@@ -28,11 +28,11 @@ module.exports = {
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			primary: {
-  				DEFAULT: '#FB923C',
+  				DEFAULT: '#173753',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
   			secondary: {
-  				DEFAULT: '#3B82F6',
+  				DEFAULT: '#1d70a2',
   				foreground: 'hsl(var(--secondary-foreground))'
   			},
   			muted: {
@@ -40,7 +40,7 @@ module.exports = {
   				foreground: 'hsl(var(--muted-foreground))'
   			},
   			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
+  				DEFAULT: '#D9E1E7',
   				foreground: 'hsl(var(--accent-foreground))'
   			},
   			destructive: {

@@ -59,7 +59,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-primary w-full fixed top-0 z-50 h-16">
+    <nav className="bg-secondary w-full fixed top-0 z-50 h-16">
       <div className="lg:container mt-2 md:mt-4 relative flex items-center justify-between px-4 md:flex md:justify-between">
         <div className="flex items-center space-x-4 md:space-x-8">
           <Link to="/" className="text-2xl text-white font-semibold italic">
@@ -83,12 +83,12 @@ export default function Navbar() {
         <div className="hidden md:flex items-center space-x-4 relative">
           <div className="flex">
             <ActiveLink to="/login">
-              <span className="px-2 py-1 rounded flex items-center gap-1 text-white font-semibold text-sm lg:text-base transition-all duration-500 ease-in-out hover:bg-accent hover:text-primary">
+              <span className="px-2 py-1 rounded flex items-center gap-1 text-white font-semibold text-sm lg:text-base transition-all duration-500 ease-in-out hover:bg-slate-50 hover:text-primary">
                 Login
               </span>
             </ActiveLink>
             <ActiveLink to="/register">
-              <span className="px-2 py-1 rounded flex items-center gap-1 text-white font-semibold text-sm lg:text-base transition-all duration-500 ease-in-out hover:bg-accent hover:text-primary">
+              <span className="px-2 py-1 rounded flex items-center gap-1 text-white font-semibold text-sm lg:text-base transition-all duration-500 ease-in-out hover:bg-slate-50 hover:text-primary">
                 Register
               </span>
             </ActiveLink>
