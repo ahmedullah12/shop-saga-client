@@ -21,7 +21,7 @@ const Categories = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 mb-20">
+    <div className="container mx-auto p-6 mb-12">
       <h1 className="text-2xl md:text-3xl font-bold mb-6 text-secondary">
         Product Categories
       </h1>

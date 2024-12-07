@@ -17,7 +17,6 @@ export default function Navbar() {
 
   
   const { data: userData } = useGetUserWithEmailQuery(user?.email);
-  console.log(userData);
 
   const mobileNavVariants = {
     open: { opacity: 1, y: 0 },

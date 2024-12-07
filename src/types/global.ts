@@ -11,7 +11,7 @@ export interface IUserData {
   id: string
   name: string
   email: string
-  profileImage: any
+  profileImage: string | null;
   contactNumber: string
   role: string
   status: string
@@ -20,4 +20,19 @@ export interface IUserData {
   shop: any
   followShop: any[]
   reviews: any[]
+}
+
+export interface IProduct {
+  id: string
+  name: string
+  price: number
+  inventoryCount: number
+  isFlashSale: boolean
+  discount?: number
+  flashSalePrice?: number
+  description: string
+  images: string[]
+  shopId: string
+  createdAt: string
+  updatedAt: string
 }
