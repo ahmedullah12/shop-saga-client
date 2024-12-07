@@ -37,7 +37,7 @@ const Login = () => {
         navigate(from, { replace: true });
         setIsSuccess(true);
       }
-    } catch (err: any) {
+    } catch (err) {
       console.log(err);
     }
   };

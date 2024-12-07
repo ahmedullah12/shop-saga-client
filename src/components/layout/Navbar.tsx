@@ -5,9 +5,19 @@ import { Menus } from "@/utils/navMenus";
 import { BiLogIn } from "react-icons/bi";
 import { HiOutlineLogin } from "react-icons/hi";
 import { motion } from "framer-motion";
+import { useAppSelector } from "@/redux/hooks";
+import { useCurrentUser } from "@/redux/features/auth/authApi";
+import { useGetUserWithEmailQuery } from "@/redux/features/user/userApi";
+import UserDropdown from "../UserDropdown";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+
+  const user = useAppSelector(useCurrentUser);
+
+  
+  const { data: userData } = useGetUserWithEmailQuery(user?.email);
+  console.log(userData);
 
   const mobileNavVariants = {
     open: { opacity: 1, y: 0 },
@@ -81,18 +91,22 @@ export default function Navbar() {
           </ul>
         </div>
         <div className="hidden md:flex items-center space-x-4 relative">
-          <div className="flex">
-            <ActiveLink to="/login">
-              <span className="px-2 py-1 rounded flex items-center gap-1 text-white font-semibold text-sm lg:text-base transition-all duration-500 ease-in-out hover:bg-slate-50 hover:text-primary">
-                Login
-              </span>
-            </ActiveLink>
-            <ActiveLink to="/register">
-              <span className="px-2 py-1 rounded flex items-center gap-1 text-white font-semibold text-sm lg:text-base transition-all duration-500 ease-in-out hover:bg-slate-50 hover:text-primary">
-                Register
-              </span>
-            </ActiveLink>
-          </div>
+          {userData?.data ? (
+            <UserDropdown user={userData.data} />
+          ) : (
+            <div className="flex">
+              <ActiveLink to="/login">
+                <span className="px-2 py-1 rounded flex items-center gap-1 text-white font-semibold text-sm lg:text-base transition-all duration-500 ease-in-out hover:bg-slate-50 hover:text-primary">
+                  Login
+                </span>
+              </ActiveLink>
+              <ActiveLink to="/register">
+                <span className="px-2 py-1 rounded flex items-center gap-1 text-white font-semibold text-sm lg:text-base transition-all duration-500 ease-in-out hover:bg-slate-50 hover:text-primary">
+                  Register
+                </span>
+              </ActiveLink>
+            </div>
+          )}
         </div>
         <div className="md:hidden">
           <Hamburger color="white" toggled={open} toggle={setOpen} />

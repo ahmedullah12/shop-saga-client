@@ -11,7 +11,7 @@ export default function Banner() {
           Discover a world of quality products, seamless shopping, and
           unbeatable deals.
         </p>
-        <Button className="bg-primary text-white hover:bg-gray-200">
+        <Button className="bg-primary text-white hover:bg-gray-200 hover:bg-secondary">
           Start Shopping
         </Button>
       </div>
