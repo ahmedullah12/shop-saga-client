@@ -28,16 +28,35 @@ export interface IProduct {
   price: number
   inventoryCount: number
   isFlashSale: boolean
-  discount?: number
-  flashSalePrice?: number
+  discount: number
+  flashSalePrice: number
   description: string
   images: string[]
   shopId: string
   createdAt: string
   updatedAt: string
+  shop: IShop
+  productCategory: IProductCategory[]
+}
+
+export interface IShop {
+  id: string
+  name: string
+  vendorId: string
+  logoUrl: string
+  description: string
+  status: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface IProductCategory {
+  productId: string
+  categoryId: string
+  category: ICategory
 }
 
 export interface ICategory {
-  id: string;
-  name: string;
+  id: string
+  name: string
 }

@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   return (
@@ -43,9 +44,10 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         </div>
       </CardContent>
       <CardFooter className="flex justify-between items-center p-4">
+        <Link to={`/products/${product.id}`}>
         <Button variant="outline" size="sm">
           View Details
-        </Button>
+        </Button></Link>
         <Button variant="default" size="sm">
           Add to Cart
         </Button>
