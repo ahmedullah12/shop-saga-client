@@ -16,7 +16,7 @@ const FlashSaleProducts = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {products.data.length > 0 &&
-          products.data.map((product: IProduct) => (
+          products?.data?.map((product: IProduct) => (
             <ProductCard key={product.id} product={product} />
           ))}
       </div>

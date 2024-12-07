@@ -12,7 +12,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   return (
     <Card className="w-full max-w-sm mx-auto relative">
       {product.isFlashSale && (
-        <div className="absolute top-2 right-2 bg-primary text-white text-xs font-semibold px-2 py-1 rounded z-50">
+        <div className="absolute top-2 right-2 bg-secondary text-white text-xs font-semibold px-2 py-1 rounded z-20">
           Flash Sale
         </div>
       )}

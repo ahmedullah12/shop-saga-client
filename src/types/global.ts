@@ -36,3 +36,8 @@ export interface IProduct {
   createdAt: string
   updatedAt: string
 }
+
+export interface ICategory {
+  id: string;
+  name: string;
+}

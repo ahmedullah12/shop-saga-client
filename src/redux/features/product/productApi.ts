@@ -3,9 +3,11 @@ import { baseApi } from "@/redux/api/baseApi";
 const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllProducts: builder.query({
-      query: ({ searchTerm }) => {
+      query: ({ searchTerm, price, category }) => {
         const params = new URLSearchParams();
         if (searchTerm) params.append("searchTerm", searchTerm);
+        if(price) params.append("price", price)
+        if(category) params.append("category", category)
 
         return {
           url: `/products?${params.toString()}`,
