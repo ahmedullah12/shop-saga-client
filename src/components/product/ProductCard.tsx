@@ -11,11 +11,11 @@ import {
 const ProductCard = ({ product }: { product: IProduct }) => {
   return (
     <Card className="w-full max-w-sm mx-auto relative">
-      {/* {product.isFlashSale && (
-        <div className="absolute top-2 right-2 bg-none border-2 border-primary text-primary text-xs font-semibold px-2 py-1 rounded z-50">
+      {product.isFlashSale && (
+        <div className="absolute top-2 right-2 bg-primary text-white text-xs font-semibold px-2 py-1 rounded z-50">
           Flash Sale
         </div>
-      )} */}
+      )}
       <CardHeader className="p-0">
         <img
           src={product.images[0]}
