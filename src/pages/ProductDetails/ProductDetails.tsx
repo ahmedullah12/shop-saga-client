@@ -50,12 +50,12 @@ const ProductDetails = () => {
               {/* Product Header */}
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                  {product.data.name}
+                  {product?.data?.name}
                 </h2>
 
                 {/* Categories */}
                 <div className="flex gap-2 mb-4">
-                  {product.data.productCategory.map((cat: IProductCategory) => (
+                  {product?.data?.productCategory.map((cat: IProductCategory) => (
                     <Badge
                       key={cat.categoryId}
                       variant="secondary"
@@ -71,18 +71,18 @@ const ProductDetails = () => {
               <div className="flex items-center space-x-4">
                 <p className="text-2xl font-bold text-primary">
                   $
-                  {product.data.isFlashSale
-                    ? product.data.flashSalePrice?.toFixed(2)
-                    : product.data.price.toFixed(2)}
+                  {product?.data?.isFlashSale
+                    ? product?.data?.flashSalePrice?.toFixed(2)
+                    : product?.data?.price.toFixed(2)}
                 </p>
 
-                {product.data.isFlashSale && (
+                {product?.data?.isFlashSale && (
                   <p className="text-sm line-through text-muted-foreground">
-                    ${product.data.price.toFixed(2)}
+                    ${product?.data?.price.toFixed(2)}
                   </p>
                 )}
 
-                {product.data.inventoryCount > 0 ? (
+                {product?.data?.inventoryCount > 0 ? (
                   <Badge variant="outline" className="text-green-600">
                     In Stock
                   </Badge>
@@ -93,17 +93,17 @@ const ProductDetails = () => {
 
               {/* Description */}
               <div className="prose max-w-none text-muted-foreground">
-                <p>{product.data.description}</p>
+                <p>{product?.data?.description}</p>
               </div>
 
               {/* Add to Cart */}
               <Button
                 className="w-full"
                 size="lg"
-                disabled={product.data.inventoryCount === 0}
+                disabled={product?.data?.inventoryCount === 0}
               >
                 <ShoppingCart className="mr-2 h-5 w-5" />
-                {product.data.inventoryCount === 0
+                {product?.data?.inventoryCount === 0
                   ? "Out of Stock"
                   : "Add to Cart"}
               </Button>
@@ -119,17 +119,17 @@ const ProductDetails = () => {
             </h3>
             <CardContent className="p-6 md:p-8">
               <div className="flex items-center space-x-4">
-                {product.data.shop.logoUrl && (
+                {product?.data?.shop.logoUrl && (
                   <img
-                    src={product.data.shop.logoUrl}
-                    alt={product.data.shop.name}
+                    src={product?.data?.shop.logoUrl}
+                    alt={product?.data?.shop.name}
                     className="h-16 w-16 rounded-full object-cover"
                   />
                 )}
                 <div>
-                  <Link to={`/shop/${product.data.shop.id}`}>
+                  <Link to={`/shop/${product?.data?.shop.id}`}>
                     <p className="text-xl font-semibold text-foreground hover:underline">
-                      {product.data.shop.name}
+                      {product?.data?.shop.name}
                     </p>
                   </Link>
                   <div className="flex items-center text-yellow-500 mt-1">
@@ -139,7 +139,7 @@ const ProductDetails = () => {
                     </span>
                   </div>
                   <p className="text-sm text-muted-foreground mt-1">
-                    {product.data.shop.description}
+                    {product?.data?.shop.description}
                   </p>
                 </div>
               </div>

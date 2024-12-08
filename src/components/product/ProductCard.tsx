@@ -8,51 +8,83 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import { addToCart, replaceCartWithNewProduct, retainCurrentCart } from "@/redux/features/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import WarningModal from "../modals/WarningModal";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
+  const dispatch = useAppDispatch();
+  const warning = useAppSelector((state) => state.cart.warning);
+
+  const handleAddToCart = (product: IProduct) => {
+    console.log(product);
+    dispatch(addToCart(product)); // Attempt to add to cart
+  };
+
+  const handleReplaceCart = () => {
+    dispatch(replaceCartWithNewProduct());
+  };
+
+  const handleCancelAddition = () => {
+
+    dispatch(retainCurrentCart()); // Keep current cart
+  };
   return (
-    <Card className="w-full max-w-sm mx-auto relative">
-      {product.isFlashSale && (
-        <div className="absolute top-2 right-2 bg-secondary text-white text-xs font-semibold px-2 py-1 rounded z-20">
-          Flash Sale
-        </div>
-      )}
-      <CardHeader className="p-0">
-        <img
-          src={product.images[0]}
-          alt={product.name}
-          className="w-full h-40 object-cover rounded-t-md"
-        />
-      </CardHeader>
-      <CardContent className="p-4">
-        <CardTitle className="text-lg font-semibold">{product.name}</CardTitle>
-        <p className="text-sm text-muted-foreground mt-1">
-          {product.description}
-        </p>
-        <div className="flex items-center justify-between mt-4">
-          <p className="text-xl font-bold text-primary">
-            $
-            {product.isFlashSale
-              ? product.flashSalePrice?.toFixed(2)
-              : product.price}
+    <>
+      <Card className="w-full max-w-sm mx-auto relative">
+        {product.isFlashSale && (
+          <div className="absolute top-2 right-2 bg-secondary text-white text-xs font-semibold px-2 py-1 rounded z-20">
+            Flash Sale
+          </div>
+        )}
+        <CardHeader className="p-0">
+          <img
+            src={product.images[0]}
+            alt={product.name}
+            className="w-full h-40 object-cover rounded-t-md"
+          />
+        </CardHeader>
+        <CardContent className="p-4">
+          <CardTitle className="text-lg font-semibold">
+            {product.name}
+          </CardTitle>
+          <p className="text-sm text-muted-foreground mt-1">
+            {product.description}
           </p>
-          {product.isFlashSale && (
-            <p className="text-sm line-through text-muted-foreground">
-              ${product.price}
+          <div className="flex items-center justify-between mt-4">
+            <p className="text-xl font-bold text-primary">
+              $
+              {product.isFlashSale
+                ? product.flashSalePrice?.toFixed(2)
+                : product.price}
             </p>
-          )}
-        </div>
-      </CardContent>
-      <CardFooter className="flex justify-between items-center p-4">
-        <Link to={`/products/${product.id}`}>
-        <Button variant="outline" size="sm">
-          View Details
-        </Button></Link>
-        <Button variant="default" size="sm">
-          Add to Cart
-        </Button>
-      </CardFooter>
-    </Card>
+            {product.isFlashSale && (
+              <p className="text-sm line-through text-muted-foreground">
+                ${product.price}
+              </p>
+            )}
+          </div>
+        </CardContent>
+        <CardFooter className="flex justify-between items-center p-4">
+          <Link to={`/products/${product.id}`}>
+            <Button variant="outline" size="sm">
+              View Details
+            </Button>
+          </Link>
+          <Button onClick={() => handleAddToCart(product)} variant="default" size="sm">
+            Add to Cart
+          </Button>
+        </CardFooter>
+      </Card>
+      {warning && (
+        <WarningModal
+          isOpen={!!warning}
+          message={warning}
+          onReplace={handleReplaceCart}
+          onCancel={handleCancelAddition}
+        />
+      )}
+    </>
   );
 };
 
