@@ -41,12 +41,14 @@ const ProductDetails = () => {
         <Card className="w-full mx-auto max-w-6xl shadow-xl border-none">
           <CardContent className="grid grid-cols-1 lg:grid-cols-2 gap-10 p-6 md:p-10">
             {/* Image Section (Unchanged) */}
-            <div className="w-full">
-              <ProductDetailsImages images={product?.data?.images} />
-            </div>
+            {product?.data && (
+              <div className="w-full">
+                <ProductDetailsImages images={product?.data?.images} />
+              </div>
+            )}
 
             {/* Product Information Section */}
-            <div className="space-y-6">
+            <div className="">
               {/* Product Header */}
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -54,21 +56,23 @@ const ProductDetails = () => {
                 </h2>
 
                 {/* Categories */}
-                <div className="flex gap-2 mb-4">
-                  {product?.data?.productCategory.map((cat: IProductCategory) => (
-                    <Badge
-                      key={cat.categoryId}
-                      variant="secondary"
-                      className="text-xs text-white uppercase tracking-wider"
-                    >
-                      {cat.category.name}
-                    </Badge>
-                  ))}
+                <div className="flex gap-2 mb-8">
+                  {product?.data?.productCategory.map(
+                    (cat: IProductCategory) => (
+                      <Badge
+                        key={cat.categoryId}
+                        variant="secondary"
+                        className="text-xs text-white uppercase tracking-wider"
+                      >
+                        {cat.category.name}
+                      </Badge>
+                    )
+                  )}
                 </div>
               </div>
 
               {/* Pricing */}
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-4 mb-3">
                 <p className="text-2xl font-bold text-primary">
                   $
                   {product?.data?.isFlashSale
@@ -91,8 +95,12 @@ const ProductDetails = () => {
                 )}
               </div>
 
-              {/* Description */}
-              <div className="prose max-w-none text-muted-foreground">
+              
+              <div className="prose max-w-none text-muted-foreground mb-4">
+                <p>Quantity: {product?.data?.inventoryCount}</p>
+              </div>
+
+              <div className="prose max-w-none text-muted-foreground mb-6">
                 <p>{product?.data?.description}</p>
               </div>
 

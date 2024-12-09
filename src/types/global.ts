@@ -28,8 +28,8 @@ export interface IProduct {
   price: number
   inventoryCount: number
   isFlashSale: boolean
-  discount: number
-  flashSalePrice: number
+  discount: number | null;
+  flashSalePrice: number | null;
   description: string
   images: string[]
   shopId: string

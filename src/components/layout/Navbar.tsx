@@ -69,7 +69,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-secondary w-full fixed top-0 z-50 h-16">
-      <div className="lg:container mt-2 relative flex items-center justify-between px-4 md:flex md:justify-between">
+      <div className="h-full lg:container relative flex items-center justify-between px-4 md:flex md:justify-between">
         <div className="flex items-center space-x-4 md:space-x-8">
           <Link to="/" className="text-2xl text-white font-semibold italic">
             Shop Saga
@@ -93,7 +93,7 @@ export default function Navbar() {
           {userData?.data ? (
             <UserDropdown user={userData.data} />
           ) : (
-            <div className="flex">
+            <div className="flex items-center">
               <ActiveLink to="/login">
                 <span className="px-2 py-1 rounded flex items-center gap-1 text-white font-semibold text-sm lg:text-base transition-all duration-500 ease-in-out hover:bg-slate-50 hover:text-primary">
                   Login

@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 const Cart = () => {
   const { cart, totalPrice } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
-  console.log(cart);
 
   const handleIncrease = (productId: string) => {
     dispatch(increaseQuantity(productId));

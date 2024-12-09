@@ -9,7 +9,7 @@ type TInitialState = {
   cart: CartItem[];
   totalPrice: number;
   warning: string | null;
-  pendingProduct: IProduct | null; // Track the product causing the warning
+  pendingProduct: IProduct | null;
 };
 
 const initialState: TInitialState = {
@@ -37,16 +37,21 @@ const cartSlice = createSlice({
         return;
       }
 
+      const priceToUse =
+        action.payload.isFlashSale && action.payload.flashSalePrice
+          ? action.payload.flashSalePrice
+          : action.payload.price;
+
       // Add product logic (unchanged)
       if (!selectedProduct) {
         const product = { ...action.payload, addedProductQuantity: 1 };
         product.inventoryCount -= 1;
         state.cart.push(product);
-        state.totalPrice += product.price;
+        state.totalPrice += priceToUse;
       } else {
         selectedProduct.addedProductQuantity += 1;
         selectedProduct.inventoryCount -= 1;
-        state.totalPrice += selectedProduct.price;
+        state.totalPrice += priceToUse;
       }
 
       state.warning = null;
@@ -100,6 +105,16 @@ const cartSlice = createSlice({
         state.cart = state.cart.filter((item) => item.id !== productId);
       }
     },
+    clearCart: (state) => {
+      state.cart.forEach(
+        (item) => (item.inventoryCount += item.addedProductQuantity)
+      );
+
+      state.cart = [];
+      state.totalPrice = 0;
+      state.warning = null;
+      state.pendingProduct = null;
+    },
   },
 });
 
@@ -110,5 +125,6 @@ export const {
   removeFromCart,
   increaseQuantity,
   decreaseQuantity,
+  clearCart,
 } = cartSlice.actions;
 export default cartSlice.reducer;

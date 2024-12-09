@@ -35,7 +35,7 @@ const ProductDetailsImages = ({ images }: ProductImagesCarouselProps) => {
               selectedImage === index ? "opacity-50" : ""
             } cursor-pointer`}
           >
-            <CardContent className="w-20 md:w-40 h-[100px]">
+            <CardContent className="p-0 w-20 md:w-40 h-[100px]">
               <img
                 src={image}
                 alt={`Room Image ${index + 1}`}
