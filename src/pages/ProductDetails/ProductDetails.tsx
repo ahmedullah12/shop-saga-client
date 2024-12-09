@@ -10,11 +10,18 @@ import {
 } from "@/redux/features/product/productApi";
 import { IProduct, IProductCategory } from "@/types/global";
 import ProductCard from "@/components/product/ProductCard";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { addToCart, replaceCartWithNewProduct, retainCurrentCart } from "@/redux/features/cart/cartSlice";
+import WarningModal from "@/components/modals/WarningModal";
+import toast from "react-hot-toast";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const warning = useAppSelector((state) => state.cart.warning);
 
   const { data: product, isLoading } = useGetSingleProductQuery(id as string);
+
+  const dispatch = useAppDispatch();
 
   const relatedCategories = product?.data?.productCategory?.map(
     (cat: IProductCategory) => cat.categoryId
@@ -26,7 +33,19 @@ const ProductDetails = () => {
       // Optionally exclude the current product
     });
 
-  console.log(relatedProducts);
+    const handleAddToCart = (product: IProduct) => {
+      toast.success("Product added to cart!!")
+      dispatch(addToCart(product)); // Attempt to add to cart
+    };
+  
+    const handleReplaceCart = () => {
+      dispatch(replaceCartWithNewProduct());
+    };
+  
+    const handleCancelAddition = () => {
+  
+      dispatch(retainCurrentCart()); // Keep current cart
+    };
 
   if (isLoading && relatedProductsLoading)
     return (
@@ -109,6 +128,7 @@ const ProductDetails = () => {
                 className="w-full"
                 size="lg"
                 disabled={product?.data?.inventoryCount === 0}
+                onClick={() => handleAddToCart(product)}
               >
                 <ShoppingCart className="mr-2 h-5 w-5" />
                 {product?.data?.inventoryCount === 0
@@ -118,6 +138,15 @@ const ProductDetails = () => {
             </div>
           </CardContent>
         </Card>
+
+        {warning && (
+        <WarningModal
+          isOpen={!!warning}
+          message={warning}
+          onReplace={handleReplaceCart}
+          onCancel={handleCancelAddition}
+        />
+      )}
 
         {/* Shop Information (Added Below) */}
         <div className="container mx-auto px-4 md:px-6 mt-8">

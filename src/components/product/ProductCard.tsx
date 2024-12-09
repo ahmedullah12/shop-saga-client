@@ -11,14 +11,15 @@ import { Link } from "react-router-dom";
 import { addToCart, replaceCartWithNewProduct, retainCurrentCart } from "@/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import WarningModal from "../modals/WarningModal";
+import toast from "react-hot-toast";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const dispatch = useAppDispatch();
   const warning = useAppSelector((state) => state.cart.warning);
 
   const handleAddToCart = (product: IProduct) => {
-    console.log(product);
-    dispatch(addToCart(product)); // Attempt to add to cart
+    toast.success("Product added to cart!!")
+    dispatch(addToCart(product));
   };
 
   const handleReplaceCart = () => {
@@ -26,8 +27,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   };
 
   const handleCancelAddition = () => {
-
-    dispatch(retainCurrentCart()); // Keep current cart
+    dispatch(retainCurrentCart());
   };
   return (
     <>

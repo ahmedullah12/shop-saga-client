@@ -29,6 +29,7 @@ const Checkout = () => {
     const submitData = {
       ...data,
       totalPrice,
+      products: cart
     };
 
     try {
