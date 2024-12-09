@@ -7,6 +7,8 @@ import ProductDetails from "@/pages/ProductDetails/ProductDetails";
 import Cart from "@/pages/Cart/Cart";
 import Checkout from "@/pages/Checkout/Checkout";
 import SuccessPage from "@/pages/SuccessPage/SuccessPage";
+import RecentViewedProducts from "@/pages/RecentViewedProducts/RecentViewedProducts";
+import AllProducts from "@/pages/Home/AllProducts";
 
 const router = createBrowserRouter([
   {
@@ -22,16 +24,24 @@ const router = createBrowserRouter([
         element: <ProductDetails />,
       },
       {
+        path: "/all-products",
+        element: <AllProducts/>
+      },
+      {
         path: "/cart",
         element: <Cart />,
       },
       {
+        path: "/recent-products",
+        element: <RecentViewedProducts />,
+      },
+      {
         path: "/checkout",
-        element: <Checkout/>
+        element: <Checkout />,
       },
       {
         path: "/checkout/success",
-        element: <SuccessPage/>
+        element: <SuccessPage />,
       },
       {
         path: "/register",

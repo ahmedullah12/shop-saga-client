@@ -11,9 +11,15 @@ import {
 import { IProduct, IProductCategory } from "@/types/global";
 import ProductCard from "@/components/product/ProductCard";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { addToCart, replaceCartWithNewProduct, retainCurrentCart } from "@/redux/features/cart/cartSlice";
+import {
+  addToCart,
+  replaceCartWithNewProduct,
+  retainCurrentCart,
+} from "@/redux/features/cart/cartSlice";
 import WarningModal from "@/components/modals/WarningModal";
 import toast from "react-hot-toast";
+import { addViewedProduct } from "@/redux/features/recent-product/recentProductsSlice";
+import { useEffect } from "react";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -33,19 +39,24 @@ const ProductDetails = () => {
       // Optionally exclude the current product
     });
 
-    const handleAddToCart = (product: IProduct) => {
-      toast.success("Product added to cart!!")
-      dispatch(addToCart(product)); // Attempt to add to cart
-    };
-  
-    const handleReplaceCart = () => {
-      dispatch(replaceCartWithNewProduct());
-    };
-  
-    const handleCancelAddition = () => {
-  
-      dispatch(retainCurrentCart()); // Keep current cart
-    };
+  const handleAddToCart = (product: IProduct) => {
+    toast.success("Product added to cart!!");
+    dispatch(addToCart(product)); // Attempt to add to cart
+  };
+
+  const handleReplaceCart = () => {
+    dispatch(replaceCartWithNewProduct());
+  };
+
+  const handleCancelAddition = () => {
+    dispatch(retainCurrentCart()); // Keep current cart
+  };
+
+  useEffect(() => {
+    if (product?.data) {
+      dispatch(addViewedProduct(product?.data));
+    }
+  }, [dispatch, product]);
 
   if (isLoading && relatedProductsLoading)
     return (
@@ -114,7 +125,6 @@ const ProductDetails = () => {
                 )}
               </div>
 
-              
               <div className="prose max-w-none text-muted-foreground mb-4">
                 <p>Quantity: {product?.data?.inventoryCount}</p>
               </div>
@@ -140,13 +150,13 @@ const ProductDetails = () => {
         </Card>
 
         {warning && (
-        <WarningModal
-          isOpen={!!warning}
-          message={warning}
-          onReplace={handleReplaceCart}
-          onCancel={handleCancelAddition}
-        />
-      )}
+          <WarningModal
+            isOpen={!!warning}
+            message={warning}
+            onReplace={handleReplaceCart}
+            onCancel={handleCancelAddition}
+          />
+        )}
 
         {/* Shop Information (Added Below) */}
         <div className="container mx-auto px-4 md:px-6 mt-8">

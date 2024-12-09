@@ -4,6 +4,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { IUserData } from "@/types/global";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
+import { Link } from "react-router-dom";
 
 type TUserDropdown = {
   user: IUserData;
@@ -25,7 +26,10 @@ const UserDropdown = ({ user }: TUserDropdown) => {
           </Avatar>
           <span>{user?.name}</span>
         </PopoverTrigger>
-        <PopoverContent className="w-32 bg-accent border-none">
+        <PopoverContent className="w-40 bg-accent border-none">
+          <Link className="text-primary font-semibold hover:underline" to={"/recent-products"}>
+            Recent Products
+          </Link>
           <Button
             onClick={handleLogout}
             className="w-full mt-4 px-2 py-1 text-sm bg-primary hover:bg-secondary text-white rounded"

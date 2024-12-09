@@ -4,6 +4,7 @@ import Categories from "./Categories";
 import FlashSaleProducts from "./FlashSaleProducts";
 
 const Home = () => {
+  
   return (
     <div>
       <Banner/>
