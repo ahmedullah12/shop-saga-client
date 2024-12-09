@@ -27,9 +27,14 @@ const UserDropdown = ({ user }: TUserDropdown) => {
           <span>{user?.name}</span>
         </PopoverTrigger>
         <PopoverContent className="w-40 bg-accent border-none">
+          <div className="flex flex-col gap-y-2">
           <Link className="text-primary font-semibold hover:underline" to={"/recent-products"}>
             Recent Products
           </Link>
+          <Link className="text-primary font-semibold hover:underline" to={"/user-order-history"}>
+            Order History
+          </Link>
+          </div>
           <Button
             onClick={handleLogout}
             className="w-full mt-4 px-2 py-1 text-sm bg-primary hover:bg-secondary text-white rounded"

@@ -9,6 +9,7 @@ import Checkout from "@/pages/Checkout/Checkout";
 import SuccessPage from "@/pages/SuccessPage/SuccessPage";
 import RecentViewedProducts from "@/pages/RecentViewedProducts/RecentViewedProducts";
 import AllProducts from "@/pages/Home/AllProducts";
+import UserOrderHistory from "@/pages/UserOrderHistory/UserOrderHistory";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/recent-products",
         element: <RecentViewedProducts />,
+      },
+      {
+        path: "/user-order-history",
+        element: <UserOrderHistory/>
       },
       {
         path: "/checkout",

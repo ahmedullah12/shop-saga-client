@@ -60,3 +60,28 @@ export interface ICategory {
   id: string
   name: string
 }
+
+export interface IPayment {
+    id: string
+    customerName: string
+    customerEmail: string
+    customerPhone: string
+    customerAddress: string
+    userId: string
+    transactionId: string
+    paymentDate: string
+    totalPrice: number
+    status: string
+    user: IUserData
+    products: IPaymentProduct[]
+  
+}
+
+export interface IPaymentProduct {
+  id: string
+  paymentId: string
+  productId: string
+  quantity: number
+  price: number
+  product: IProduct
+}
