@@ -11,6 +11,8 @@ import RecentViewedProducts from "@/pages/RecentViewedProducts/RecentViewedProdu
 import AllProducts from "@/pages/Home/AllProducts";
 import UserOrderHistory from "@/pages/UserOrderHistory/UserOrderHistory";
 import UserReviews from "@/pages/UserReviews";
+import ProtectedRoute from "@/components/layout/ProtectedRoute";
+import { UserRole } from "@/utils/constants";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +25,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/products/:id",
-        element: <ProductDetails />,
+        element: (
+          <ProtectedRoute role={undefined}>
+            <ProductDetails />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/all-products",
@@ -39,19 +45,35 @@ const router = createBrowserRouter([
       },
       {
         path: "/user-order-history",
-        element: <UserOrderHistory />,
+        element: (
+          <ProtectedRoute role={UserRole.CUSTOMER}>
+            <UserOrderHistory />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/user-reviews",
-        element: <UserReviews />,
+        element: (
+          <ProtectedRoute role={UserRole.CUSTOMER}>
+            <UserReviews />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/checkout",
-        element: <Checkout />,
+        element: (
+          <ProtectedRoute role={undefined}>
+            <Checkout />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/checkout/success",
-        element: <SuccessPage />,
+        element: (
+          <ProtectedRoute role={UserRole.CUSTOMER}>
+            <SuccessPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/register",

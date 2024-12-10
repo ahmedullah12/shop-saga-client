@@ -1,7 +1,8 @@
-import  { useEffect, useState } from 'react';
-import { Check, Star } from 'lucide-react';
-import { useAppDispatch } from '@/redux/hooks';
-import { clearCart } from '@/redux/features/cart/cartSlice';
+import { useEffect, useState } from "react";
+import { Check, Star } from "lucide-react";
+import { useAppDispatch } from "@/redux/hooks";
+import { clearCart } from "@/redux/features/cart/cartSlice";
+import { Link } from "react-router-dom";
 
 const SuccessPage = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -9,16 +10,16 @@ const SuccessPage = () => {
 
   useEffect(() => {
     setIsVisible(true);
-    dispatch(clearCart())
+    dispatch(clearCart());
   }, [dispatch]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-100 flex items-center justify-center px-4 py-12">
-      <div 
+      <div
         className={`
           bg-white shadow-2xl rounded-3xl p-8 max-w-md w-full 
           transform transition-all duration-1000 
-          ${isVisible ? 'scale-100 opacity-100' : 'scale-90 opacity-0'}
+          ${isVisible ? "scale-100 opacity-100" : "scale-90 opacity-0"}
         `}
       >
         <div className="relative">
@@ -37,30 +38,29 @@ const SuccessPage = () => {
             Payment Successful!
           </h1>
           <p className="text-center text-gray-600 mb-6 animate-fade-in-delay">
-            Thank you for your purchase. Your order has been processed successfully.
+            Thank you for your purchase. Your order has been processed
+            successfully.
           </p>
 
           <div className="flex space-x-4">
-            <button 
-              className="
-                flex-1 bg-blue-500 text-white py-3 rounded-lg 
-                hover:bg-blue-600 transition-colors 
-                focus:outline-none focus:ring-2 focus:ring-blue-400
-                flex items-center justify-center
+            <Link
+              to="/user-order-history"
+              className=" flex-1 bg-blue-500 text-white py-3 rounded-lg
+              hover:bg-blue-600 transition-colors focus:outline-none
+              focus:ring-2 focus:ring-blue-400 flex items-center justify-center
               "
             >
               View Order
-            </button>
-            <button 
-              className="
-                flex-1 bg-gray-100 text-gray-800 py-3 rounded-lg 
-                hover:bg-gray-200 transition-colors
-                focus:outline-none focus:ring-2 focus:ring-gray-300
-                flex items-center justify-center
+            </Link>
+            <Link
+              to="/all-products"
+              className=" flex-1 bg-gray-100 text-gray-800 py-3 rounded-lg
+              hover:bg-gray-200 transition-colors focus:outline-none
+              focus:ring-2 focus:ring-gray-300 flex items-center justify-center
               "
             >
               Continue Shopping
-            </button>
+            </Link>
           </div>
         </div>
       </div>

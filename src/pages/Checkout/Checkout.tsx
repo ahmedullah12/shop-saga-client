@@ -53,7 +53,7 @@ const Checkout = () => {
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="bg-white shadow-2xl rounded-2xl overflow-hidden">
         <div className="p-6">
-          <h1 className="text-3xl font-bold text-primary text-center">
+          <h1 className="text-3xl font-bold text-secondary text-center">
             Checkout
           </h1>
         </div>

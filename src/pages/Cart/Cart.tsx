@@ -1,12 +1,21 @@
 import { Button } from "@/components/ui/button";
-import { decreaseQuantity, increaseQuantity, removeFromCart } from "@/redux/features/cart/cartSlice";
+import { useCurrentUser } from "@/redux/features/auth/authApi";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+  removeFromCart,
+} from "@/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Minus, Plus } from "lucide-react";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const { cart, totalPrice } = useAppSelector((state) => state.cart);
+  const user = useAppSelector(useCurrentUser);
+
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleIncrease = (productId: string) => {
     dispatch(increaseQuantity(productId));
@@ -20,6 +29,14 @@ const Cart = () => {
 
   const handleRemove = (productId: string) => {
     dispatch(removeFromCart(productId));
+  };
+
+  const handleNavigateCheckout = () => {
+    if (user) {
+      return navigate("/checkout");
+    }
+
+    return toast.error("Please login to checkout!!");
   };
 
   return (
@@ -72,7 +89,7 @@ const Cart = () => {
                     </button>
                   </div>
                   <Button
-                  size="sm"
+                    size="sm"
                     className="bg-primary"
                     onClick={() => handleRemove(product.id)}
                   >
@@ -91,9 +108,10 @@ const Cart = () => {
               Total Price:{" "}
               <span className="text-primary">${totalPrice.toFixed(2)}</span>
             </p>
-            <Link to="/checkout">
-              <Button className="w-full mt-4">Proceed to Checkout</Button>
-            </Link>
+
+            <Button onClick={handleNavigateCheckout} className="w-full mt-4">
+              Proceed to Checkout
+            </Button>
           </div>
         </div>
       )}
