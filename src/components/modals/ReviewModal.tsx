@@ -12,7 +12,6 @@ import { Star } from "lucide-react";
 import toast from "react-hot-toast";
 import { useCreateReviewMutation } from "@/redux/features/product-review/productReviewApi";
 
-// Typescript interfaces (you might want to move these to a global types file)
 interface ReviewModalProps {
   productId: string;
   productName: string;

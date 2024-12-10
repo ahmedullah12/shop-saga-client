@@ -52,6 +52,8 @@ const ProductDetails = () => {
     dispatch(retainCurrentCart()); // Keep current cart
   };
 
+  console.log(product);
+
   useEffect(() => {
     if (product?.data) {
       dispatch(addViewedProduct(product?.data));
@@ -65,6 +67,16 @@ const ProductDetails = () => {
       </div>
     );
 
+    const starRating = (rating: number) => {
+      return Array.from({ length: 5 }, (_, index) => (
+        <Star
+          key={index}
+          className={`h-4 w-4 ${
+            index < rating ? 'text-yellow-500 fill-current' : 'text-gray-300'
+          }`}
+        />
+      ));
+    };
   return (
     <div className="bg-background py-10 md:py-20">
       <div className="container mx-auto px-4 md:px-6">
@@ -193,6 +205,36 @@ const ProductDetails = () => {
             </CardContent>
           </Card>
         </div>
+        {product?.data?.reviews && product.data.reviews.length > 0 && (
+          <div className="container mx-auto px-4 md:px-6 mt-12">
+            <Card className="w-full mx-auto max-w-6xl shadow-md">
+              <h3 className="text-2xl text-secondary font-bold my-3 ms-4">
+                Customer Reviews ({product.data.reviews.length})
+              </h3>
+              <CardContent className="p-6 md:p-8 space-y-4">
+                {product.data.reviews.map((review: IReview) => (
+                  <div 
+                    key={review.id} 
+                    className="border-b pb-4 last:border-b-0"
+                  >
+                    <div className="flex items-center mb-2">
+                      <div className="flex mr-2">
+                        {starRating(review.rating)}
+                      </div>
+                      <span className="text-sm text-muted-foreground">
+                        {review.user.name}
+                      </span>
+                    </div>
+                    <p className="text-foreground">
+                      {review.comment}
+                    </p>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
         {relatedProducts?.data?.data?.length > 0 && (
           <div className="container mx-auto px-4 md:px-6 mt-12">
             <h3 className="text-2xl font-bold text-secondary mb-6">
