@@ -23,10 +23,7 @@ interface ReviewSubmissionData {
   comment: string;
 }
 
-const ReviewModal: React.FC<ReviewModalProps> = ({
-  productId,
-  productName,
-}) => {
+const CreateReviewModal = ({ productId, productName }: ReviewModalProps) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -121,4 +118,4 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
   );
 };
 
-export default ReviewModal;
+export default CreateReviewModal;

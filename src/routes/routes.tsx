@@ -10,6 +10,7 @@ import SuccessPage from "@/pages/SuccessPage/SuccessPage";
 import RecentViewedProducts from "@/pages/RecentViewedProducts/RecentViewedProducts";
 import AllProducts from "@/pages/Home/AllProducts";
 import UserOrderHistory from "@/pages/UserOrderHistory/UserOrderHistory";
+import UserReviews from "@/pages/UserReviews";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/all-products",
-        element: <AllProducts/>
+        element: <AllProducts />,
       },
       {
         path: "/cart",
@@ -38,7 +39,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/user-order-history",
-        element: <UserOrderHistory/>
+        element: <UserOrderHistory />,
+      },
+      {
+        path: "/user-reviews",
+        element: <UserReviews />,
       },
       {
         path: "/checkout",

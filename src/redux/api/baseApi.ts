@@ -20,7 +20,6 @@ type TCustomError = {
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:5000/api",
   credentials: "include",
-  //this is for sending token when making a request to backend
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
 

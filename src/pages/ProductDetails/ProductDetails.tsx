@@ -8,7 +8,7 @@ import {
   useGetAllProductsQuery,
   useGetSingleProductQuery,
 } from "@/redux/features/product/productApi";
-import { IProduct, IProductCategory } from "@/types/global";
+import { IProduct, IProductCategory, IReview } from "@/types/global";
 import ProductCard from "@/components/product/ProductCard";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
@@ -36,12 +36,11 @@ const ProductDetails = () => {
   const { data: relatedProducts, isLoading: relatedProductsLoading } =
     useGetAllProductsQuery({
       category: relatedCategories,
-      // Optionally exclude the current product
     });
 
   const handleAddToCart = (product: IProduct) => {
     toast.success("Product added to cart!!");
-    dispatch(addToCart(product)); // Attempt to add to cart
+    dispatch(addToCart(product));
   };
 
   const handleReplaceCart = () => {
@@ -49,7 +48,7 @@ const ProductDetails = () => {
   };
 
   const handleCancelAddition = () => {
-    dispatch(retainCurrentCart()); // Keep current cart
+    dispatch(retainCurrentCart());
   };
 
   console.log(product);
@@ -67,16 +66,16 @@ const ProductDetails = () => {
       </div>
     );
 
-    const starRating = (rating: number) => {
-      return Array.from({ length: 5 }, (_, index) => (
-        <Star
-          key={index}
-          className={`h-4 w-4 ${
-            index < rating ? 'text-yellow-500 fill-current' : 'text-gray-300'
-          }`}
-        />
-      ));
-    };
+  const starRating = (rating: number) => {
+    return Array.from({ length: 5 }, (_, index) => (
+      <Star
+        key={index}
+        className={`h-4 w-4 ${
+          index < rating ? "text-yellow-500 fill-current" : "text-gray-300"
+        }`}
+      />
+    ));
+  };
   return (
     <div className="bg-background py-10 md:py-20">
       <div className="container mx-auto px-4 md:px-6">
@@ -213,8 +212,8 @@ const ProductDetails = () => {
               </h3>
               <CardContent className="p-6 md:p-8 space-y-4">
                 {product.data.reviews.map((review: IReview) => (
-                  <div 
-                    key={review.id} 
+                  <div
+                    key={review.id}
                     className="border-b pb-4 last:border-b-0"
                   >
                     <div className="flex items-center mb-2">
@@ -225,9 +224,7 @@ const ProductDetails = () => {
                         {review.user.name}
                       </span>
                     </div>
-                    <p className="text-foreground">
-                      {review.comment}
-                    </p>
+                    <p className="text-foreground">{review.comment}</p>
                   </div>
                 ))}
               </CardContent>

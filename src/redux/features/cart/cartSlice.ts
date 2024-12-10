@@ -33,7 +33,7 @@ const cartSlice = createSlice({
         state.cart[0].shopId !== action.payload.shopId
       ) {
         state.warning = "Adding products from different vendors. Replace cart?";
-        state.pendingProduct = action.payload; // Track the product causing the warning
+        state.pendingProduct = action.payload;
         return;
       }
 
@@ -42,7 +42,6 @@ const cartSlice = createSlice({
           ? action.payload.flashSalePrice
           : action.payload.price;
 
-      // Add product logic (unchanged)
       if (!selectedProduct) {
         const product = { ...action.payload, addedProductQuantity: 1 };
         product.inventoryCount -= 1;
@@ -84,7 +83,7 @@ const cartSlice = createSlice({
       if (product && product.inventoryCount > 0) {
         product.addedProductQuantity += 1;
         product.inventoryCount -= 1;
-        state.totalPrice += product.price; // Update total price
+        state.totalPrice += product.price;
       }
     },
     decreaseQuantity: (state, action: PayloadAction<string>) => {
@@ -93,7 +92,7 @@ const cartSlice = createSlice({
       if (product && product.addedProductQuantity > 1) {
         product.addedProductQuantity -= 1;
         product.inventoryCount += 1;
-        state.totalPrice -= product.price; // Update total price
+        state.totalPrice -= product.price;
       }
     },
     removeFromCart: (state, action: PayloadAction<string>) => {

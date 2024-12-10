@@ -1,5 +1,4 @@
-// import React from 'react';
-import { 
+import {
   Table,
   TableBody,
   TableCell,
@@ -11,46 +10,33 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useGetUserPaymentsQuery } from "@/redux/features/payment/paymentApi";
 import { IPayment, IPaymentProduct } from "@/types/global";
-import ReviewModal from "@/components/modals/ReviewModal";
-// import ReviewModal from './ReviewModal';
+import formatDate from "@/utils/formatDate";
+import CreateReviewModal from "@/components/modals/CreateReviewModal";
 
-// Utility function to trim text
 const trimText = (text: string, maxLength: number = 20) => {
-  return text.length > maxLength 
-    ? `${text.slice(0, maxLength)}...` 
-    : text;
+  return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
 };
 
 const UserOrderHistory = () => {
   const { data: payments } = useGetUserPaymentsQuery(undefined);
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
   const showProductDetails = (products: IPaymentProduct[]) => {
     return products.map((product) => (
-      <div 
-        key={product.id} 
+      <div
+        key={product.id}
         className="text-sm text-gray-600 flex items-center justify-between mb-2"
       >
         <div className="flex flex-col">
           <span className="font-medium">
-            {trimText(product.product?.name || 'Unknown Product')}
+            {trimText(product.product?.name || "Unknown Product")}
           </span>
           <span className="text-xs text-gray-500">
             Qty: {product.quantity} @ ${product.price.toFixed(2)}
           </span>
         </div>
-        <ReviewModal 
+        <CreateReviewModal
           productId={product.productId}
-          productName={product.product?.name || 'Product'}
+          productName={product.product?.name || "Product"}
         />
       </div>
     ));
@@ -86,7 +72,7 @@ const UserOrderHistory = () => {
                   ${payment.totalPrice.toFixed(2)}
                 </TableCell>
                 <TableCell>
-                  <Badge 
+                  <Badge
                     variant="outline"
                     className={
                       payment.status === "COMPLETED"

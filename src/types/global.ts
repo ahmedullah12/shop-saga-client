@@ -8,80 +8,91 @@ export type TError = {
 };
 
 export interface IUserData {
-  id: string
-  name: string
-  email: string
+  id: string;
+  name: string;
+  email: string;
   profileImage: string | null;
-  contactNumber: string
-  role: string
-  status: string
-  createdAt: string
-  updatedAt: string
-  shop: any
-  followShop: any[]
-  reviews: any[]
+  contactNumber: string;
+  role: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  shop: any;
+  followShop: any[];
+  reviews: any[];
 }
 
 export interface IProduct {
-  id: string
-  name: string
-  price: number
-  inventoryCount: number
-  isFlashSale: boolean
+  id: string;
+  name: string;
+  price: number;
+  inventoryCount: number;
+  isFlashSale: boolean;
   discount: number | null;
   flashSalePrice: number | null;
-  description: string
-  images: string[]
-  shopId: string
-  createdAt: string
-  updatedAt: string
-  shop: IShop
-  productCategory: IProductCategory[]
+  description: string;
+  images: string[];
+  shopId: string;
+  createdAt: string;
+  updatedAt: string;
+  shop: IShop;
+  productCategory: IProductCategory[];
 }
 
 export interface IShop {
-  id: string
-  name: string
-  vendorId: string
-  logoUrl: string
-  description: string
-  status: string
-  createdAt: string
-  updatedAt: string
+  id: string;
+  name: string;
+  vendorId: string;
+  logoUrl: string;
+  description: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IProductCategory {
-  productId: string
-  categoryId: string
-  category: ICategory
+  productId: string;
+  categoryId: string;
+  category: ICategory;
 }
 
 export interface ICategory {
-  id: string
-  name: string
+  id: string;
+  name: string;
 }
 
 export interface IPayment {
-    id: string
-    customerName: string
-    customerEmail: string
-    customerPhone: string
-    customerAddress: string
-    userId: string
-    transactionId: string
-    paymentDate: string
-    totalPrice: number
-    status: string
-    user: IUserData
-    products: IPaymentProduct[]
-  
+  id: string;
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  customerAddress: string;
+  userId: string;
+  transactionId: string;
+  paymentDate: string;
+  totalPrice: number;
+  status: string;
+  user: IUserData;
+  products: IPaymentProduct[];
 }
 
 export interface IPaymentProduct {
-  id: string
-  paymentId: string
-  productId: string
-  quantity: number
-  price: number
-  product: IProduct
+  id: string;
+  paymentId: string;
+  productId: string;
+  quantity: number;
+  price: number;
+  product: IProduct;
+}
+
+export interface IReview {
+  id: string;
+  rating: number;
+  comment: string;
+  userId: string;
+  productId: string;
+  createdAt: string;
+  updatedAt: string;
+  user: IUserData;
+  product: IProduct;
 }

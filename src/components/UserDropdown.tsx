@@ -34,6 +34,9 @@ const UserDropdown = ({ user }: TUserDropdown) => {
           <Link className="text-primary font-semibold hover:underline" to={"/user-order-history"}>
             Order History
           </Link>
+          <Link className="text-primary font-semibold hover:underline" to={"/user-reviews"}>
+            Reviews
+          </Link>
           </div>
           <Button
             onClick={handleLogout}
