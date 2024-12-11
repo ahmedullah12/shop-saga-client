@@ -5,9 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CreateShopModal from "@/components/modals/CreateShopModal";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useGetUserShopQuery } from "@/redux/features/shop/shopApi";
+import UpdateShopModal from "@/components/modals/UpdateShopModal";
 
 const Shop = () => {
   const [isCreateShopModalOpen, setIsCreateShopModalOpen] = useState(false);
+  const [isUpdateShopModalOpen, setIsUpdateShopModalOpen] = useState(false);
 
   const { data: shopData, isLoading } = useGetUserShopQuery(undefined);
   console.log(shopData?.products);
@@ -49,7 +51,7 @@ const Shop = () => {
             </Avatar>
             <span>{shopData?.data?.name}</span>
           </CardTitle>
-          <Button variant="outline">
+          <Button onClick={() => setIsUpdateShopModalOpen(true)} variant="outline">
             <Edit className="mr-2 h-4 w-4" /> Edit Shop
           </Button>
         </CardHeader>
@@ -74,6 +76,11 @@ const Shop = () => {
           <div></div>
         )}
       </div>
+      <UpdateShopModal
+        isOpen={isUpdateShopModalOpen}
+        setIsOpen={setIsUpdateShopModalOpen}
+        currentShopData={shopData?.data}
+      />
     </div>
   );
 };

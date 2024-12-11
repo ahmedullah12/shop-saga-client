@@ -14,9 +14,18 @@ const shopApi = baseApi.injectEndpoints({
             query: () => ({
                 url: "/shop/user-shop",
                 method: "GET"
-            })
+            }),
+            providesTags: ["Shops"]
+        }),
+        updateShop: builder.mutation({
+            query: (payload) => ({
+                url: `/shop`,
+                method: "PUT",
+                body: payload,
+            }),
+            invalidatesTags: ["Shops"]
         })
     })
 });
 
-export const { useCreateShopMutation, useGetUserShopQuery } = shopApi;
+export const { useCreateShopMutation, useGetUserShopQuery, useUpdateShopMutation } = shopApi;
