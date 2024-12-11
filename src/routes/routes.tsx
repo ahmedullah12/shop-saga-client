@@ -7,13 +7,15 @@ import ProductDetails from "@/pages/ProductDetails/ProductDetails";
 import Cart from "@/pages/Cart/Cart";
 import Checkout from "@/pages/Checkout/Checkout";
 import SuccessPage from "@/pages/SuccessPage/SuccessPage";
-import RecentViewedProducts from "@/pages/RecentViewedProducts/RecentViewedProducts";
+import RecentViewedProducts from "@/pages/Customer/RecentViewedProducts/RecentViewedProducts";
 import AllProducts from "@/pages/Home/AllProducts";
-import UserOrderHistory from "@/pages/UserOrderHistory/UserOrderHistory";
-import UserReviews from "@/pages/UserReviews";
+import UserOrderHistory from "@/pages/Customer/UserOrderHistory/UserOrderHistory";
+import UserReviews from "@/pages/Customer/UserReviews/UserReviews";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import { UserRole } from "@/utils/constants";
 import FlashSaleProducts from "@/pages/FlashSaleProducts/FlashSaleProducts";
+import DashboardLayout from "@/components/layout/DashboardLayout";
+import Shop from "@/pages/Vendor/Shop/Shop";
 
 const router = createBrowserRouter([
   {
@@ -90,6 +92,16 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout/>,
+    children: [
+      {
+        path: "/dashboard/vendor/shop",
+        element: <Shop/>
+      }
+    ]
+  }
 ]);
 
 export default router;

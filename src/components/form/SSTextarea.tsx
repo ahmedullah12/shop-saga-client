@@ -13,14 +13,14 @@ type TTextareaProps = {
 const SSTextarea = ({ width, name, label, rows, disabled }: TTextareaProps) => {
   return (
     <div style={{ marginBottom: "20px" }}>
-      <Label>{label}</Label>
+      <Label className="text-primary">{label}</Label>
       <Controller
         name={name}
         rules={{ required: `${label} is required` }}
         render={({ field, fieldState: { error } }) => (
           <>
             <Textarea
-              className={`${width} focus:outline-none`}
+              className={`${width} focus:outline-none resize-none`}
               {...field}
               id={name}
               rows={rows}

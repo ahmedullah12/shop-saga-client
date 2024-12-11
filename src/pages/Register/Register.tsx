@@ -3,9 +3,9 @@ import SSInput from "@/components/form/SSInput";
 import { SSSelect } from "@/components/form/SSSelect";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { useCurrentUser, useRegisterMutation } from "@/redux/features/auth/authApi";
+import { useRegisterMutation } from "@/redux/features/auth/authApi";
 import { setUser, TUser } from "@/redux/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import { TError } from "@/types/global";
 import verifyJwt from "@/utils/verifyJwt";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -17,8 +17,6 @@ const Register = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
-  const user = useAppSelector(useCurrentUser);
-
   const roleOptions = [
     { value: "CUSTOMER", label: "Customer" },
     { value: "VENDOR", label: "Vendor" },
@@ -26,7 +24,6 @@ const Register = () => {
 
   const [register, { error, isLoading }] = useRegisterMutation();
 
-  
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -53,7 +50,11 @@ const Register = () => {
         const userData = verifyJwt(res.data.accessToken) as TUser;
         dispatch(setUser({ user: userData, token: res.data.accessToken }));
         toast.success(res.message);
-        navigate("/");
+        if (userData.role === "VENDOR") {
+          navigate("/dashboard/vendor/shop");
+        } else {
+          navigate("/");
+        }
         setIsSuccess(true);
       }
     } catch (err) {
@@ -61,14 +62,6 @@ const Register = () => {
       console.log(err);
     }
   };
-
-  useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-  }, [user, navigate]);
-
-  console.log(error);
 
   useEffect(() => {
     if (error) {

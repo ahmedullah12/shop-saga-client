@@ -1,12 +1,9 @@
 import SSForm from "@/components/form/SSForm";
 import SSInput from "@/components/form/SSInput";
 import { Button } from "@/components/ui/button";
-import {
-  useCurrentUser,
-  useLoginUserMutation,
-} from "@/redux/features/auth/authApi";
+import { useLoginUserMutation } from "@/redux/features/auth/authApi";
 import { setUser, TUser } from "@/redux/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import { TError } from "@/types/global";
 import verifyJwt from "@/utils/verifyJwt";
 import { useEffect, useState } from "react";
@@ -17,7 +14,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 const Login = () => {
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const user = useAppSelector(useCurrentUser);
   const [login, { error, isLoading }] = useLoginUserMutation();
   const dispatch = useAppDispatch();
 
@@ -43,12 +39,6 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-  }, [user, navigate]);
-
-  useEffect(() => {
     if (error) {
       const err = error as TError;
       if (err.data) {
@@ -62,7 +52,7 @@ const Login = () => {
     <div className=" flex justify-center items-center bg-white  relative mt-20">
       <div className="w-full md:w-[500px] px-4">
         <div className="bg-accent rounded-lg px-10 py-5 shadow-lg">
-        <h1 className="mb-6 font-semibold text-secondary text-2xl underline">
+          <h1 className="mb-6 font-semibold text-secondary text-2xl underline">
             Login
           </h1>
 
