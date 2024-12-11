@@ -1,3 +1,4 @@
+import { useSearchParams, useNavigate } from "react-router-dom";
 import ProductCard from "@/components/product/ProductCard";
 import ProductFilters from "@/components/product/ProductFilters";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,15 @@ const AllProducts = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [priceRange, setPriceRange] = useState("");
   const [category, setCategory] = useState("");
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const categoryParam = searchParams.get("category");
+    if (categoryParam) {
+      setCategory(categoryParam);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const timerId = setTimeout(() => {
@@ -35,8 +45,8 @@ const AllProducts = () => {
   const handleClearFilters = () => {
     setPriceRange("");
     setCategory("");
+    navigate("/all-products");
   };
-
 
   useEffect(() => {
     setQuery((prev) => ({
@@ -52,6 +62,7 @@ const AllProducts = () => {
     useGetAllCategoriesQuery(undefined);
 
   if (isLoading && categoriesLoading) return <p>Loading...</p>;
+
   return (
     <div className="container mx-auto p-6 mb-12">
       <h1 className="text-2xl md:text-3xl font-bold mb-6 text-secondary">
@@ -62,7 +73,7 @@ const AllProducts = () => {
         <input
           type="text"
           placeholder="Search rooms..."
-          className="w-[250px] md:w-[450px] bg-transparent p-2 border-2 border-secondary rounded-md "
+          className="w-[250px] md:w-[450px] bg-transparent p-2 border-2 border-secondary rounded-md"
           value={searchTerm}
           onChange={handleSearchChange}
         />
@@ -88,12 +99,13 @@ const AllProducts = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {products?.data?.data.length > 0 ?
+        {products?.data?.data.length > 0 ? (
           products?.data?.data.map((product: IProduct) => (
             <ProductCard key={product.id} product={product} />
-          )) : (
-            <p>No products to show...</p>
-          )}
+          ))
+        ) : (
+          <p>No products to show...</p>
+        )}
       </div>
     </div>
   );

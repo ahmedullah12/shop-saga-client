@@ -13,6 +13,7 @@ import UserOrderHistory from "@/pages/UserOrderHistory/UserOrderHistory";
 import UserReviews from "@/pages/UserReviews";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import { UserRole } from "@/utils/constants";
+import FlashSaleProducts from "@/pages/FlashSaleProducts/FlashSaleProducts";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/all-products",
         element: <AllProducts />,
+      },
+      { 
+        path: "/flash-sale-products", 
+        element: <FlashSaleProducts /> 
       },
       {
         path: "/cart",

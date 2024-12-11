@@ -22,10 +22,17 @@ const productApi = baseApi.injectEndpoints({
       providesTags: ["Products"],
     }),
     getFlashSaleProducts: builder.query({
-      query: () => ({
-        url: "/products/flash-sale",
-        method: "GET",
-      }),
+      query: ({ limit }) => {
+        console.log(limit);
+        const params = new URLSearchParams();
+
+        if (limit) params.append("limit", limit);
+
+        return {
+          url: `/products/flash-sale?${params.toString()}`,
+          method: "GET",
+        };
+      },
     }),
     getSingleProduct: builder.query({
       query: (id: string) => ({

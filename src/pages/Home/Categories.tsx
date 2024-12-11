@@ -17,7 +17,7 @@ const Categories = () => {
   }
 
   const handleCategoryClick = (categoryId: string) => {
-    navigate(`/products?category=${categoryId}`);
+    navigate(`/all-products?category=${categoryId}`);
   };
 
   return (
@@ -25,7 +25,7 @@ const Categories = () => {
       <h1 className="text-2xl md:text-3xl font-bold mb-6 text-secondary">
         Product Categories
       </h1>
-      <div className="flex flex-wrap gap-4 place-items-center">
+      <div className="flex flex-wrap gap-4 justify-center items-center">
         {categories?.data.map((category: { id: string; name: string }) => (
           <div
             key={category.id}
