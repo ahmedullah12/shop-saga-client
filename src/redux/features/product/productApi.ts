@@ -33,20 +33,37 @@ const productApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
+      providesTags: ["Products"]
     }),
     getSingleProduct: builder.query({
       query: (id: string) => ({
         url: `/products/${id}`,
         method: "GET",
       }),
+      providesTags: ["Products"]
     }),
     createProduct: builder.mutation({
       query: (payload) => ({
         url: "/products/create-product",
         method: "POST",
         body: payload
-      })
-    })
+      }),
+      invalidatesTags: ["Products"]
+    }),
+    duplicateProduct: builder.mutation({
+      query: (productId) => ({
+        url: `/products/duplicate-product/${productId}`,
+        method: "POST"
+      }),
+      invalidatesTags: ["Products"]
+    }),
+    deleteProduct: builder.mutation({
+      query: (productId) => ({
+        url: `/products/${productId}`,
+        method: "DELETE"
+      }),
+      invalidatesTags: ["Products"]
+    }),
   }),
 });
 
@@ -54,5 +71,7 @@ export const {
   useGetAllProductsQuery,
   useGetFlashSaleProductsQuery,
   useGetSingleProductQuery,
-  useCreateProductMutation
+  useCreateProductMutation,
+  useDuplicateProductMutation,
+  useDeleteProductMutation,
 } = productApi;

@@ -38,7 +38,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
 
   const error = result?.error as TCustomError;
-  console.log(error);
 
   if (error?.status === 404) {
     toast.error(error?.data?.message || "An error occurred.");

@@ -15,7 +15,7 @@ const shopApi = baseApi.injectEndpoints({
                 url: "/shop/user-shop",
                 method: "GET"
             }),
-            providesTags: ["Shops"]
+            providesTags: ["Shops", "Products"]
         }),
         updateShop: builder.mutation({
             query: (payload) => ({

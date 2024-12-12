@@ -22,7 +22,7 @@ const AddProduct = () => {
   const { data: categories, isLoading: categoriesLoading } =
     useGetAllCategoriesQuery(undefined);
 
-  const [createProduct] = useCreateProductMutation();
+  const [createProduct, {isLoading: createProductLoading}] = useCreateProductMutation();
 
   const categoryOptions =
     categories?.data?.map((category: ICategory) => ({
@@ -68,7 +68,7 @@ const AddProduct = () => {
     console.log(res);
     if (res.success === true) {
       toast.success(res.message);
-      navigate("/dashboard/vendor/products")
+      navigate("/dashboard/vendor/products");
     }
   };
 
@@ -173,7 +173,7 @@ const AddProduct = () => {
             />
 
             <div className=" mt-6">
-              <Button type="submit" className="max-w-[200px]">
+              <Button disabled={createProductLoading} type="submit" className="max-w-[200px]">
                 Create Product
               </Button>
             </div>

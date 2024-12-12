@@ -18,6 +18,7 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 import Shop from "@/pages/Vendor/Shop/Shop";
 import AddProduct from "@/pages/Vendor/AddProduct/AddProduct";
 import VendorAllProducts from "@/pages/Vendor/VendorAllProducts/VendorAllProducts";
+import UpdateProduct from "@/pages/Vendor/UpdateProduct/UpdateProduct";
 
 const router = createBrowserRouter([
   {
@@ -109,7 +110,11 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/vendor/add-product",
         element: <AddProduct/>
-      }
+      },
+      {
+        path: "/dashboard/vendor/update-product/:id",
+        element: <UpdateProduct/>
+      },
     ]
   }
 ]);

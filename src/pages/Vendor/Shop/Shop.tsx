@@ -15,7 +15,6 @@ const Shop = () => {
   const [isUpdateShopModalOpen, setIsUpdateShopModalOpen] = useState(false);
 
   const { data: shopData, isLoading } = useGetUserShopQuery(undefined);
-  console.log(shopData?.products);
 
   if (isLoading) return <p>Loading...</p>;
 
