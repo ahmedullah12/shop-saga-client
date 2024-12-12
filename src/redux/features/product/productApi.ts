@@ -3,10 +3,11 @@ import { baseApi } from "@/redux/api/baseApi";
 const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllProducts: builder.query({
-      query: ({ searchTerm, price, category }) => {
+      query: ({ searchTerm, price, category, limit }) => {
         const params = new URLSearchParams();
         if (searchTerm) params.append("searchTerm", searchTerm);
         if (price) params.append("price", price);
+        if(limit) params.append("limit", limit)
 
         if (category && Array.isArray(category)) {
           params.append("category", category.join(","));
@@ -57,6 +58,14 @@ const productApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Products"]
     }),
+    updateProduct: builder.mutation({
+      query: ({payload, id}) => ({
+        url: `/products/${id}`,
+        method: "PUT",
+        body: payload,
+      }),
+      invalidatesTags: ["Products"]
+    }),
     deleteProduct: builder.mutation({
       query: (productId) => ({
         url: `/products/${productId}`,
@@ -73,5 +82,6 @@ export const {
   useGetSingleProductQuery,
   useCreateProductMutation,
   useDuplicateProductMutation,
+  useUpdateProductMutation,
   useDeleteProductMutation,
 } = productApi;

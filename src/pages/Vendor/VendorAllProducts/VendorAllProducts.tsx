@@ -33,6 +33,7 @@ import { useDeleteProductMutation, useDuplicateProductMutation } from "@/redux/f
 import toast from "react-hot-toast";
 import { IProduct } from "@/types/global";
 import { Link, useNavigate } from "react-router-dom";
+import Loader from "@/components/Loader";
 
 const VendorAllProducts = () => {
   const { data: shopData, isLoading } = useGetUserShopQuery(undefined);
@@ -67,12 +68,7 @@ const VendorAllProducts = () => {
     navigate(`/dashboard/vendor/update-product/${product.id}`)
   };
 
-  if (isLoading)
-    return (
-      <div className="flex justify-center items-center h-full">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-      </div>
-    );
+  if (isLoading) return <Loader/>;
 
   const products = shopData?.data?.products || [];
 

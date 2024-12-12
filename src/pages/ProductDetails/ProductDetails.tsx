@@ -36,6 +36,7 @@ const ProductDetails = () => {
   const { data: relatedProducts, isLoading: relatedProductsLoading } =
     useGetAllProductsQuery({
       category: relatedCategories,
+      limit: 5,
     });
 
   const handleAddToCart = (product: IProduct) => {
