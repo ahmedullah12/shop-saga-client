@@ -16,6 +16,8 @@ import { UserRole } from "@/utils/constants";
 import FlashSaleProducts from "@/pages/FlashSaleProducts/FlashSaleProducts";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import Shop from "@/pages/Vendor/Shop/Shop";
+import AddProduct from "@/pages/Vendor/AddProduct/AddProduct";
+import VendorAllProducts from "@/pages/Vendor/VendorAllProducts/VendorAllProducts";
 
 const router = createBrowserRouter([
   {
@@ -99,6 +101,14 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/vendor/shop",
         element: <Shop/>
+      },
+      {
+        path: "/dashboard/vendor/products",
+        element: <VendorAllProducts/>
+      },
+      {
+        path: "/dashboard/vendor/add-product",
+        element: <AddProduct/>
       }
     ]
   }

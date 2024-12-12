@@ -26,8 +26,6 @@ const DashboardLayout: React.FC = () => {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
-    console.log(location);
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -104,14 +102,16 @@ const DashboardLayout: React.FC = () => {
           <div className="px-4 flex-grow">
             {sidebarOptions.map((option) => (
               <Link
-              className={`block px-4 py-2 rounded-md ${
-                location.pathname === `/dashboard/vendor/${option.route}` ? "bg-primary text-white" : ""
-              }`} 
-              key={option.title}
-              to={`/dashboard/vendor/${option.route}`}
-            >
-               {option.title}
-            </Link>
+                className={`block px-4 py-2 rounded-md ${
+                  location.pathname === `/dashboard/vendor/${option.route}`
+                    ? "bg-primary text-white"
+                    : ""
+                }`}
+                key={option.title}
+                to={`/dashboard/vendor/${option.route}`}
+              >
+                {option.title}
+              </Link>
             ))}
           </div>
         </div>

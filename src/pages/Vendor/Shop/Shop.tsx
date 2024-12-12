@@ -6,6 +6,9 @@ import CreateShopModal from "@/components/modals/CreateShopModal";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useGetUserShopQuery } from "@/redux/features/shop/shopApi";
 import UpdateShopModal from "@/components/modals/UpdateShopModal";
+import { Link } from "react-router-dom";
+import { IProduct } from "@/types/global";
+import ProductCard from "@/components/product/ProductCard";
 
 const Shop = () => {
   const [isCreateShopModalOpen, setIsCreateShopModalOpen] = useState(false);
@@ -16,7 +19,7 @@ const Shop = () => {
 
   if (isLoading) return <p>Loading...</p>;
 
-  if (!shopData.data) {
+  if (!shopData?.data) {
     return (
       <div className="container mx-auto p-6 text-center">
         <Card className="max-w-md mx-auto">
@@ -51,7 +54,10 @@ const Shop = () => {
             </Avatar>
             <span>{shopData?.data?.name}</span>
           </CardTitle>
-          <Button onClick={() => setIsUpdateShopModalOpen(true)} variant="outline">
+          <Button
+            onClick={() => setIsUpdateShopModalOpen(true)}
+            variant="outline"
+          >
             <Edit className="mr-2 h-4 w-4" /> Edit Shop
           </Button>
         </CardHeader>
@@ -66,21 +72,36 @@ const Shop = () => {
           </div>
         </CardContent>
       </Card>
-      <div className="mt-4 ">
-        <h3 className="text-secondary text-2xl font-semibold mb-2">Products</h3>
+      <div className="mt-6 ">
+        <div className="flex justify-between">
+          <h3 className="text-secondary text-2xl font-semibold mb-2">
+            Products
+          </h3>
+          <Link to="/dashboard/vendor/add-product">
+            <Button size={"sm"} variant={"outline"}>
+              Add Product
+            </Button>
+          </Link>
+        </div>
         {shopData?.data?.products?.length === 0 ? (
           <p className="text-muted-foreground">
             No products added yet. Click "Add Product" to get started.
           </p>
         ) : (
-          <div></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+            {shopData?.data?.products?.map((product: IProduct) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
         )}
       </div>
-      <UpdateShopModal
-        isOpen={isUpdateShopModalOpen}
-        setIsOpen={setIsUpdateShopModalOpen}
-        currentShopData={shopData?.data}
-      />
+      {shopData?.data && (
+        <UpdateShopModal
+          isOpen={isUpdateShopModalOpen}
+          setIsOpen={setIsUpdateShopModalOpen}
+          currentShopData={shopData?.data}
+        />
+      )}
     </div>
   );
 };
