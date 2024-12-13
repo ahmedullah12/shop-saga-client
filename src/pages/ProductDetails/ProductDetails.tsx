@@ -150,7 +150,7 @@ const ProductDetails = () => {
                 className="w-full"
                 size="lg"
                 disabled={product?.data?.inventoryCount === 0}
-                onClick={() => handleAddToCart(product)}
+                onClick={() => handleAddToCart(product?.data)}
               >
                 <ShoppingCart className="mr-2 h-5 w-5" />
                 {product?.data?.inventoryCount === 0

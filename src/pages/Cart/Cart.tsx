@@ -54,7 +54,7 @@ const Cart = () => {
             <p className="text-xl md:text-2xl text-center md:text-left font-bold mb-5">
               Your Cart items ({cart.length})
             </p>
-            {cart.map((product) => (
+            {cart.length > 0 && cart.map((product) => (
               <div
                 key={product.id}
                 className="mb-4 p-4 bg-gray-50 flex justify-between items-center shadow-md rounded-lg"
@@ -63,8 +63,8 @@ const Cart = () => {
                 <div className="flex items-center gap-4">
                   <img
                     className="w-16 md:w-20 h-16 md:h-20 rounded-lg"
-                    src={product.images[0]}
-                    alt={product.name}
+                    src={product?.images[0]}
+                    alt={product?.name}
                   />
                   <p className="text-xs md:text-base">{product.name}</p>
                 </div>
@@ -103,6 +103,14 @@ const Cart = () => {
           {/* Right side - Total price and checkout */}
           <div className="col-span-12 md:col-span-4 bg-gray-50 p-6 rounded-lg shadow-md">
             <h3 className="text-2xl font-medium">Order Summary</h3>
+            {
+              cart.length > 0 && cart.map(prod => (
+                <div className="flex justify-between text-sm mt-4">
+                  <p>{prod.name}</p>
+                  <p>${prod.flashSalePrice ? prod.flashSalePrice.toFixed(2) : prod.price}({prod.addedProductQuantity})</p>
+                </div>
+              ))
+            }
             <div className="w-full h-[1px] bg-primary my-4"></div>
             <p className="text-lg mt-10 mb-4 flex justify-between">
               Total Price:{" "}

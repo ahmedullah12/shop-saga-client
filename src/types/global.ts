@@ -89,6 +89,7 @@ export interface IReview {
   id: string;
   rating: number;
   comment: string;
+  reply: string | null;
   userId: string;
   productId: string;
   createdAt: string;

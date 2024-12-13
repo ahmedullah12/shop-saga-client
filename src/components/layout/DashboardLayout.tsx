@@ -13,7 +13,7 @@ const sidebarOptions = [
   },
   {
     title: "Reviews & Ratings",
-    route: "product-reviews",
+    route: "products-reviews",
   },
   {
     title: "Order History",

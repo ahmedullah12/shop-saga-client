@@ -22,6 +22,19 @@ const productApi = baseApi.injectEndpoints({
       },
       providesTags: ["Products"],
     }),
+    getVendorProducts: builder.query({
+      query: ({ shopId, limit }) => {
+        const params = new URLSearchParams();
+        if(shopId) params.append("shopId", shopId)
+        if (limit) params.append("limit", limit);
+
+        return {
+          url: `/products/vendor-products?${params.toString()}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["Products"]
+    }),
     getFlashSaleProducts: builder.query({
       query: ({ limit }) => {
         console.log(limit);
@@ -78,6 +91,7 @@ const productApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllProductsQuery,
+  useGetVendorProductsQuery,
   useGetFlashSaleProductsQuery,
   useGetSingleProductQuery,
   useCreateProductMutation,

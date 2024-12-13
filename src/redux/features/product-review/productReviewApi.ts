@@ -17,6 +17,12 @@ const productReviewApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Reviews"],
     }),
+    getShopProductsReviews: builder.query({
+      query: ({shopId}) => ({
+        url: `/review/shop-product-reviews?shopId=${shopId}`,
+        method: "GET",
+      }),
+    }),
     updateReview: builder.mutation({
       query: ({ payload, id }) => ({
         url: `/review/${id}`,
@@ -32,12 +38,24 @@ const productReviewApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Reviews"],
     }),
+    createReplyReview: builder.mutation({
+      query: ({reviewId, payload}) => {
+        console.log(payload);
+        return {
+          url: `/review/reply-review?reviewId=${reviewId}`,
+          method: "PUT",
+          body: payload,
+        }
+      }
+    })
   }),
 });
 
 export const {
   useCreateReviewMutation,
   useGetUserReviewsQuery,
+  useGetShopProductsReviewsQuery,
   useDeleteReviewMutation,
   useUpdateReviewMutation,
+  useCreateReplyReviewMutation,
 } = productReviewApi;

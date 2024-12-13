@@ -19,6 +19,7 @@ import Shop from "@/pages/Vendor/Shop/Shop";
 import AddProduct from "@/pages/Vendor/AddProduct/AddProduct";
 import VendorAllProducts from "@/pages/Vendor/VendorAllProducts/VendorAllProducts";
 import UpdateProduct from "@/pages/Vendor/UpdateProduct/UpdateProduct";
+import ShopProductsReviews from "@/pages/Vendor/Reviews/ShopProductsReviews";
 
 const router = createBrowserRouter([
   {
@@ -41,9 +42,9 @@ const router = createBrowserRouter([
         path: "/all-products",
         element: <AllProducts />,
       },
-      { 
-        path: "/flash-sale-products", 
-        element: <FlashSaleProducts /> 
+      {
+        path: "/flash-sale-products",
+        element: <FlashSaleProducts />,
       },
       {
         path: "/cart",
@@ -97,26 +98,30 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout/>,
+    element: <DashboardLayout />,
     children: [
       {
         path: "/dashboard/vendor/shop",
-        element: <Shop/>
+        element: <Shop />,
       },
       {
         path: "/dashboard/vendor/products",
-        element: <VendorAllProducts/>
+        element: <VendorAllProducts />,
+      },
+      {
+        path: "/dashboard/vendor/products-reviews",
+        element: <ShopProductsReviews />,
       },
       {
         path: "/dashboard/vendor/add-product",
-        element: <AddProduct/>
+        element: <AddProduct />,
       },
       {
         path: "/dashboard/vendor/update-product/:id",
-        element: <UpdateProduct/>
+        element: <UpdateProduct />,
       },
-    ]
-  }
+    ],
+  },
 ]);
 
 export default router;

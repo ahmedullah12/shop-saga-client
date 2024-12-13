@@ -10,10 +10,14 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Star, Edit, Trash2 } from "lucide-react";
-import { useDeleteReviewMutation, useGetUserReviewsQuery } from "@/redux/features/product-review/productReviewApi";
+import {
+  useDeleteReviewMutation,
+  useGetUserReviewsQuery,
+} from "@/redux/features/product-review/productReviewApi";
 import { IReview } from "@/types/global";
 import UpdateReviewModal from "@/components/modals/UpdateReviewModal";
 import DeleteConfirmationModal from "@/components/modals/DeleteConfirmationModal";
+import { Link } from "react-router-dom";
 
 const UserReviews = () => {
   const [selectedReview, setSelectedReview] = useState<IReview | null>(null);
@@ -21,6 +25,7 @@ const UserReviews = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const { data: reviews, isLoading } = useGetUserReviewsQuery(undefined);
+  console.log(reviews);
   const [deleteReview] = useDeleteReviewMutation();
 
   const renderStarRating = (rating: number) => {
@@ -82,8 +87,10 @@ const UserReviews = () => {
                 <TableBody>
                   {reviews.data.map((review: IReview) => (
                     <TableRow key={review.id}>
-                      <TableCell className="font-medium">
-                        {review.productId}
+                      <TableCell className="font-medium hover:underline">
+                        <Link to={`/products/${review.product.id}`}>
+                          {review.product.name}
+                        </Link>
                       </TableCell>
                       <TableCell>{renderStarRating(review.rating)}</TableCell>
                       <TableCell>{review.comment}</TableCell>

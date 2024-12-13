@@ -29,18 +29,34 @@ import { Edit2, MoreVertical, Trash2, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useGetUserShopQuery } from "@/redux/features/shop/shopApi";
-import { useDeleteProductMutation, useDuplicateProductMutation } from "@/redux/features/product/productApi";
+import {
+  useDeleteProductMutation,
+  useDuplicateProductMutation,
+  useGetVendorProductsQuery,
+} from "@/redux/features/product/productApi";
 import toast from "react-hot-toast";
 import { IProduct } from "@/types/global";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "@/components/Loader";
+import Pagination from "@/components/Pagination";
 
 const VendorAllProducts = () => {
-  const { data: shopData, isLoading } = useGetUserShopQuery(undefined);
   const [deleteConfirmation, setDeleteConfirmation] = useState<string | null>(
     null
   );
+  const [currentPage, setCurrentPage] = useState(1);
+  const dataPerPage = 8;
 
+  const { data: shopData, isLoading } = useGetUserShopQuery(undefined);
+
+  const { data: productsData, isLoading: productsLoading } =
+    useGetVendorProductsQuery({
+      shopId: shopData?.data.id,
+      page: currentPage,
+      limit: dataPerPage,
+    });
+
+  console.log(productsData);
   const navigate = useNavigate();
 
   const [deleteProduct] = useDeleteProductMutation();
@@ -48,29 +64,31 @@ const VendorAllProducts = () => {
 
   const handleDelete = async (productId: string) => {
     const res = await deleteProduct(productId).unwrap();
-    
+
     if (res.success === true) {
       toast.success(res.message);
       setDeleteConfirmation(null);
     }
   };
 
-  const handleDuplicate = async(productId: string) => {
+  const handleDuplicate = async (productId: string) => {
     const res = await duplicateProduct(productId).unwrap();
 
     if (res.success === true) {
       toast.success(res.message);
-      navigate(`/dashboard/vendor/update-product/${res.data.id}`)
+      navigate(`/dashboard/vendor/update-product/${res.data.id}`);
     }
   };
 
   const handleEdit = (product: IProduct) => {
-    navigate(`/dashboard/vendor/update-product/${product.id}`)
+    navigate(`/dashboard/vendor/update-product/${product.id}`);
   };
 
-  if (isLoading) return <Loader/>;
+  if (isLoading && productsLoading) return <Loader />;
 
-  const products = shopData?.data?.products || [];
+  const products = productsData?.data?.data || [];
+  const meta = productsData?.data?.meta;
+  const totalPages = Math.ceil(meta?.total / dataPerPage);
 
   return (
     <div className="w-full p-6 bg-white shadow-sm rounded-lg">
@@ -197,6 +215,14 @@ const VendorAllProducts = () => {
             ))}
           </TableBody>
         </Table>
+      )}
+
+      {meta?.total > dataPerPage && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
       )}
     </div>
   );
