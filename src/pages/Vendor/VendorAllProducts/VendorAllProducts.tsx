@@ -56,7 +56,6 @@ const VendorAllProducts = () => {
       limit: dataPerPage,
     });
 
-  console.log(productsData);
   const navigate = useNavigate();
 
   const [deleteProduct] = useDeleteProductMutation();

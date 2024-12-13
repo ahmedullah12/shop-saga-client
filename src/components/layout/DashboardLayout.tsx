@@ -17,7 +17,7 @@ const sidebarOptions = [
   },
   {
     title: "Order History",
-    route: "orders",
+    route: "shop-orders",
   },
 ];
 

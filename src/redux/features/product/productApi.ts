@@ -3,11 +3,13 @@ import { baseApi } from "@/redux/api/baseApi";
 const productApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllProducts: builder.query({
-      query: ({ searchTerm, price, category, limit }) => {
+      query: ({ searchTerm, price, category, limit, page }) => {
         const params = new URLSearchParams();
+
         if (searchTerm) params.append("searchTerm", searchTerm);
         if (price) params.append("price", price);
         if(limit) params.append("limit", limit)
+        if(page) params.append("page", page)
 
         if (category && Array.isArray(category)) {
           params.append("category", category.join(","));
@@ -23,10 +25,12 @@ const productApi = baseApi.injectEndpoints({
       providesTags: ["Products"],
     }),
     getVendorProducts: builder.query({
-      query: ({ shopId, limit }) => {
+      query: ({ shopId, limit, page }) => {
         const params = new URLSearchParams();
+
         if(shopId) params.append("shopId", shopId)
         if (limit) params.append("limit", limit);
+        if (page) params.append("page", page);
 
         return {
           url: `/products/vendor-products?${params.toString()}`,
@@ -36,11 +40,11 @@ const productApi = baseApi.injectEndpoints({
       providesTags: ["Products"]
     }),
     getFlashSaleProducts: builder.query({
-      query: ({ limit }) => {
-        console.log(limit);
+      query: ({ limit, page }) => {
         const params = new URLSearchParams();
 
         if (limit) params.append("limit", limit);
+        if (page) params.append("page", page);
 
         return {
           url: `/products/flash-sale?${params.toString()}`,

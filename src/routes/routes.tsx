@@ -20,6 +20,7 @@ import AddProduct from "@/pages/Vendor/AddProduct/AddProduct";
 import VendorAllProducts from "@/pages/Vendor/VendorAllProducts/VendorAllProducts";
 import UpdateProduct from "@/pages/Vendor/UpdateProduct/UpdateProduct";
 import ShopProductsReviews from "@/pages/Vendor/Reviews/ShopProductsReviews";
+import ShopOrderHistory from "@/pages/Vendor/ShopOrderHistory/ShopOrderHistory";
 
 const router = createBrowserRouter([
   {
@@ -111,6 +112,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/vendor/products-reviews",
         element: <ShopProductsReviews />,
+      },
+      {
+        path: "/dashboard/vendor/shop-orders",
+        element: <ShopOrderHistory />,
       },
       {
         path: "/dashboard/vendor/add-product",
