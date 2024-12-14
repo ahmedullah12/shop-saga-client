@@ -60,7 +60,7 @@ const UserDropdown = ({ user }: TUserDropdown) => {
               ) : (
                 <Link
                   className="text-primary font-semibold hover:underline"
-                  to={"/dashboard/admin/users"}
+                  to={"/dashboard/admin/all-users"}
                 >
                   Dashboard
                 </Link>

@@ -18,7 +18,7 @@ type TCustomError = {
 };
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000/api",
+  baseUrl: "https://assignment-9-server-kappa.vercel.app/api",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -45,7 +45,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 
   if (error?.status === 401) {
     const res = await fetch(
-      "http://localhost:5000/api/auth/refresh-token",
+      "https://assignment-9-server-kappa.vercel.app/api/auth/refresh-token",
       {
         method: "POST",
         credentials: "include",

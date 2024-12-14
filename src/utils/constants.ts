@@ -26,7 +26,7 @@ export const vendorSideBarOptions = [
 export const adminSideBarOptions = [
   {
     title: "Users",
-    route: "users",
+    route: "all-users",
   },
   {
     title: "Shops",

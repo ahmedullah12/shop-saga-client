@@ -37,7 +37,7 @@ const DeleteConfirmationModal = ({
       const res = await onDelete();
      if(res.success === true){
         onOpenChange(false);
-        toast.success("Item deleted successfully");
+        toast.success(res.message);
      }
     } catch (error) {
       console.error("Delete failed:", error);

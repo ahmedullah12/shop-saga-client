@@ -103,7 +103,7 @@ const DashboardLayout: React.FC = () => {
               : adminSideBarOptions.map((option) => (
                   <Link
                     className={`block px-4 py-2 rounded-md ${
-                      location.pathname === `/dashboard/vendor/${option.route}`
+                      location.pathname === `/dashboard/admin/${option.route}`
                         ? "bg-primary text-white"
                         : ""
                     }`}

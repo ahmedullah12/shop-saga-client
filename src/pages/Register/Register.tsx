@@ -83,7 +83,7 @@ const Register = () => {
           </h1>
 
           <SSForm onSubmit={onSubmit} isSuccess={isSuccess}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <SSInput
                 width="max-w-[300px]"
                 name="name"
@@ -97,7 +97,7 @@ const Register = () => {
                 label="Email"
               />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <SSInput
                 width="max-w-[300px]"
                 name="password"
@@ -109,10 +109,10 @@ const Register = () => {
                 label="Role"
                 options={roleOptions}
                 placeholder="Select a Role"
-                className="max-w-[300px] mb-5"
+                className="max-w-[300px]"
               />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <SSInput
                 width="max-w-[300px]"
                 name="contactNumber"

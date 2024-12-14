@@ -24,6 +24,7 @@ import ShopOrderHistory from "@/pages/Vendor/ShopOrderHistory/ShopOrderHistory";
 import ShopPage from "@/pages/Shop/ShopPage";
 import ForgetPassword from "@/pages/ForgetPassword/ForgetPassword";
 import ResetPassword from "@/pages/ResetPassword/ResetPassword";
+import AllUsers from "@/pages/Admin/AllUsers/AllUsers";
 
 const router = createBrowserRouter([
   {
@@ -163,6 +164,10 @@ const router = createBrowserRouter([
             <UpdateProduct />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "/dashboard/admin/all-users",
+        element: <AllUsers />,
       },
     ],
   },
