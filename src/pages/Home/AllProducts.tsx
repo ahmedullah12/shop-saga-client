@@ -6,18 +6,54 @@ import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi"
 import { useGetAllProductsQuery } from "@/redux/features/product/productApi";
 import { IProduct } from "@/types/global";
 import { FilterIcon } from "lucide-react";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import Loader from "@/components/Loader";
 
 const AllProducts = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [query, setQuery] = useState({});
+  const [query, setQuery] = useState<Record<string, any>>({
+    page: 1,
+    limit: 8,
+  });
   const [showFilters, setShowFilters] = useState(false);
   const [priceRange, setPriceRange] = useState("");
   const [category, setCategory] = useState("");
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
+  const { data: productData, isLoading: productsLoading } = useGetAllProductsQuery(query, {
+    skip: !hasMore,
+  });
+
+  const { data: categories, isLoading: categoriesLoading } = useGetAllCategoriesQuery(undefined);
+
+  // Update products when new data arrives
+  useEffect(() => {
+    if (productData?.data?.data) {
+      setProducts((prevProducts) => {
+        const newProducts = productData.data.data;
+        
+        // Check if we've reached the end of results
+        if (newProducts.length === 0) {
+          setHasMore(false);
+        }
+
+        // Prevent duplicate products
+        const uniqueNewProducts = newProducts.filter(
+          (newProduct: IProduct) => !prevProducts.some((p) => p.id === newProduct.id)
+        );
+
+        return [...prevProducts, ...uniqueNewProducts];
+      });
+      setIsLoading(false);
+    }
+  }, [productData]);
+
+  // Handle search params for category
   useEffect(() => {
     const categoryParam = searchParams.get("category");
     if (categoryParam) {
@@ -25,15 +61,58 @@ const AllProducts = () => {
     }
   }, [searchParams]);
 
+  // Debounced search term update
   useEffect(() => {
     const timerId = setTimeout(() => {
-      setQuery((prev) => ({ ...prev, searchTerm }));
-    }, 1000);
+      // Reset products and pagination when search term changes
+      setProducts([]);
+      setQuery((prev) => ({
+        ...prev,
+        searchTerm,
+        page: 1,
+      }));
+      setHasMore(true);
+    }, 500);
 
     return () => {
       clearTimeout(timerId);
     };
   }, [searchTerm]);
+
+  // Infinite scroll handler
+  const handleScroll = useCallback(() => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop + 1 >=
+      document.documentElement.scrollHeight - 100 && // Added buffer
+      !isLoading && 
+      hasMore
+    ) {
+      setQuery((prev) => ({
+        ...prev,
+        page: (prev.page || 1) + 1,
+      }));
+      setIsLoading(true);
+    }
+  }, [isLoading, hasMore]);
+
+  // Attach scroll event listener
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
+  // Update query when filters change
+  useEffect(() => {
+    // Reset products when filters change
+    setProducts([]);
+    setQuery((prev) => ({
+      ...prev,
+      price: priceRange,
+      category: category,
+      page: 1,
+    }));
+    setHasMore(true);
+  }, [priceRange, category]);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -46,23 +125,14 @@ const AllProducts = () => {
   const handleClearFilters = () => {
     setPriceRange("");
     setCategory("");
+    setProducts([]);
+    setQuery({ page: 1, limit: 10 });
+    setHasMore(true);
     navigate("/all-products");
   };
 
-  useEffect(() => {
-    setQuery((prev) => ({
-      ...prev,
-      price: priceRange,
-      category: category,
-    }));
-  }, [priceRange, category]);
-
-  const { data: products, isLoading } = useGetAllProductsQuery(query);
-
-  const { data: categories, isLoading: categoriesLoading } =
-    useGetAllCategoriesQuery(undefined);
-
-  if (isLoading && categoriesLoading) return <Loader/>;
+  // Loading states
+  if (categoriesLoading && productsLoading) return <Loader />;
 
   return (
     <div className="container mx-auto p-6 mb-12">
@@ -100,14 +170,19 @@ const AllProducts = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {products?.data?.data.length > 0 ? (
-          products?.data?.data.map((product: IProduct) => (
+        {products.length > 0 ? (
+          products.map((product: IProduct) => (
             <ProductCard key={product.id} product={product} />
           ))
         ) : (
           <p>No products to show...</p>
         )}
       </div>
+
+      {isLoading && <Loader />}
+      {!hasMore && products.length > 0 && (
+        <p className="text-center mt-4 text-gray-500">No more products to load</p>
+      )}
     </div>
   );
 };
