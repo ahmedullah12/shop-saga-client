@@ -12,7 +12,7 @@ type TInputProps = {
 
 const SSInput = ({width, type, name, label, disabled }: TInputProps) => {
   return (
-    <div style={{ marginBottom: "20px" }}>
+    <div>
       <Label className="text-primary">{label}</Label>
       <Controller
         name={name}

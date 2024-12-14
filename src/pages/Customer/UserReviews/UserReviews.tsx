@@ -19,13 +19,20 @@ import UpdateReviewModal from "@/components/modals/UpdateReviewModal";
 import DeleteConfirmationModal from "@/components/modals/DeleteConfirmationModal";
 import { Link } from "react-router-dom";
 import Loader from "@/components/Loader";
+import Pagination from "@/components/Pagination";
+import ReviewComment from "@/components/ReviewComment";
 
 const UserReviews = () => {
   const [selectedReview, setSelectedReview] = useState<IReview | null>(null);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const dataPerPage = 6;
 
-  const { data: reviews, isLoading } = useGetUserReviewsQuery(undefined);
+  const { data: reviews, isLoading } = useGetUserReviewsQuery({
+    page: currentPage,
+    limit: dataPerPage,
+  });
   const [deleteReview] = useDeleteReviewMutation();
 
   const renderStarRating = (rating: number) => {
@@ -57,6 +64,10 @@ const UserReviews = () => {
 
   if (isLoading) <Loader />;
 
+  const reviewsData = reviews?.data?.data;
+  const meta = reviews?.data?.meta;
+  const totalPages = Math.ceil(meta?.total / dataPerPage);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <Card>
@@ -66,7 +77,7 @@ const UserReviews = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {reviews?.data && reviews.data.length > 0 ? (
+          {reviewsData && reviewsData.length > 0 ? (
             <>
               <Table>
                 <TableHeader>
@@ -79,7 +90,7 @@ const UserReviews = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {reviews.data.map((review: IReview) => (
+                  {reviewsData.map((review: IReview) => (
                     <TableRow key={review.id}>
                       <TableCell className="font-medium hover:underline">
                         <Link to={`/products/${review.product.id}`}>
@@ -87,7 +98,9 @@ const UserReviews = () => {
                         </Link>
                       </TableCell>
                       <TableCell>{renderStarRating(review.rating)}</TableCell>
-                      <TableCell>{review.comment}</TableCell>
+                      <TableCell>
+                        <ReviewComment comment={review.comment} />
+                      </TableCell>
                       <TableCell>
                         {new Date(review.createdAt).toLocaleDateString()}
                       </TableCell>
@@ -137,6 +150,14 @@ const UserReviews = () => {
           )}
         </CardContent>
       </Card>
+
+      {meta?.total > dataPerPage && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
+      )}
     </div>
   );
 };

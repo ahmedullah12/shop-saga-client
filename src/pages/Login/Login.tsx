@@ -57,7 +57,8 @@ const Login = () => {
           </h1>
 
           <SSForm onSubmit={onSubmit} isSuccess={isSuccess}>
-            <SSInput
+           <div className="space-y-5">
+           <SSInput
               width="max-w-[300px]"
               name="email"
               type="text"
@@ -69,7 +70,15 @@ const Login = () => {
               type="password"
               label="Password"
             />
-            <Button disabled={isLoading} type="submit" className="bg-primary">
+           </div>
+
+            <Link to={"/forgot-password"}>
+              <small className="text-xs hover:underline">
+                Forgot Password?
+              </small>
+            </Link>
+
+            <Button disabled={isLoading} type="submit" className="bg-primary block mt-4">
               {isLoading ? "Logging" : "Login"}
             </Button>
           </SSForm>

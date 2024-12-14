@@ -22,6 +22,8 @@ import UpdateProduct from "@/pages/Vendor/UpdateProduct/UpdateProduct";
 import ShopProductsReviews from "@/pages/Vendor/Reviews/ShopProductsReviews";
 import ShopOrderHistory from "@/pages/Vendor/ShopOrderHistory/ShopOrderHistory";
 import ShopPage from "@/pages/Shop/ShopPage";
+import ForgetPassword from "@/pages/ForgetPassword/ForgetPassword";
+import ResetPassword from "@/pages/ResetPassword/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -99,6 +101,14 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgetPassword />,
+      },
+      {
+        path: "/reset-password",
+        element: <ResetPassword />,
       },
     ],
   },

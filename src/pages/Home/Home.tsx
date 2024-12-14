@@ -1,3 +1,4 @@
+import ScrollToTop from "@/components/ScrollToTop";
 import AllProducts from "./AllProducts";
 import Banner from "./Banner";
 import Categories from "./Categories";
@@ -7,6 +8,7 @@ const Home = () => {
   
   return (
     <div>
+      <ScrollToTop/>
       <Banner/>
       <Categories/>
       <FlashSaleProducts/>

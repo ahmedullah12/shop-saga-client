@@ -11,10 +11,18 @@ const productReviewApi = baseApi.injectEndpoints({
       invalidatesTags: ["Reviews"],
     }),
     getUserReviews: builder.query({
-      query: () => ({
-        url: "/review/user-reviews",
-        method: "GET",
-      }),
+      query: ({limit, page}) => {
+        const params = new URLSearchParams();
+
+        if(page) params.append("page", page);
+        if(limit) params.append("limit", limit);
+
+
+        return {
+          url: `/review/user-reviews?${params.toString()}`,
+          method: "GET",
+        }
+      },
       providesTags: ["Reviews"],
     }),
     getShopProductsReviews: builder.query({
