@@ -7,8 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Link } from "react-router-dom";
-import { addToCart, replaceCartWithNewProduct, retainCurrentCart } from "@/redux/features/cart/cartSlice";
+import { Link, useLocation } from "react-router-dom";
+import {
+  addToCart,
+  replaceCartWithNewProduct,
+  retainCurrentCart,
+} from "@/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import WarningModal from "../modals/WarningModal";
 import toast from "react-hot-toast";
@@ -17,8 +21,10 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   const dispatch = useAppDispatch();
   const warning = useAppSelector((state) => state.cart.warning);
 
+  const location = useLocation();
+
   const handleAddToCart = (product: IProduct) => {
-    toast.success("Product added to cart!!")
+    toast.success("Product added to cart!!");
     dispatch(addToCart(product));
   };
 
@@ -31,7 +37,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   };
   return (
     <>
-      <Card className="w-full max-w-sm mx-auto relative">
+      <Card className="w-full max-w-sm mx-auto relative flex flex-col">
         {product.isFlashSale && (
           <div className="absolute top-2 right-2 bg-secondary text-white text-xs font-semibold px-2 py-1 rounded z-20">
             Flash Sale
@@ -44,12 +50,12 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             className="w-full h-40 object-cover rounded-t-md"
           />
         </CardHeader>
-        <CardContent className="p-4">
-          <CardTitle className="text-lg font-semibold">
+        <CardContent className="p-4 flex flex-col flex-grow">
+          <CardTitle className="text-lg font-semibold min-h-[48px]">
             {product.name}
           </CardTitle>
           <p className="text-sm text-muted-foreground mt-1">
-            {product.description}
+            {product.description.slice(0, 50) + "..."}
           </p>
           <div className="flex items-center justify-between mt-4">
             <p className="text-xl font-bold text-primary">
@@ -65,17 +71,24 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             )}
           </div>
         </CardContent>
-        <CardFooter className="flex justify-between items-center p-4">
+        <CardFooter className="flex justify-between items-center p-4 mt-auto">
           <Link to={`/products/${product.id}`}>
             <Button variant="outline" size="sm">
               View Details
             </Button>
           </Link>
-          <Button onClick={() => handleAddToCart(product)} variant="default" size="sm">
-            Add to Cart
-          </Button>
+          {location.pathname !== "/dashboard/vendor/shop" && (
+            <Button
+              onClick={() => handleAddToCart(product)}
+              variant="default"
+              size="sm"
+            >
+              Add to Cart
+            </Button>
+          )}
         </CardFooter>
       </Card>
+
       {warning && (
         <WarningModal
           isOpen={!!warning}

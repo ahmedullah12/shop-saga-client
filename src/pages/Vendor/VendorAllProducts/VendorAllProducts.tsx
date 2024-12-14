@@ -45,7 +45,7 @@ const VendorAllProducts = () => {
     null
   );
   const [currentPage, setCurrentPage] = useState(1);
-  const dataPerPage = 8;
+  const dataPerPage = 6;
 
   const { data: shopData, isLoading } = useGetUserShopQuery(undefined);
 
@@ -83,7 +83,7 @@ const VendorAllProducts = () => {
     navigate(`/dashboard/vendor/update-product/${product.id}`);
   };
 
-  if (isLoading && productsLoading) return <Loader />;
+  if (isLoading || productsLoading) return <Loader />;
 
   const products = productsData?.data?.data || [];
   const meta = productsData?.data?.meta;
@@ -147,7 +147,7 @@ const VendorAllProducts = () => {
                 <TableCell>{product.inventoryCount}</TableCell>
                 <TableCell>
                   <Badge
-                    variant={product.isFlashSale ? "destructive" : "secondary"}
+                    variant={product.isFlashSale ? "destructive" : "default"}
                   >
                     {product.isFlashSale ? "Flash Sale" : "Regular"}
                   </Badge>

@@ -1,3 +1,4 @@
+import Loader from "@/components/Loader";
 import ProductCard from "@/components/product/ProductCard";
 import { Button } from "@/components/ui/button";
 import { useGetFlashSaleProductsQuery } from "@/redux/features/product/productApi";
@@ -5,10 +6,11 @@ import { IProduct } from "@/types/global";
 import { Link } from "react-router-dom";
 
 const FlashSaleProducts = () => {
-  const { data: products, isLoading } = useGetFlashSaleProductsQuery({limit: "4"});
-  console.log(products);
-  
-  if (isLoading) return <p>Loading...</p>;
+  const { data: products, isLoading } = useGetFlashSaleProductsQuery({
+    limit: 4,
+  });
+
+  if (isLoading) return <Loader />;
   return (
     <div className="container mx-auto p-6 mb-12">
       <h1 className="text-2xl md:text-3xl font-bold mb-8 text-secondary">
@@ -24,7 +26,7 @@ const FlashSaleProducts = () => {
 
       <div className="flex justify-center mt-5">
         <Link to={"/flash-sale-products"}>
-          <Button size={"default"}>All Products</Button>
+          <Button size={"default"}>All Flash Sale</Button>
         </Link>
       </div>
     </div>

@@ -9,6 +9,7 @@ import UpdateShopModal from "@/components/modals/UpdateShopModal";
 import { Link } from "react-router-dom";
 import { IProduct } from "@/types/global";
 import ProductCard from "@/components/product/ProductCard";
+import Loader from "@/components/Loader";
 
 const Shop = () => {
   const [isCreateShopModalOpen, setIsCreateShopModalOpen] = useState(false);
@@ -16,7 +17,7 @@ const Shop = () => {
 
   const { data: shopData, isLoading } = useGetUserShopQuery(undefined);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loader/>;
 
   if (!shopData?.data) {
     return (
@@ -87,7 +88,7 @@ const Shop = () => {
             No products added yet. Click "Add Product" to get started.
           </p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {shopData?.data?.products?.map((product: IProduct) => (
               <ProductCard key={product.id} product={product} />
             ))}

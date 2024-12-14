@@ -21,6 +21,7 @@ import VendorAllProducts from "@/pages/Vendor/VendorAllProducts/VendorAllProduct
 import UpdateProduct from "@/pages/Vendor/UpdateProduct/UpdateProduct";
 import ShopProductsReviews from "@/pages/Vendor/Reviews/ShopProductsReviews";
 import ShopOrderHistory from "@/pages/Vendor/ShopOrderHistory/ShopOrderHistory";
+import ShopPage from "@/pages/Shop/ShopPage";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/shop/:id",
+        element: <ShopPage />,
       },
       {
         path: "/recent-products",
@@ -103,27 +108,51 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard/vendor/shop",
-        element: <Shop />,
+        element: (
+          <ProtectedRoute role={UserRole.VENDOR}>
+            <Shop />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/vendor/products",
-        element: <VendorAllProducts />,
+        element: (
+          <ProtectedRoute role={UserRole.VENDOR}>
+            <VendorAllProducts />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/vendor/products-reviews",
-        element: <ShopProductsReviews />,
+        element: (
+          <ProtectedRoute role={UserRole.VENDOR}>
+            <ShopProductsReviews />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/vendor/shop-orders",
-        element: <ShopOrderHistory />,
+        element: (
+          <ProtectedRoute role={UserRole.VENDOR}>
+            <ShopOrderHistory />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/vendor/add-product",
-        element: <AddProduct />,
+        element: (
+          <ProtectedRoute role={UserRole.VENDOR}>
+            <AddProduct />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/vendor/update-product/:id",
-        element: <UpdateProduct />,
+        element: (
+          <ProtectedRoute role={UserRole.VENDOR}>
+            <UpdateProduct />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

@@ -8,7 +8,14 @@ const userApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    followShop: builder.mutation({
+      query: (shopId) => ({
+        url: `/user/follow-shop/${shopId}`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["Users", "Shops"]
+    })
   }),
 });
 
-export const { useGetUserWithEmailQuery } = userApi;
+export const { useGetUserWithEmailQuery, useFollowShopMutation } = userApi;

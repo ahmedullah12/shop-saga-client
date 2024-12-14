@@ -14,6 +14,7 @@ import {
 import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
 import { ICategory } from "@/types/global";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import Loader from "@/components/Loader";
 
 const UpdateProduct = () => {
   const { id } = useParams();
@@ -74,13 +75,7 @@ const UpdateProduct = () => {
     }
   };
 
-  if (productLoading || !initialFormData) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
+  if (productLoading || !initialFormData) <Loader />;
 
   return (
     <div className="container px-4">

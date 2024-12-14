@@ -7,6 +7,7 @@ import { useGetAllProductsQuery } from "@/redux/features/product/productApi";
 import { IProduct } from "@/types/global";
 import { FilterIcon } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
+import Loader from "@/components/Loader";
 
 const AllProducts = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -61,7 +62,7 @@ const AllProducts = () => {
   const { data: categories, isLoading: categoriesLoading } =
     useGetAllCategoriesQuery(undefined);
 
-  if (isLoading && categoriesLoading) return <p>Loading...</p>;
+  if (isLoading && categoriesLoading) return <Loader/>;
 
   return (
     <div className="container mx-auto p-6 mb-12">

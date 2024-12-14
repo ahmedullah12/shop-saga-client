@@ -18,6 +18,7 @@ import { IReview } from "@/types/global";
 import UpdateReviewModal from "@/components/modals/UpdateReviewModal";
 import DeleteConfirmationModal from "@/components/modals/DeleteConfirmationModal";
 import { Link } from "react-router-dom";
+import Loader from "@/components/Loader";
 
 const UserReviews = () => {
   const [selectedReview, setSelectedReview] = useState<IReview | null>(null);
@@ -25,7 +26,6 @@ const UserReviews = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const { data: reviews, isLoading } = useGetUserReviewsQuery(undefined);
-  console.log(reviews);
   const [deleteReview] = useDeleteReviewMutation();
 
   const renderStarRating = (rating: number) => {
@@ -55,13 +55,7 @@ const UserReviews = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-primary"></div>
-      </div>
-    );
-  }
+  if (isLoading) <Loader />;
 
   return (
     <div className="container mx-auto px-4 py-8">

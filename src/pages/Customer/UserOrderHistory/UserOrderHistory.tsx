@@ -12,13 +12,14 @@ import { useGetUserPaymentsQuery } from "@/redux/features/payment/paymentApi";
 import { IPayment, IPaymentProduct } from "@/types/global";
 import formatDate from "@/utils/formatDate";
 import CreateReviewModal from "@/components/modals/CreateReviewModal";
+import Loader from "@/components/Loader";
 
 const trimText = (text: string, maxLength: number = 20) => {
   return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
 };
 
 const UserOrderHistory = () => {
-  const { data: payments } = useGetUserPaymentsQuery(undefined);
+  const { data: payments, isLoading } = useGetUserPaymentsQuery(undefined);
 
   const showProductDetails = (products: IPaymentProduct[]) => {
     return products.map((product) => (
@@ -41,6 +42,8 @@ const UserOrderHistory = () => {
       </div>
     ));
   };
+
+  if (isLoading) return <Loader />;
 
   return (
     <Card className="w-full max-w-6xl mx-auto mt-6">

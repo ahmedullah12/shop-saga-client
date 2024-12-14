@@ -19,13 +19,11 @@ const Checkout = () => {
   console.log(cart);
 
   const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
-    // Validate payment method
     if (!paymentMethod) {
       alert("Please select a payment method");
       return;
     }
 
-    // Add payment method to form data
     const submitData = {
       ...data,
       totalPrice,

@@ -20,6 +20,7 @@ import WarningModal from "@/components/modals/WarningModal";
 import toast from "react-hot-toast";
 import { addViewedProduct } from "@/redux/features/recent-product/recentProductsSlice";
 import { useEffect } from "react";
+import Loader from "@/components/Loader";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -60,13 +61,6 @@ const ProductDetails = () => {
     }
   }, [dispatch, product]);
 
-  if (isLoading && relatedProductsLoading)
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-primary"></div>
-      </div>
-    );
-
   const starRating = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
       <Star
@@ -77,6 +71,9 @@ const ProductDetails = () => {
       />
     ));
   };
+
+  if (isLoading && relatedProductsLoading) return <Loader />;
+
   return (
     <div className="bg-background py-10 md:py-20">
       <div className="container mx-auto px-4 md:px-6">

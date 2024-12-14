@@ -18,10 +18,18 @@ const productReviewApi = baseApi.injectEndpoints({
       providesTags: ["Reviews"],
     }),
     getShopProductsReviews: builder.query({
-      query: ({shopId}) => ({
-        url: `/review/shop-product-reviews?shopId=${shopId}`,
-        method: "GET",
-      }),
+      query: ({shopId, limit, page}) => {
+        const params = new URLSearchParams();
+
+        if(shopId) params.append("shopId", shopId)
+        if(limit) params.append("limit", limit)
+        if(page) params.append("page", page)
+
+        return {
+          url: `/review/shop-product-reviews?${params.toString()}`,
+          method: "GET",
+        }
+      },
     }),
     updateReview: builder.mutation({
       query: ({ payload, id }) => ({

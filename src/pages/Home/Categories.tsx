@@ -1,24 +1,17 @@
 import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
 import { useNavigate } from "react-router-dom";
-import { PackageOpen } from "lucide-react";
+import Loader from "@/components/Loader";
 
 const Categories = () => {
   const { data: categories, isLoading } = useGetAllCategoriesQuery(undefined);
   const navigate = useNavigate();
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin">
-          <PackageOpen size={48} className="text-orange-400" />
-        </div>
-      </div>
-    );
-  }
-
+  
   const handleCategoryClick = (categoryId: string) => {
     navigate(`/all-products?category=${categoryId}`);
   };
+  
+  if (isLoading) return <Loader/>
 
   return (
     <div className="container mx-auto p-6 mb-12">

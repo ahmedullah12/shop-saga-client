@@ -1,30 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { Menu, X, Home } from "lucide-react";
-
-const sidebarOptions = [
-  {
-    title: "Shop",
-    route: "shop",
-  },
-  {
-    title: "Products",
-    route: "products",
-  },
-  {
-    title: "Reviews & Ratings",
-    route: "products-reviews",
-  },
-  {
-    title: "Order History",
-    route: "shop-orders",
-  },
-];
+import { adminSideBarOptions, vendorSideBarOptions } from "@/utils/constants";
+import { useAppSelector } from "@/redux/hooks";
+import { useCurrentUser } from "@/redux/features/auth/authApi";
 
 const DashboardLayout: React.FC = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+
+  const user = useAppSelector(useCurrentUser);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -100,19 +86,33 @@ const DashboardLayout: React.FC = () => {
             </p>
           </div>
           <div className="px-4 flex-grow">
-            {sidebarOptions.map((option) => (
-              <Link
-                className={`block px-4 py-2 rounded-md ${
-                  location.pathname === `/dashboard/vendor/${option.route}`
-                    ? "bg-primary text-white"
-                    : ""
-                }`}
-                key={option.title}
-                to={`/dashboard/vendor/${option.route}`}
-              >
-                {option.title}
-              </Link>
-            ))}
+            {user?.role === "VENDOR"
+              ? vendorSideBarOptions.map((option) => (
+                  <Link
+                    className={`block px-4 py-2 rounded-md ${
+                      location.pathname === `/dashboard/vendor/${option.route}`
+                        ? "bg-primary text-white"
+                        : ""
+                    }`}
+                    key={option.title}
+                    to={`/dashboard/vendor/${option.route}`}
+                  >
+                    {option.title}
+                  </Link>
+                ))
+              : adminSideBarOptions.map((option) => (
+                  <Link
+                    className={`block px-4 py-2 rounded-md ${
+                      location.pathname === `/dashboard/vendor/${option.route}`
+                        ? "bg-primary text-white"
+                        : ""
+                    }`}
+                    key={option.title}
+                    to={`/dashboard/vendor/${option.route}`}
+                  >
+                    {option.title}
+                  </Link>
+                ))}
           </div>
         </div>
         <div className="p-4">
