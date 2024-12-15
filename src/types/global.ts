@@ -48,6 +48,8 @@ export interface IShop {
   status: string;
   createdAt: string;
   updatedAt: string;
+  vendor: IUserData
+  products?: IProduct[]
 }
 
 export interface IProductCategory {

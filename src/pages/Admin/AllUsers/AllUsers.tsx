@@ -34,8 +34,6 @@ const AllUsers = () => {
   const [deleteUser] = useDeleteUserMutation();
   const [suspendUser] = useSuspendUserMutation();
 
-  console.log(usersData);
-
   const handleOpenDeleteModal = (user: IUserData) => {
     setSelectedUser(user);
     setIsDeleteModalOpen(true);

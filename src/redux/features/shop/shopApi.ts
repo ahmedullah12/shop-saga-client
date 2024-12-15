@@ -10,6 +10,20 @@ const shopApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Users", "Shops"],
     }),
+    getAllShop: builder.query({
+      query: ({ limit, page }) => {
+        const params = new URLSearchParams();
+
+        if (limit) params.append("limit", limit);
+        if (page) params.append("page", page);
+
+        return {
+          url: `/shop?${params.toString()}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["Shops"]
+    }),
     getUserShop: builder.query({
       query: () => ({
         url: "/shop/user-shop",
@@ -32,12 +46,21 @@ const shopApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Shops"],
     }),
+    blacklistShop: builder.mutation({
+      query: (shopId) => ({
+        url: `/shop/blacklist-shop/${shopId}`,
+        method: "PUT",
+      }),
+      invalidatesTags: ["Shops"]
+    }),
   }),
 });
 
 export const {
   useCreateShopMutation,
+  useGetAllShopQuery,
   useGetUserShopQuery,
   useGetSingleShopQuery,
   useUpdateShopMutation,
+  useBlacklistShopMutation
 } = shopApi;

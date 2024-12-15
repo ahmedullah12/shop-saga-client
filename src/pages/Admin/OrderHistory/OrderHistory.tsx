@@ -46,8 +46,6 @@ const OrderHistory = () => {
     limit: dataPerPage,
   });
 
-  console.log(ordersData);
-
   if (isLoading) return <Loader />;
 
   const orders = ordersData?.data?.data;
