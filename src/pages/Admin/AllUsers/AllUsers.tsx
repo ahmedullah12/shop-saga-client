@@ -1,6 +1,10 @@
 import Loader from "@/components/Loader";
 import Pagination from "@/components/Pagination";
-import { useDeleteUserMutation, useGetAllUsersQuery } from "@/redux/features/user/userApi";
+import {
+  useDeleteUserMutation,
+  useGetAllUsersQuery,
+  useSuspendUserMutation,
+} from "@/redux/features/user/userApi";
 import { useState } from "react";
 import {
   Table,
@@ -14,6 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { IUserData } from "@/types/global";
 import { Button } from "@/components/ui/button";
 import DeleteConfirmationModal from "@/components/modals/DeleteConfirmationModal";
+import toast from "react-hot-toast";
 
 const AllUsers = () => {
   const [selectedUser, setSelectedUser] = useState<IUserData | null>(null);
@@ -27,6 +32,7 @@ const AllUsers = () => {
   });
 
   const [deleteUser] = useDeleteUserMutation();
+  const [suspendUser] = useSuspendUserMutation();
 
   console.log(usersData);
 
@@ -35,10 +41,17 @@ const AllUsers = () => {
     setIsDeleteModalOpen(true);
   };
 
-
   const handleDeleteUser = async () => {
     if (selectedUser) {
       return deleteUser(selectedUser.id).unwrap();
+    }
+  };
+
+  const handleSuspendUser = async (userId: string) => {
+    const res = await suspendUser(userId).unwrap();
+
+    if (res.success === true) {
+      toast.success(res.data.message);
     }
   };
 
@@ -75,7 +88,13 @@ const AllUsers = () => {
                   <TableCell>{user.role}</TableCell>
                   <TableCell>{user.status}</TableCell>
                   <TableCell className="space-x-3">
-                    <Button disabled={user.status === "DELETED"} size={"sm"}>Suspend</Button>
+                    <Button
+                      onClick={() => handleSuspendUser(user.id)}
+                      disabled={user.status === "DELETED"}
+                      size={"sm"}
+                    >
+                      {user.status === "SUSPENDED" ? "Reactivate" : "Suspend"}
+                    </Button>
                     <Button
                       size={"sm"}
                       variant={"destructive"}

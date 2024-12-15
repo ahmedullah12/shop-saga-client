@@ -108,7 +108,7 @@ const DashboardLayout: React.FC = () => {
                         : ""
                     }`}
                     key={option.title}
-                    to={`/dashboard/vendor/${option.route}`}
+                    to={`/dashboard/admin/${option.route}`}
                   >
                     {option.title}
                   </Link>

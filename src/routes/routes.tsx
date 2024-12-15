@@ -25,6 +25,7 @@ import ShopPage from "@/pages/Shop/ShopPage";
 import ForgetPassword from "@/pages/ForgetPassword/ForgetPassword";
 import ResetPassword from "@/pages/ResetPassword/ResetPassword";
 import AllUsers from "@/pages/Admin/AllUsers/AllUsers";
+import OrderHistory from "@/pages/Admin/OrderHistory/OrderHistory";
 
 const router = createBrowserRouter([
   {
@@ -168,6 +169,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/admin/all-users",
         element: <AllUsers />,
+      },
+      {
+        path: "/dashboard/admin/orders-history",
+        element: <OrderHistory />,
       },
     ],
   },
