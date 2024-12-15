@@ -59,6 +59,8 @@ export interface IProductCategory {
 export interface ICategory {
   id: string;
   name: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IPayment {

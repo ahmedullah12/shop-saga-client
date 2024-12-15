@@ -26,6 +26,8 @@ import ForgetPassword from "@/pages/ForgetPassword/ForgetPassword";
 import ResetPassword from "@/pages/ResetPassword/ResetPassword";
 import AllUsers from "@/pages/Admin/AllUsers/AllUsers";
 import OrderHistory from "@/pages/Admin/OrderHistory/OrderHistory";
+import Categories from "@/pages/Admin/Categories/Categories";
+import AllShops from "@/pages/Admin/AllShops/AllShops";
 
 const router = createBrowserRouter([
   {
@@ -173,6 +175,14 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/admin/orders-history",
         element: <OrderHistory />,
+      },
+      {
+        path: "/dashboard/admin/products-categories",
+        element: <Categories />,
+      },
+      {
+        path: "/dashboard/admin/shops",
+        element: <AllShops />,
       },
     ],
   },

@@ -19,7 +19,7 @@ const Categories = () => {
         Product Categories
       </h1>
       <div className="flex flex-wrap gap-4 justify-center items-center">
-        {categories?.data.map((category: { id: string; name: string }) => (
+        {categories?.data?.data?.map((category: { id: string; name: string }) => (
           <div
             key={category.id}
             className="
