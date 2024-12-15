@@ -26,7 +26,7 @@ const Categories = () => {
   const dataPerPage = 6;
 
   const { data: categoriesData, isLoading } =
-    useGetAllCategoriesQuery(undefined);
+    useGetAllCategoriesQuery({limit: dataPerPage, page: currentPage});
 
     const [deleteCategory] = useDeleteCategoryMutation();
 
@@ -74,7 +74,7 @@ const Categories = () => {
                 <TableCell className="font-medium">{category.name}</TableCell>
 
                 <TableCell>{formatDate(category.createdAt)}</TableCell>
-                <TableCell className="space-x-4">
+                <TableCell className="md:space-x-4">
                   <UpdateCategoryModal category={category} />
                   <Button
                     size={"sm"}

@@ -24,6 +24,7 @@ const CreateCategoryModal = () => {
         const res = await createCategory({ name: category }).unwrap();
         if(res.success === true){
           toast.success(res.message);
+          setCategory("")
           setIsOpen(false)
         }
       }

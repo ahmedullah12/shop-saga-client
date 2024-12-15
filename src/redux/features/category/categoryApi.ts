@@ -3,10 +3,17 @@ import { baseApi } from "@/redux/api/baseApi";
 const categoryApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllCategories: builder.query({
-      query: () => ({
-        url: "/category",
-        method: "GET",
-      }),
+      query: ({page, limit}) => {
+        const params = new URLSearchParams();
+
+        if(page) params.append("page", page)
+        if(limit) params.append("limit", limit)
+
+        return {
+          url: `/category?${params.toString()}`,
+          method: "GET",
+        }
+      },
       providesTags: ["Categories"]
     }),
     createCategory: builder.mutation({
