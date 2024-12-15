@@ -79,7 +79,7 @@ const Login = () => {
             </Link>
 
             <Button disabled={isLoading} type="submit" className="bg-primary block mt-4">
-              {isLoading ? "Logging" : "Login"}
+              {isLoading ? "Logging In" : "Login"}
             </Button>
           </SSForm>
 

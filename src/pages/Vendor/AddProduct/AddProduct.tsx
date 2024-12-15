@@ -12,6 +12,7 @@ import MultiImageUpload from "@/components/MultiImageUpload";
 import toast from "react-hot-toast";
 import { useCreateProductMutation } from "@/redux/features/product/productApi";
 import { useNavigate } from "react-router-dom";
+import Loader from "@/components/Loader";
 
 const AddProduct = () => {
   const [isFlashSale, setIsFlashSale] = useState(false);
@@ -25,7 +26,7 @@ const AddProduct = () => {
   const [createProduct, {isLoading: createProductLoading}] = useCreateProductMutation();
 
   const categoryOptions =
-    categories?.data?.map((category: ICategory) => ({
+    categories?.data?.data?.map((category: ICategory) => ({
       value: category.id,
       label: category.name,
     })) || [];
@@ -65,12 +66,13 @@ const AddProduct = () => {
     formData.append("data", JSON.stringify(productData));
 
     const res = await createProduct(formData).unwrap();
-    console.log(res);
     if (res.success === true) {
       toast.success(res.message);
       navigate("/dashboard/vendor/products");
     }
   };
+
+  if(categoriesLoading) return <Loader/>
 
   return (
     <div className="container px-4">
@@ -81,7 +83,7 @@ const AddProduct = () => {
 
         <SSForm onSubmit={handleSubmit}>
           <div className="space-y-4">
-            <div className="grid grid-cols-2">
+            <div className="grid md:grid-cols-2">
               <SSInput
                 name="name"
                 type="text"
@@ -97,7 +99,7 @@ const AddProduct = () => {
               />
             </div>
 
-            <div className="grid grid-cols-2">
+            <div className="grid md:grid-cols-2">
               <SSInput
                 name="inventoryCount"
                 type="number"

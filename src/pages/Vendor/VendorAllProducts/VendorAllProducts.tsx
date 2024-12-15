@@ -48,6 +48,7 @@ const VendorAllProducts = () => {
   const dataPerPage = 6;
 
   const { data: shopData, isLoading } = useGetUserShopQuery(undefined);
+  console.log(shopData);
 
   const { data: productsData, isLoading: productsLoading } =
     useGetVendorProductsQuery({
@@ -93,7 +94,13 @@ const VendorAllProducts = () => {
     <div className="w-full p-6 bg-white shadow-sm rounded-lg">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800">My Products</h2>
-        <Link to="/dashboard/vendor/add-product">
+        <Link
+          to={
+            shopData
+              ? "/dashboard/vendor/add-product"
+              : "/dashboard/vendor/shop"
+          }
+        >
           <Button size={"sm"} variant="default">
             Add Product
           </Button>

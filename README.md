@@ -1,50 +1,45 @@
-# React + TypeScript + Vite
+# Shop Saga
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+The E-Commerce platform designed to streamline and automate the processes for vendors to create, manage, and update their shops. The Customers can see various products and order products. Administrators can control and monitor the full system
 
-Currently, two official plugins are available:
+## Live URL
+client-side: https://shop-sagaa.netlify.app
+server-side: https://assignment-9-server-kappa.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies
+- React
+- TypeScript
+- Tailwind CSS
+- Shadcn
+- React Router Dom
+- React Redux
+- Redux Toolkit
+- RTK Query
+- React Hook Form
+- React Hot Toast
+- React Icons
+- React Select
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Installation Guideline
 
-- Configure the top-level `parserOptions` property like this:
+Instructions on how to install, configure, and get the project running locally.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Prerequisites
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- you have to add yarn or npm install to install the packages
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Installation Steps
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+1. First open the terminal of the project, write yarn or npm install
+2. To start the project, write yarn dev or npm run dev
+
+## Key Features
+- Redux State Management
+- Role Based Access
+- Vendor Shop and Products Creation
+- Products searching and filtering
+- Customer add to cart, order, review add
+- Customer and Vendor shop orders history
+- Comprehensive Error handling

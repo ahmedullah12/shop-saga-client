@@ -15,7 +15,6 @@ export default function Navbar() {
 
   const user = useAppSelector(useCurrentUser);
 
-  
   const { data: userData } = useGetUserWithEmailQuery(user?.email);
 
   const mobileNavVariants = {
@@ -130,24 +129,28 @@ export default function Navbar() {
             ))}
           </ul>
           <div className="mt-1 px-4 pb-2 relative">
-            <div>
-              <NavLink
-                className="px-3 mb-4 pt-1 flex items-center gap-x-3 text-primary hover:text-secondary transition-all duration-700 ease-in-out rounded"
-                to="/login"
-                onClick={handleMenuItemClick}
-              >
-                <BiLogIn size={18} color="#674188" />
-                Login
-              </NavLink>
-              <NavLink
-                className="px-3 flex items-center gap-x-3 text-primary hover:text-secondary transition-all duration-700 ease-in-out rounded"
-                to="/register"
-                onClick={handleMenuItemClick}
-              >
-                <HiOutlineLogin size={18} color="#674188" />
-                Register
-              </NavLink>
-            </div>
+            {userData?.data ? (
+              <UserDropdown user={userData.data} />
+            ) : (
+              <div>
+                <NavLink
+                  className="px-3 mb-4 pt-1 flex items-center gap-x-3 text-primary hover:text-secondary transition-all duration-700 ease-in-out rounded"
+                  to="/login"
+                  onClick={handleMenuItemClick}
+                >
+                  <BiLogIn size={18} color="#674188" />
+                  Login
+                </NavLink>
+                <NavLink
+                  className="px-3 flex items-center gap-x-3 text-primary hover:text-secondary transition-all duration-700 ease-in-out rounded"
+                  to="/register"
+                  onClick={handleMenuItemClick}
+                >
+                  <HiOutlineLogin size={18} color="#674188" />
+                  Register
+                </NavLink>
+              </div>
+            )}
           </div>
         </motion.div>
       </div>
