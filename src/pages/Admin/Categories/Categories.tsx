@@ -10,25 +10,42 @@ import { useState } from "react";
 import Loader from "@/components/Loader";
 import Pagination from "@/components/Pagination";
 import { Button } from "@/components/ui/button";
-import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
+import { useDeleteCategoryMutation, useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
 import { ICategory } from "@/types/global";
 import formatDate from "@/utils/formatDate";
 import CreateCategoryModal from "@/components/modals/CreateCategoryModal";
+import UpdateCategoryModal from "@/components/modals/UpdateCategoryModal";
+import DeleteConfirmationModal from "@/components/modals/DeleteConfirmationModal";
 
 const Categories = () => {
+  const [selectedCategory, setSelectedCategory] = useState<ICategory | null>(
+    null
+  );
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const dataPerPage = 6;
 
   const { data: categoriesData, isLoading } =
     useGetAllCategoriesQuery(undefined);
 
+    const [deleteCategory] = useDeleteCategoryMutation();
+
+  const handleOpenDeleteModal = (category: ICategory) => {
+    setSelectedCategory(category);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteCategory = async () => {
+    if (selectedCategory) {
+      return deleteCategory(selectedCategory.id).unwrap();
+    }
+  };
+
   if (isLoading) return <Loader />;
 
   const categories = categoriesData?.data?.data || [];
   const meta = categoriesData?.data?.meta;
   const totalPages = Math.ceil(meta?.total / dataPerPage);
-
-  console.log(categories);
 
   return (
     <div className="w-full p-6 bg-white shadow-sm rounded-lg">
@@ -48,7 +65,7 @@ const Categories = () => {
             <TableRow>
               <TableHead>Name</TableHead>
               <TableHead>Created At</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -58,14 +75,28 @@ const Categories = () => {
 
                 <TableCell>{formatDate(category.createdAt)}</TableCell>
                 <TableCell className="space-x-4">
-                  <Button size={"sm"}>Edit</Button>
-                  <Button size={"sm"} variant={"destructive"}>Delete</Button>
+                  <UpdateCategoryModal category={category} />
+                  <Button
+                    size={"sm"}
+                    variant={"destructive"}
+                    onClick={() => handleOpenDeleteModal(category)}
+                  >
+                    Delete
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       )}
+
+      <DeleteConfirmationModal
+        isOpen={isDeleteModalOpen}
+        onOpenChange={setIsDeleteModalOpen}
+        onDelete={handleDeleteCategory}
+        title="Delete User"
+        description="Are you sure you want to delete this category?"
+      />
 
       {meta?.total > dataPerPage && (
         <Pagination

@@ -119,7 +119,7 @@ const AllUsers = () => {
 
           {(!users || users.length === 0) && (
             <div className="text-center text-gray-500 py-4">
-              No order history found.
+              No users found.
             </div>
           )}
         </CardContent>
