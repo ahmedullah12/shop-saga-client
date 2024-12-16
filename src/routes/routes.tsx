@@ -170,19 +170,35 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/admin/all-users",
-        element: <AllUsers />,
+        element: (
+          <ProtectedRoute role={UserRole.ADMIN}>
+            <AllUsers />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/admin/orders-history",
-        element: <OrderHistory />,
+        element: (
+          <ProtectedRoute role={UserRole.ADMIN}>
+            <OrderHistory />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/admin/products-categories",
-        element: <Categories />,
+        element: (
+          <ProtectedRoute role={UserRole.ADMIN}>
+            <Categories />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/admin/shops",
-        element: <AllShops />,
+        element: (
+          <ProtectedRoute role={UserRole.ADMIN}>
+            <AllShops />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

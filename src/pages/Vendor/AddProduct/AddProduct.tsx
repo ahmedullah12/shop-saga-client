@@ -21,7 +21,7 @@ const AddProduct = () => {
   const navigate = useNavigate();
 
   const { data: categories, isLoading: categoriesLoading } =
-    useGetAllCategoriesQuery(undefined);
+    useGetAllCategoriesQuery({});
 
   const [createProduct, {isLoading: createProductLoading}] = useCreateProductMutation();
 
@@ -65,10 +65,15 @@ const AddProduct = () => {
     }
     formData.append("data", JSON.stringify(productData));
 
-    const res = await createProduct(formData).unwrap();
+    try{
+      const res = await createProduct(formData).unwrap();
     if (res.success === true) {
       toast.success(res.message);
       navigate("/dashboard/vendor/products");
+    }
+    }catch(err: any){
+      console.log(err);
+      toast.error(err.data.message)
     }
   };
 

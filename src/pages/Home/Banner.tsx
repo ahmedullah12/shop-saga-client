@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export default function Banner() {
   return (
@@ -11,9 +12,10 @@ export default function Banner() {
           Discover a world of quality products, seamless shopping, and
           unbeatable deals.
         </p>
+        <Link to="/all-products">
         <Button className="bg-primary text-white hover:bg-gray-200 hover:bg-secondary">
           Start Shopping
-        </Button>
+        </Button></Link>
       </div>
     </div>
   );

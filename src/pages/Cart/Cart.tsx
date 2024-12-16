@@ -6,6 +6,7 @@ import {
   removeFromCart,
 } from "@/redux/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { UserRole } from "@/utils/constants";
 import { Minus, Plus } from "lucide-react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -32,6 +33,10 @@ const Cart = () => {
   };
 
   const handleNavigateCheckout = () => {
+    if(user && (user.role !== UserRole.CUSTOMER)){
+      return toast.error("You need a customer account to proceed!!")
+    }
+    
     if (user) {
       return navigate("/checkout");
     }
@@ -42,8 +47,8 @@ const Cart = () => {
   return (
     <div className="md:container px-4 min-h-screen">
       {cart.length === 0 ? (
-        <div className="min-h-screen flex justify-center items-center">
-          <p className="text-xl md:text-2xl font-bold text-center">
+        <div className="min-h-screen flex">
+          <p className="text-xl md:text-2xl font-bold text-primary mt-4">
             You haven't added any products to the cart yet.
           </p>
         </div>

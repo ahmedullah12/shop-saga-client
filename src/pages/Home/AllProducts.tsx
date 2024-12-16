@@ -25,18 +25,20 @@ const AllProducts = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const { data: productData, isLoading: productsLoading } = useGetAllProductsQuery(query, {
-    skip: !hasMore,
-  });
+  const { data: productData, isLoading: productsLoading } =
+    useGetAllProductsQuery(query, {
+      skip: !hasMore,
+    });
 
-  const { data: categories, isLoading: categoriesLoading } = useGetAllCategoriesQuery(undefined);
-
+  const { data: categories, isLoading: categoriesLoading } =
+    useGetAllCategoriesQuery({});
+    
   // Update products when new data arrives
   useEffect(() => {
     if (productData?.data?.data) {
       setProducts((prevProducts) => {
         const newProducts = productData.data.data;
-        
+
         // Check if we've reached the end of results
         if (newProducts.length === 0) {
           setHasMore(false);
@@ -44,7 +46,8 @@ const AllProducts = () => {
 
         // Prevent duplicate products
         const uniqueNewProducts = newProducts.filter(
-          (newProduct: IProduct) => !prevProducts.some((p) => p.id === newProduct.id)
+          (newProduct: IProduct) =>
+            !prevProducts.some((p) => p.id === newProduct.id)
         );
 
         return [...prevProducts, ...uniqueNewProducts];
@@ -52,6 +55,8 @@ const AllProducts = () => {
       setIsLoading(false);
     }
   }, [productData]);
+
+
 
   // Handle search params for category
   useEffect(() => {
@@ -83,8 +88,8 @@ const AllProducts = () => {
   const handleScroll = useCallback(() => {
     if (
       window.innerHeight + document.documentElement.scrollTop + 1 >=
-      document.documentElement.scrollHeight - 100 && // Added buffer
-      !isLoading && 
+        document.documentElement.scrollHeight - 100 && // Added buffer
+      !isLoading &&
       hasMore
     ) {
       setQuery((prev) => ({
@@ -181,7 +186,9 @@ const AllProducts = () => {
 
       {isLoading && <Loader />}
       {!hasMore && products.length > 0 && (
-        <p className="text-center mt-4 text-gray-500">No more products to load</p>
+        <p className="text-center mt-4 text-gray-500">
+          No more products to load
+        </p>
       )}
     </div>
   );

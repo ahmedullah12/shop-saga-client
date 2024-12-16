@@ -4,9 +4,8 @@ import { Button } from "@/components/ui/button";
 import { useLoginUserMutation } from "@/redux/features/auth/authApi";
 import { setUser, TUser } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
-import { TError } from "@/types/global";
 import verifyJwt from "@/utils/verifyJwt";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -14,7 +13,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 const Login = () => {
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const [login, { error, isLoading }] = useLoginUserMutation();
+  const [login, { isLoading }] = useLoginUserMutation();
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -33,21 +32,12 @@ const Login = () => {
         navigate(from, { replace: true });
         setIsSuccess(true);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
     }
   };
 
-  useEffect(() => {
-    if (error) {
-      const err = error as TError;
-      if (err.data) {
-        toast.error(err.data.message);
-      } else {
-        toast.error("An unexpected error occurred.");
-      }
-    }
-  }, [error]);
+
   return (
     <div className=" flex justify-center items-center bg-white  relative mt-20">
       <div className="w-full md:w-[500px] px-4">

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "@/components/Loader";
 
 const Categories = () => {
-  const { data: categories, isLoading } = useGetAllCategoriesQuery(undefined);
+  const { data: categories, isLoading } = useGetAllCategoriesQuery({});
   const navigate = useNavigate();
 
   
