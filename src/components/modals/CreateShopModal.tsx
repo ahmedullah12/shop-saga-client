@@ -41,10 +41,15 @@ const CreateShopModal = ({ isOpen, setIsOpen }: ModalParams) => {
     formData.append("logo", selectedImage);
     formData.append("data", JSON.stringify(data));
 
-    const res = await createShop(formData).unwrap();
-    if (res.success === true) {
-      toast.success(res.message);
-      setIsOpen(false);
+    try {
+      const res = await createShop(formData).unwrap();
+      if (res.success === true) {
+        toast.success(res.message);
+        setIsOpen(false);
+      }
+    } catch (err: any) {
+      console.log(err);
+      toast.error(err.data.message);
     }
   };
   return (

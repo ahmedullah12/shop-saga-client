@@ -72,8 +72,8 @@ const UpdateShopModal = ({
         toast.success(res.message);
         setIsOpen(false);
       }
-    } catch (error) {
-      toast.error("Failed to update shop");
+    } catch (error: any) {
+      toast.error(error.data.message);
       console.log(error);
     }
   };
