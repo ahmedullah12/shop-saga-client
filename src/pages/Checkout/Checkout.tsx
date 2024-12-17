@@ -16,8 +16,6 @@ const Checkout = () => {
 
   const [createPayment] = useCreatePaymentMutation();
 
-  console.log(cart);
-
   const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
     if (!paymentMethod) {
       alert("Please select a payment method");
@@ -32,7 +30,7 @@ const Checkout = () => {
 
     try {
       const res = await createPayment(submitData).unwrap();
-      console.log(res);
+      
       if (res.data.result === "true") {
         window.location.href = res.data.payment_url;
       }

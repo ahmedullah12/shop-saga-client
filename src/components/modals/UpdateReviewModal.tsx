@@ -61,7 +61,6 @@ const UpdateReviewModal = ({
 
     try {
       const result = await updateReview({payload: reviewData, id: review.id}).unwrap();
-      console.log(result);
       
       if (result.success === true) {
         onOpenChange(false);

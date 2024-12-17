@@ -60,7 +60,7 @@ const Categories = () => {
           <p className="text-sm">Start by adding category</p>
         </div>
       ) : (
-        <Table>
+        <Table className="mb-4">
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>

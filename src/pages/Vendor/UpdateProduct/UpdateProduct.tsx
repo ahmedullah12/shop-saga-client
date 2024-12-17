@@ -23,7 +23,7 @@ const UpdateProduct = () => {
   const { data: productData, isLoading: productLoading } =
     useGetSingleProductQuery(id as string);
   const { data: categories, isLoading: categoriesLoading } =
-    useGetAllCategoriesQuery(undefined);
+    useGetAllCategoriesQuery({});
   const [updateProduct, { isLoading: updateProductLoading }] =
     useUpdateProductMutation();
 
@@ -46,7 +46,7 @@ const UpdateProduct = () => {
   }, [productData]);
 
   const categoryOptions =
-    categories?.data?.map((category: ICategory) => ({
+    categories?.data?.data?.map((category: ICategory) => ({
       value: category.id,
       label: category.name,
     })) || [];
@@ -64,7 +64,6 @@ const UpdateProduct = () => {
         payload: payloadData,
         id: productData?.data?.id,
       }).unwrap();
-      console.log(res);
       if (res.success === true) {
         toast.success(res.message);
         navigate("/dashboard/vendor/products");
@@ -75,7 +74,8 @@ const UpdateProduct = () => {
     }
   };
 
-  if (productLoading || !initialFormData) <Loader />;
+  if (productLoading || initialFormData === null) return <Loader />;
+
 
   return (
     <div className="container px-4">
@@ -84,74 +84,81 @@ const UpdateProduct = () => {
           Update Product
         </h1>
 
-        <SSForm onSubmit={handleSubmit} defaultValues={initialFormData}>
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <SSInput
-                name="name"
-                type="text"
-                width="full"
-                label="Product Name"
-              />
+        {initialFormData !== null && (
+          <SSForm onSubmit={handleSubmit} defaultValues={initialFormData}>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <SSInput
+                  name="name"
+                  type="text"
+                  width="full"
+                  label="Product Name"
+                />
 
-              <SSInput name="price" type="number" width="full" label="Price" />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <SSInput
-                name="inventoryCount"
-                type="number"
-                width="full"
-                label="Inventory Count"
-              />
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Categories
-                </label>
-                <Controller
-                  name="categories"
-                  rules={{ required: "At least one category is required" }}
-                  render={({ field, fieldState: { error } }) => (
-                    <div>
-                      <Select
-                        {...field}
-                        isMulti
-                        options={categoryOptions}
-                        isLoading={categoriesLoading}
-                        placeholder="Select categories"
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                      />
-                      {error && (
-                        <p className="text-red-500 text-sm mt-1">
-                          {error.message}
-                        </p>
-                      )}
-                    </div>
-                  )}
+                <SSInput
+                  name="price"
+                  type="number"
+                  width="full"
+                  label="Price"
                 />
               </div>
-            </div>
 
-            <SSTextarea
-              name="description"
-              width="full"
-              label="Description"
-              rows={4}
-            />
+              <div className="grid grid-cols-2 gap-4">
+                <SSInput
+                  name="inventoryCount"
+                  type="number"
+                  width="full"
+                  label="Inventory Count"
+                />
 
-            <div className="mt-6">
-              <Button
-                type="submit"
-                disabled={updateProductLoading}
-                className="w-full max-w-[200px]"
-              >
-                {updateProductLoading ? "Updating..." : "Update Product"}
-              </Button>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Categories
+                  </label>
+                  <Controller
+                    name="categories"
+                    rules={{ required: "At least one category is required" }}
+                    render={({ field, fieldState: { error } }) => (
+                      <div>
+                        <Select
+                          {...field}
+                          isMulti
+                          options={categoryOptions}
+                          isLoading={categoriesLoading}
+                          placeholder="Select categories"
+                          className="basic-multi-select"
+                          classNamePrefix="select"
+                        />
+                        {error && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {error.message}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  />
+                </div>
+              </div>
+
+              <SSTextarea
+                name="description"
+                width="full"
+                label="Description"
+                rows={4}
+              />
+
+              <div className="mt-6">
+                <Button
+                  type="submit"
+                  disabled={updateProductLoading}
+                  className="w-full max-w-[200px]"
+                >
+                  {updateProductLoading ? "Updating..." : "Update Product"}
+                </Button>
+              </div>
             </div>
-          </div>
-        </SSForm>
+          </SSForm>
+        )}
       </div>
     </div>
   );

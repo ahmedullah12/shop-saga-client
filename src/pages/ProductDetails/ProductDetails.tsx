@@ -53,8 +53,6 @@ const ProductDetails = () => {
     dispatch(retainCurrentCart());
   };
 
-  console.log(product);
-
   useEffect(() => {
     if (product?.data) {
       dispatch(addViewedProduct(product?.data));

@@ -56,7 +56,6 @@ const productReviewApi = baseApi.injectEndpoints({
     }),
     createReplyReview: builder.mutation({
       query: ({reviewId, payload}) => {
-        console.log(payload);
         return {
           url: `/review/reply-review?reviewId=${reviewId}`,
           method: "PUT",

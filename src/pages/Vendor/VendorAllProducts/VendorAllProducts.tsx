@@ -48,7 +48,6 @@ const VendorAllProducts = () => {
   const dataPerPage = 6;
 
   const { data: shopData, isLoading } = useGetUserShopQuery(undefined);
-  console.log(shopData);
 
   const { data: productsData, isLoading: productsLoading } =
     useGetVendorProductsQuery({
@@ -113,7 +112,7 @@ const VendorAllProducts = () => {
           <p className="text-sm">Start by adding your first product</p>
         </div>
       ) : (
-        <Table>
+        <Table className="mb-4">
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">Image</TableHead>
