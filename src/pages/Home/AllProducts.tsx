@@ -14,21 +14,19 @@ const AllProducts = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [query, setQuery] = useState<Record<string, any>>({
     page: 1,
-    limit: 4,
+    limit: 8,
   });
   const [showFilters, setShowFilters] = useState(false);
   const [priceRange, setPriceRange] = useState("");
   const [category, setCategory] = useState("");
   const [products, setProducts] = useState<IProduct[]>([]);
   const [hasMore, setHasMore] = useState(true);
+  const [isFirstPageLoaded, setIsFirstPageLoaded] = useState(false);
 
   const [searchParams] = useSearchParams();
 
-  const {
-    data: productData,
-    isLoading: productsLoading,
-    isFetching,
-  } = useGetAllProductsQuery(query);
+  const { data: productData, isLoading: productsLoading } =
+    useGetAllProductsQuery(query);
 
   const { data: categories, isLoading: categoriesLoading } =
     useGetAllCategoriesQuery({});
@@ -39,6 +37,7 @@ const AllProducts = () => {
 
       if (query.page === 1) {
         setProducts(newProducts);
+        setIsFirstPageLoaded(true);
       } else {
         setProducts((prevProducts) => {
           const uniqueNewProducts = newProducts.filter(
@@ -69,6 +68,7 @@ const AllProducts = () => {
         page: 1,
       }));
       setHasMore(true);
+      setIsFirstPageLoaded(false);
     }, 500);
 
     return () => {
@@ -85,13 +85,17 @@ const AllProducts = () => {
       page: 1,
     }));
     setHasMore(true);
+    setIsFirstPageLoaded(false);
   }, [priceRange, category]);
 
   const fetchMoreData = () => {
-    setQuery((prev) => ({
-      ...prev,
-      page: (prev.page || 1) + 1,
-    }));
+    // Only fetch more data if first page is loaded and we have more products
+    if (isFirstPageLoaded && hasMore) {
+      setQuery((prev) => ({
+        ...prev,
+        page: (prev.page || 1) + 1,
+      }));
+    }
   };
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -108,6 +112,7 @@ const AllProducts = () => {
     setProducts([]);
     setQuery({ page: 1, limit: 8 });
     setHasMore(true);
+    setIsFirstPageLoaded(false);
   };
 
   return (
@@ -145,12 +150,12 @@ const AllProducts = () => {
         </div>
       </div>
 
-      {(categoriesLoading || productsLoading || isFetching) && <Loader />}
+      {(categoriesLoading || productsLoading) && <Loader />}
 
       <InfiniteScroll
         dataLength={products.length}
         next={fetchMoreData}
-        hasMore={hasMore}
+        hasMore={isFirstPageLoaded && hasMore}
         loader={<Loader />}
         endMessage={
           products.length > 0 && (
@@ -161,13 +166,9 @@ const AllProducts = () => {
         }
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {!productsLoading && products.length > 0 ? (
-            products.map((product: IProduct) => (
-              <ProductCard key={product.id} product={product} />
-            ))
-          ) : (
-            <p>No products to show...</p>
-          )}
+          {products.map((product: IProduct) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
       </InfiniteScroll>
     </div>
