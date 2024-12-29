@@ -1,14 +1,13 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect } from "react";
 import {
   FieldValues,
   FormProvider,
   SubmitHandler,
   useForm,
-} from 'react-hook-form';
+} from "react-hook-form";
 
 type TFormConfig = {
   defaultValues?: Record<string, any>;
-  
 };
 
 type TFormProps = {
@@ -21,31 +20,34 @@ const SSForm = ({
   onSubmit,
   children,
   defaultValues,
-  isSuccess
+  isSuccess,
 }: TFormProps) => {
-  const formConfig: TFormConfig = {};
-
-  if (defaultValues) {
-    formConfig['defaultValues'] = defaultValues;
-  }
+  const formConfig: TFormConfig = { defaultValues };
 
   const methods = useForm(formConfig);
+  const { reset } = methods;
 
   const submit: SubmitHandler<FieldValues> = (data) => {
     onSubmit(data);
   };
 
+  // Reset the form when `isSuccess` is true
   useEffect(() => {
-    if(isSuccess) {
-      methods.reset();
+    if (isSuccess) {
+      reset();
     }
-  },[isSuccess, methods])
+  }, [isSuccess, reset]);
+
+  // Reset the form when `defaultValues` change
+  useEffect(() => {
+    if (defaultValues) {
+      reset(defaultValues);
+    }
+  }, [defaultValues, reset]);
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(submit)}>
-        {children}
-      </form>
+      <form onSubmit={methods.handleSubmit(submit)}>{children}</form>
     </FormProvider>
   );
 };

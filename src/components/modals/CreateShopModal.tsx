@@ -90,7 +90,7 @@ const CreateShopModal = ({ isOpen, setIsOpen }: ModalParams) => {
           <Button
             disabled={shopCreateLoading}
             type="submit"
-            className="w-full *:"
+            className="w-full"
           >
             Submit
           </Button>

@@ -10,13 +10,13 @@ type TInputProps = {
   disabled?: boolean;
 };
 
-const SSInput = ({width, type, name, label, disabled }: TInputProps) => {
+const SSInput = ({ width, type, name, label, disabled }: TInputProps) => {
   return (
     <div>
       <Label className="text-primary">{label}</Label>
       <Controller
         name={name}
-        rules={{required: `${label} is required`}}
+        rules={{ required: `${label} is required` }}
         render={({ field, fieldState: { error } }) => (
           <>
             <Input

@@ -1,10 +1,11 @@
 import { logOut } from "@/redux/features/auth/authSlice";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { useAppDispatch } from "@/redux/hooks";
 import { IUserData } from "@/types/global";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Button } from "./ui/button";
+import { Folders, LogOut, ShoppingBasket } from "lucide-react";
+import { MdDashboard, MdOutlineRateReview } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 type TUserDropdown = {
   user: IUserData;
@@ -26,25 +27,28 @@ const UserDropdown = ({ user }: TUserDropdown) => {
           </Avatar>
           <span>{user?.name}</span>
         </PopoverTrigger>
-        <PopoverContent className="w-40 bg-accent border-none">
+        <PopoverContent className="w-60 bg-accent border-none">
           {user.role === "CUSTOMER" ? (
-            <div className="flex flex-col gap-y-2">
+            <div className="flex flex-col gap-y-3">
               <Link
-                className="text-primary font-semibold hover:underline"
+                className="flex items-center gap-x-2 text-primary font-semibold hover:underline"
                 to={"/recent-products"}
               >
+                <ShoppingBasket />
                 Recent Products
               </Link>
               <Link
-                className="text-primary font-semibold hover:underline"
+                className="flex items-center gap-x-2 text-primary font-semibold hover:underline"
                 to={"/user-order-history"}
               >
+                <Folders />
                 Order History
               </Link>
               <Link
-                className="text-primary font-semibold hover:underline"
+                className="flex items-center gap-x-2 text-primary font-semibold hover:underline"
                 to={"/user-reviews"}
               >
+                <MdOutlineRateReview size={24} />
                 Reviews
               </Link>
             </div>
@@ -52,27 +56,30 @@ const UserDropdown = ({ user }: TUserDropdown) => {
             <div>
               {user.role === "VENDOR" ? (
                 <Link
-                  className="text-primary font-semibold hover:underline"
+                  className="flex items-center gap-x-2 text-primary font-semibold hover:underline"
                   to={"/dashboard/vendor/shop"}
                 >
+                  <MdDashboard />
                   Dashboard
                 </Link>
               ) : (
                 <Link
-                  className="text-primary font-semibold hover:underline"
+                  className="flex items-center gap-x-2  text-primary font-semibold hover:underline"
                   to={"/dashboard/admin/all-users"}
                 >
+                  <MdDashboard size={22}/>
                   Dashboard
                 </Link>
               )}
             </div>
           )}
-          <Button
+          <button
             onClick={handleLogout}
-            className="w-full mt-4 px-2 py-1 text-sm bg-primary hover:bg-secondary text-white rounded"
+            className="flex items-center gap-x-2 text-primary font-semibold mt-3"
           >
+            <LogOut size={22} />
             Logout
-          </Button>
+          </button>
         </PopoverContent>
       </Popover>
     </div>

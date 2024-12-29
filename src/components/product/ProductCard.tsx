@@ -71,7 +71,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             )}
           </div>
         </CardContent>
-        <CardFooter className="flex justify-between items-center p-4 mt-auto">
+        <CardFooter className="flex justify-between items-center p-4 pt-0 mt-auto">
           <Link to={`/products/${product.id}`}>
             <Button variant="outline" size="sm">
               View Details
