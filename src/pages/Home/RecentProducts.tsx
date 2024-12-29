@@ -1,19 +1,19 @@
 import ProductCard from "@/components/product/ProductCard";
 import ProductCardSkeleton from "@/components/product/ProductCardSkeleton";
 import { Button } from "@/components/ui/button";
-import { useGetFlashSaleProductsQuery } from "@/redux/features/product/productApi";
+import { useGetAllProductsQuery } from "@/redux/features/product/productApi";
 import { IProduct } from "@/types/global";
 import { Link } from "react-router-dom";
 
-const FlashSaleProducts = () => {
-  const { data: products, isLoading } = useGetFlashSaleProductsQuery({
+const RecentProducts = () => {
+  const { data: products, isLoading } = useGetAllProductsQuery({
     limit: 4,
   });
 
   return (
     <div className="container mx-auto p-6 mb-12">
       <h1 className="text-2xl md:text-3xl font-bold mb-8 text-secondary">
-        Flash Sale Products
+        Recent Products
       </h1>
 
       {isLoading ? (
@@ -32,8 +32,8 @@ const FlashSaleProducts = () => {
           </div>
 
           <div className="flex justify-center mt-5">
-            <Link to={"/flash-sale-products"}>
-              <Button size={"default"}>All Flash Sale</Button>
+            <Link to={"/products"}>
+              <Button size={"default"}>All Products</Button>
             </Link>
           </div>
         </div>
@@ -42,4 +42,4 @@ const FlashSaleProducts = () => {
   );
 };
 
-export default FlashSaleProducts;
+export default RecentProducts;

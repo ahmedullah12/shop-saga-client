@@ -8,7 +8,7 @@ import Cart from "@/pages/Cart/Cart";
 import Checkout from "@/pages/Checkout/Checkout";
 import SuccessPage from "@/pages/SuccessPage/SuccessPage";
 import RecentViewedProducts from "@/pages/Customer/RecentViewedProducts/RecentViewedProducts";
-import AllProducts from "@/pages/Home/AllProducts";
+import AllProducts from "@/pages/Products/AllProducts";
 import UserOrderHistory from "@/pages/Customer/UserOrderHistory/UserOrderHistory";
 import UserReviews from "@/pages/Customer/UserReviews/UserReviews";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
@@ -29,12 +29,13 @@ import OrderHistory from "@/pages/Admin/OrderHistory/OrderHistory";
 import Categories from "@/pages/Admin/Categories/Categories";
 import AllShops from "@/pages/Admin/AllShops/AllShops";
 import Shops from "@/pages/Shops/Shops";
+import ErrorPage from "@/pages/Error/Error";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-    
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
