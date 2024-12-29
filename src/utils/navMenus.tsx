@@ -5,23 +5,23 @@ import { MdInventory } from "react-icons/md";
 export const Menus = [
   { title: "Home", path: "/", icon: <FaHome size={18} color="#674188" /> },
   {
-    title: "All Products",
-    path: "/all-products",
+    title: "Products",
+    path: "/products",
     icon: <MdInventory  size={18} color="#674188" />,
   },
   {
     title: "Shops",
-    path: "/all-products",
+    path: "/shops",
     icon: <MdInventory  size={18} color="#674188" />,
   },
   {
     title: "About",
-    path: "/all-products",
+    path: "/products",
     icon: <MdInventory  size={18} color="#674188" />,
   },
   {
     title: "Contact Us",
-    path: "/all-products",
+    path: "/products",
     icon: <MdInventory  size={18} color="#674188" />,
   },
   {

@@ -28,11 +28,13 @@ import AllUsers from "@/pages/Admin/AllUsers/AllUsers";
 import OrderHistory from "@/pages/Admin/OrderHistory/OrderHistory";
 import Categories from "@/pages/Admin/Categories/Categories";
 import AllShops from "@/pages/Admin/AllShops/AllShops";
+import Shops from "@/pages/Shops/Shops";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    
     children: [
       {
         path: "/",
@@ -43,8 +45,12 @@ const router = createBrowserRouter([
         element: <ProductDetails />,
       },
       {
-        path: "/all-products",
+        path: "/products",
         element: <AllProducts />,
+      },
+      {
+        path: "/shops",
+        element: <Shops />,
       },
       {
         path: "/flash-sale-products",

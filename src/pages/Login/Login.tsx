@@ -44,9 +44,9 @@ const Login = () => {
 
   const handleDemoCredentials = (role: "customer" | "vendor" | "admin") => {
     const credentials = {
-      customer: { email: "customer@demo.com", password: "customer123" },
-      vendor: { email: "vendor@demo.com", password: "vendor123" },
-      admin: { email: "admin@demo.com", password: "admin123" },
+      customer: { email: "anik@gmail.com", password: "ahmedullah" },
+      vendor: { email: "sajid@gmail.com", password: "ahmedullah" },
+      admin: { email: "ahmed@gmail.com", password: "ahmedullah" },
     };
     setDefaultValues(credentials[role]);
   };

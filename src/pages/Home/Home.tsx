@@ -3,6 +3,7 @@ import AllProducts from "./AllProducts";
 import Banner from "./Banner";
 import Categories from "./Categories";
 import FlashSaleProducts from "./FlashSaleProducts";
+import Newsletter from "./Newsletter";
 
 const Home = () => {
   
@@ -12,6 +13,7 @@ const Home = () => {
       <Banner/>
       <Categories/>
       <FlashSaleProducts/>
+      <Newsletter/>
       <AllProducts/>
     </div>
   );

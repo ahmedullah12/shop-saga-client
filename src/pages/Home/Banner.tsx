@@ -30,14 +30,14 @@ export default function Banner() {
                   <div className="relative w-full h-full px-4 md:px-8 lg:px-12">
                     <div className="h-full grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
                       <div className="flex flex-col justify-center space-y-4 md:space-y-6 text-center md:text-left">
-                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl text-primary font-bold tracking-tight">
                           {data.header}
                         </h2>
                         <p className="text-lg md:text-xl text-gray-600 max-w-xl">
                           {data.desc}
                         </p>
                         <div className="pt-2">
-                          <Link to="/all-products">
+                          <Link to="/products">
                             <Button className="px-8 py-6 text-lg  hover:bg-gray-800 transition-all duration-300 rounded-md">
                               Shop Now
                             </Button>
@@ -61,10 +61,10 @@ export default function Banner() {
           ))}
         </CarouselContent>
         <div className="absolute inset-y-0 left-8 md:-left-4 flex items-center">
-          <CarouselPrevious className="bg-primary text-white h-12 w-12 opacity-70 hover:opacity-100 transition-opacity duration-200" />
+          <CarouselPrevious className="bg-primary text-white size-8 opacity-70 hover:opacity-100 transition-opacity duration-200" />
         </div>
         <div className="absolute inset-y-0 right-8 md:-right-4 flex items-center">
-          <CarouselNext className="bg-primary text-white h-12 w-12 opacity-70 hover:opacity-100 transition-opacity duration-200" />
+          <CarouselNext className="bg-primary text-white size-8 opacity-70 hover:opacity-100 transition-opacity duration-200" />
         </div>
       </Carousel>
     </div>
