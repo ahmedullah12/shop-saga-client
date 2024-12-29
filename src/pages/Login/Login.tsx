@@ -53,7 +53,7 @@ const Login = () => {
 
   return (
     <div className="flex justify-center items-center bg-white relative mt-20">
-      <div className="flex bg-accent rounded-lg overflow-hidden shadow-lg">
+      <div className="flex  rounded-lg overflow-hidden shadow-lg">
         <div className="w-[500px] h-[450px]">
           <div className="px-10 py-5 h-full">
             <h1 className="mb-2 font-semibold text-secondary text-2xl underline">

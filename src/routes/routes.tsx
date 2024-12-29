@@ -40,11 +40,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/products/:id",
-        element: (
-          <ProtectedRoute role={undefined}>
-            <ProductDetails />
-          </ProtectedRoute>
-        ),
+        element: <ProductDetails />,
       },
       {
         path: "/all-products",

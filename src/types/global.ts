@@ -37,6 +37,7 @@ export interface IProduct {
   updatedAt: string;
   shop: IShop;
   productCategory: IProductCategory[];
+  reviews: IReview[];
 }
 
 export interface IShop {
