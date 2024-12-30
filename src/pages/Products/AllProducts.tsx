@@ -1,119 +1,82 @@
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import InfiniteScroll from "react-infinite-scroll-component";
-import ProductCard from "@/components/product/ProductCard";
-import ProductFilters from "@/components/product/ProductFilters";
+import { FilterIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ProductCard from "@/components/product/ProductCard";
 import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
 import { useGetAllProductsQuery } from "@/redux/features/product/productApi";
 import { IProduct } from "@/types/global";
-import { FilterIcon } from "lucide-react";
-import { ChangeEvent, useEffect, useState } from "react";
-import Loader from "@/components/Loader";
+import Pagination from "@/components/Pagination";
+import ProductCardSkeleton from "@/components/product/ProductCardSkeleton";
 
 const AllProducts = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [query, setQuery] = useState<Record<string, any>>({
-    page: 1,
-    limit: 8,
-  });
-  const [showFilters, setShowFilters] = useState(false);
   const [priceRange, setPriceRange] = useState("");
   const [category, setCategory] = useState("");
-  const [products, setProducts] = useState<IProduct[]>([]);
-  const [hasMore, setHasMore] = useState(true);
-  const [isFirstPageLoaded, setIsFirstPageLoaded] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const dataPerPage = 8;
 
   const [searchParams] = useSearchParams();
 
+  // Use debounced search term to prevent too many API calls
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+      setCurrentPage(1); // Reset page when search changes
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  // Query with all filter parameters
   const { data: productData, isLoading: productsLoading } =
-    useGetAllProductsQuery(query);
+    useGetAllProductsQuery({
+      searchTerm: debouncedSearchTerm,
+      price: priceRange,
+      category,
+      page: currentPage,
+      limit: dataPerPage,
+    });
 
   const { data: categories, isLoading: categoriesLoading } =
     useGetAllCategoriesQuery({});
 
   useEffect(() => {
-    if (productData?.data?.data) {
-      const newProducts = productData.data.data;
-
-      if (query.page === 1) {
-        setProducts(newProducts);
-        setIsFirstPageLoaded(true);
-      } else {
-        setProducts((prevProducts) => {
-          const uniqueNewProducts = newProducts.filter(
-            (newProduct: IProduct) =>
-              !prevProducts.some((p) => p.id === newProduct.id)
-          );
-          return [...prevProducts, ...uniqueNewProducts];
-        });
-      }
-
-      setHasMore(newProducts.length > 0);
-    }
-  }, [productData, query.page]);
-
-  useEffect(() => {
     const categoryParam = searchParams.get("category");
     if (categoryParam) {
       setCategory(categoryParam);
+      setCurrentPage(1); // Reset page when category is set from URL
     }
   }, [searchParams]);
 
+  // Reset page when filters change
   useEffect(() => {
-    const timerId = setTimeout(() => {
-      setProducts([]);
-      setQuery((prev) => ({
-        ...prev,
-        searchTerm,
-        page: 1,
-      }));
-      setHasMore(true);
-      setIsFirstPageLoaded(false);
-    }, 500);
-
-    return () => {
-      clearTimeout(timerId);
-    };
-  }, [searchTerm]);
-
-  useEffect(() => {
-    setProducts([]);
-    setQuery((prev) => ({
-      ...prev,
-      price: priceRange,
-      category: category,
-      page: 1,
-    }));
-    setHasMore(true);
-    setIsFirstPageLoaded(false);
+    setCurrentPage(1);
   }, [priceRange, category]);
 
-  const fetchMoreData = () => {
-    // Only fetch more data if first page is loaded and we have more products
-    if (isFirstPageLoaded && hasMore) {
-      setQuery((prev) => ({
-        ...prev,
-        page: (prev.page || 1) + 1,
-      }));
-    }
-  };
-
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
-  const handleToggleFilters = () => {
-    setShowFilters(!showFilters);
+  const handlePriceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setPriceRange(e.target.value);
+  };
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategory(e.target.value);
   };
 
   const handleClearFilters = () => {
     setPriceRange("");
     setCategory("");
-    setProducts([]);
-    setQuery({ page: 1, limit: 8 });
-    setHasMore(true);
-    setIsFirstPageLoaded(false);
+    setSearchTerm("");
+    setCurrentPage(1);
   };
+
+  const meta = productData?.data?.meta;
+  const totalPages = Math.ceil(meta?.total / dataPerPage);
 
   return (
     <div className="container mx-auto p-6 mb-12">
@@ -121,56 +84,110 @@ const AllProducts = () => {
         All Products
       </h1>
 
-      <div className="flex flex-col md:flex-row justify-normal md:justify-between md:items-center mb-12 gap-4">
+      <div className="mb-6">
         <input
           type="text"
-          placeholder="Search rooms..."
-          className="w-[250px] md:w-[450px] bg-transparent p-2 border-2 border-secondary rounded-md"
+          placeholder="Search products..."
+          className="w-[300px] md:w-[400px] bg-transparent p-2 border-2 border-secondary rounded-md"
           value={searchTerm}
           onChange={handleSearchChange}
         />
-        <div className="relative">
-          <Button
-            className="bg-primary space-x-1 hover:bg-secondary"
-            onClick={handleToggleFilters}
-          >
-            <span>Filters</span>
-            <FilterIcon size={18} />
-          </Button>
-          {showFilters && (
-            <ProductFilters
-              priceRange={priceRange}
-              setPriceRange={setPriceRange}
-              category={category}
-              setCategory={setCategory}
-              handleClear={handleClearFilters}
-              categories={categories?.data?.data}
-            />
-          )}
-        </div>
       </div>
 
-      {(categoriesLoading || productsLoading) && <Loader />}
+      {/* Mobile Filters Toggle */}
+      <div className="md:hidden mb-4">
+        <Button
+          className="bg-primary space-x-1 hover:bg-secondary w-full"
+          onClick={() => setShowMobileFilters(!showMobileFilters)}
+        >
+          <span>{showMobileFilters ? "Hide Filters" : "Show Filters"}</span>
+          <FilterIcon size={18} />
+        </Button>
+      </div>
 
-      <InfiniteScroll
-        dataLength={products.length}
-        next={fetchMoreData}
-        hasMore={isFirstPageLoaded && hasMore}
-        loader={<Loader />}
-        endMessage={
-          products.length > 0 && (
-            <p className="text-center mt-4 text-gray-500">
-              No more products to load
-            </p>
-          )
-        }
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {products.map((product: IProduct) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </InfiniteScroll>
+      <div className="flex flex-col md:flex-row gap-6">
+        {/* Sidebar Filters - Hidden on mobile unless toggled */}
+        <aside
+          className={`w-full md:w-64 ${
+            showMobileFilters ? "block" : "hidden"
+          } md:block`}
+        >
+          <div className="bg-accent p-4 rounded-lg sticky top-24">
+            <div className="space-y-6">
+              <div>
+                <h3 className="font-semibold mb-2">Price Range</h3>
+                <select
+                  value={priceRange}
+                  onChange={handlePriceChange}
+                  className="w-full p-2 border rounded-md"
+                >
+                  <option value="">All Prices</option>
+                  <option value="0-50">$0-$50</option>
+                  <option value="50-100">$50-$100</option>
+                  <option value="100-200">$100-$200</option>
+                  <option value="200-400">$200-$400</option>
+                  <option value="400-">$400+</option>
+                </select>
+              </div>
+
+              <div>
+                <h3 className="font-semibold mb-2">Categories</h3>
+                <select
+                  value={category}
+                  onChange={handleCategoryChange}
+                  className="w-full p-2 border rounded-md "
+                >
+                  <option value="">All Categories</option>
+                  {categories?.data?.data?.map((cat: any) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {(priceRange || category || searchTerm) && (
+                <Button
+                  onClick={handleClearFilters}
+                  className="w-full bg-primary hover:bg-secondary"
+                >
+                  Clear Filters
+                </Button>
+              )}
+            </div>
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1">
+          {categoriesLoading || productsLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((index) => (
+                <ProductCardSkeleton key={index} />
+              ))}
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {productData?.data?.data?.map((product: IProduct) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {meta?.total > dataPerPage && (
+                <div className="mt-8">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                  />
+                </div>
+              )}
+            </>
+          )}
+        </main>
+      </div>
     </div>
   );
 };
