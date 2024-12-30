@@ -1,6 +1,6 @@
-import banner1 from "../assets/banner1.jpg";
-import banner2 from "../assets/banner2.jpg";
-import banner3 from "../assets/banner3.jpg";
+import banner4 from "../assets/banner4.png";
+import banner5 from "../assets/banner5.png";
+import banner6 from "../assets/banner6.png";
 
 export const UserRole = {
   ADMIN: "ADMIN",
@@ -50,16 +50,16 @@ export const bannerCarouselData = [
   {
     header: "Explore Your Journey with Shop Saga",
     desc: "Dive into a world where your shopping dreams become a reality.",
-    image: banner1,
+    image: banner4,
   },
   {
     header: "Shop Smart, Shop Unique",
     desc: "Experience the thrill of discovering products that truly stand out.",
-    image: banner2,
+    image: banner5,
   },
   {
     header: "Unlock the Saga of Savings",
     desc: "Your destination for unbeatable deals and premium quality.",
-    image: banner3,
+    image: banner6,
   },
 ];

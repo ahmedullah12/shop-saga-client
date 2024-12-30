@@ -4,7 +4,6 @@ import ProductCard from "@/components/product/ProductCard";
 import ProductDetailsImages from "@/components/product/ProductDetailsImages";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   addToCart,
   replaceCartWithNewProduct,
@@ -68,8 +67,8 @@ const ProductDetails = () => {
   return (
     <div className="bg-background pt-4 pb-10">
       <div className="container mx-auto px-4 md:px-6">
-        <Card className="w-full mx-auto shadow-2xl border-none">
-          <CardContent className="grid grid-cols-1 lg:grid-cols-2 gap-10 p-6 md:p-10">
+        <div className="w-full mx-auto shadow-2xl border-none">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 p-6 md:p-10">
             {/* Image Section (Unchanged) */}
             {product?.data && (
               <div className="w-full">
@@ -146,8 +145,8 @@ const ProductDetails = () => {
                   : "Add to Cart"}
               </Button>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {warning && (
           <WarningModal

@@ -1,15 +1,27 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useUserSubscribeMutation } from "@/redux/features/user/userApi";
 import { Bell } from "lucide-react";
-import { useState } from 'react';
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function Newsletter() {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
 
-  const handleSubmit = (e: any) => {
+  const [userSubscribe] = useUserSubscribeMutation();
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log('Email submitted:', email);
-    setEmail('');
+
+    try {
+      const res = await userSubscribe({ email }).unwrap();
+      if (res.success === true) {
+        toast.success(res.message);
+        setEmail("");
+      }
+    } catch (err: any) {
+      toast.success(err.data.message);
+    }
   };
 
   return (
@@ -26,15 +38,21 @@ export default function Newsletter() {
                   </div>
                 </div>
               </div>
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Stay in the Loop</h2>
+              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
+                Stay in the Loop
+              </h2>
               <p className="max-w-[600px] mx-auto text-gray-600 md:text-lg">
-                Subscribe to our newsletter to get notified about new products, exclusive offers, and exciting updates. 
-                Be the first to know when we add fresh items to our collection!
+                Subscribe to our newsletter to get notified about new products,
+                exclusive offers, and exciting updates. Be the first to know
+                when we add fresh items to our collection!
               </p>
             </div>
           </div>
           <div className="mx-auto w-full max-w-md space-y-2">
-            <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-2">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col md:flex-row gap-2"
+            >
               <div className="flex-1">
                 <Input
                   type="email"
@@ -45,7 +63,7 @@ export default function Newsletter() {
                   required
                 />
               </div>
-              <Button 
+              <Button
                 type="submit"
                 className="h-12 px-8 text-base font-medium hover:bg-gray-800 text-white transition-colors duration-150"
               >

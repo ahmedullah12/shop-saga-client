@@ -30,6 +30,13 @@ const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Users", "Shops"],
     }),
+    userSubscribe: builder.mutation({
+      query: (payload) => ({
+        url: "/user/subscribe-user",
+        method: "POST",
+        body: payload,
+      })
+    }),
     deleteUser: builder.mutation({
       query: (id) => ({
         url: `/user/${id}`,
@@ -51,6 +58,7 @@ export const {
   useGetAllUsersQuery,
   useGetUserWithEmailQuery,
   useFollowShopMutation,
+  useUserSubscribeMutation,
   useDeleteUserMutation,
   useSuspendUserMutation,
 } = userApi;
