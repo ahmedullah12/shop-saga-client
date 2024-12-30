@@ -30,6 +30,8 @@ import Categories from "@/pages/Admin/Categories/Categories";
 import AllShops from "@/pages/Admin/AllShops/AllShops";
 import Shops from "@/pages/Shops/Shops";
 import ErrorPage from "@/pages/Error/Error";
+import About from "@/pages/About/About";
+import Contact from "@/pages/Contact/Contact";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +54,14 @@ const router = createBrowserRouter([
       {
         path: "/shops",
         element: <Shops />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
       {
         path: "/flash-sale-products",

@@ -1,32 +1,30 @@
-import { FaHome } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { MdInventory } from "react-icons/md";
 
 export const Menus = [
-  { title: "Home", path: "/", icon: <FaHome size={18} color="#674188" /> },
   {
     title: "Products",
     path: "/products",
-    icon: <MdInventory  size={18} color="#674188" />,
+    icon: <MdInventory size={18} color="#674188" />,
   },
   {
     title: "Shops",
     path: "/shops",
-    icon: <MdInventory  size={18} color="#674188" />,
+    icon: <MdInventory size={18} color="#674188" />,
   },
   {
     title: "About",
-    path: "/products",
-    icon: <MdInventory  size={18} color="#674188" />,
+    path: "/about",
+    icon: <MdInventory size={18} color="#674188" />,
   },
   {
     title: "Contact Us",
-    path: "/products",
-    icon: <MdInventory  size={18} color="#674188" />,
+    path: "/contact",
+    icon: <MdInventory size={18} color="#674188" />,
   },
   {
     title: "Cart",
     path: "/cart",
-    icon: <FaCartShopping  size={18} color="#674188" />,
+    icon: <FaCartShopping size={18} color="#674188" />,
   },
 ];
