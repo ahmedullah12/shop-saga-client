@@ -52,7 +52,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center bg-white relative mt-20">
+    <div className="flex justify-center items-center bg-white relative my-20">
       <div className="flex  rounded-lg overflow-hidden shadow-lg">
         <div className="w-[500px] h-[450px]">
           <div className="px-10 py-5 h-full">
@@ -61,7 +61,7 @@ const Login = () => {
             </h1>
 
             <div className="mb-6 text-end">
-              <p className="font-medium text-gray-700">Demo Credentials</p>
+              <p className="font-medium text-gray-700">Demo Credentials:</p>
               <div className="flex justify-end gap-4 mt-2 text-sm">
                 <button
                   className="font-semibold text-primary"
@@ -132,9 +132,9 @@ const Login = () => {
         </div>
 
         <div className="hidden md:block w-[500px] h-[450px]">
-          <img 
-            className="w-full h-full object-cover" 
-            src={loginImage} 
+          <img
+            className="w-full h-full object-cover"
+            src={loginImage}
             alt="login"
           />
         </div>

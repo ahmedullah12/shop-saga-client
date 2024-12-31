@@ -69,7 +69,7 @@ const UserReviews = () => {
   const totalPages = Math.ceil(meta?.total / dataPerPage);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 my-10">
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-secondary">
