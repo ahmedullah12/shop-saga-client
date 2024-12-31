@@ -2,6 +2,7 @@ import ShopCard from "@/components/ShopCard";
 import ShopCardSkeleton from "@/components/ShopCardSkeleton";
 import { useGetActiveShopsQuery } from "@/redux/features/shop/shopApi";
 import { IShop } from "@/types/global";
+import { MdKeyboardArrowRight } from "react-icons/md";
 
 const Shops = () => {
   const { data: shopsData, isLoading } = useGetActiveShopsQuery({});
@@ -10,7 +11,13 @@ const Shops = () => {
 
   return (
     <div className="container mx-auto py-6 mb-10">
-      <h1 className="text-3xl font-bold text-primary mb-6">All Shops</h1>
+      <div className="w-full bg-gray-50 mb-6 px-4 py-6">
+        <h1 className="text-3xl font-bold text-primary mb-6">Shops</h1>
+        <p className="flex items-center space-x-3text-md font-bold">
+          <span>Home</span> <MdKeyboardArrowRight size={20} />{" "}
+          <span className="text-primary">Shops</span>
+        </p>
+      </div>
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {[1, 2, 3, 4].map((index) => (
@@ -18,7 +25,7 @@ const Shops = () => {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2  md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1  md:grid-cols-4 gap-6">
           {shops.map((shop: IShop) => (
             <ShopCard key={shop.id} shop={shop} />
           ))}

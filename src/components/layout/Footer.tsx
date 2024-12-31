@@ -1,21 +1,49 @@
 import { Button } from "@/components/ui/button";
+import { useUserSubscribeMutation } from "@/redux/features/user/userApi";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaTwitter,
+} from "react-icons/fa6";
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  
+    const [userSubscribe] = useUserSubscribeMutation();
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      const res = await userSubscribe({ email }).unwrap();
+      if (res.success === true) {
+        toast.success(res.message);
+        setEmail("");
+      }
+    } catch (err: any) {
+      toast.success(err.data.message);
+    }
+  };
   return (
-    <footer className="bg-secondary py-10">
-      <div className="container mx-auto text-white grid grid-cols-1 md:grid-cols-4 gap-8 px-4">
+    <footer className="bg-primary pt-10 pb-2">
+      <div className="mb-8 container mx-auto text-white grid grid-cols-1 md:grid-cols-4 gap-8 px-4">
         {/* Brand Section */}
         <div>
           <h2 className="text-xl font-semibold">Shop Saga</h2>
           <p className="mt-4">Enter Your Email</p>
-          <div className="mt-2 flex items-center">
+          <form onSubmit={handleSubmit} className="mt-2 flex items-center">
             <input
               type="email"
               placeholder="yourmail@example.com"
-              className="w-full px-4 py-2 bg-accent border border-neutral-700 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-2 bg-accent text-black border border-neutral-700 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary"
             />
-            <Button className="rounded-none rounded-r-md">Subscribe</Button>
-          </div>
+            <Button type="submit" className="bg-white hover:bg-accent text-primary rounded-none rounded-r-md">
+              Subscribe
+            </Button>
+          </form>
           <p className="mt-4 text-sm">
             Get monthly updates and free resources.
           </p>
@@ -67,6 +95,19 @@ export default function Footer() {
             ))}
           </ul>
         </div>
+
+        {/* icons section */}
+      </div>
+      <div className="flex items-center justify-center gap-x-4 text-center text-white">
+        <FaFacebook size={22}/>
+        <FaTwitter size={22}/>
+        <FaInstagram size={22}/>
+        <FaLinkedin size={22}/>
+      </div>
+      <div className="text-white text-center mt-8">
+        <p>© Copyright 2018 Mobirise - All Rights Reserved
+
+</p>
       </div>
     </footer>
   );

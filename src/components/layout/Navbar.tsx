@@ -1,125 +1,198 @@
-import { Link, NavLink } from "react-router-dom";
-import { Cross as Hamburger } from "hamburger-react";
-import { ReactNode, useState } from "react";
-import { Menus } from "@/utils/navMenus";
-import { BiLogIn } from "react-icons/bi";
-import { HiOutlineLogin } from "react-icons/hi";
-import { motion } from "framer-motion";
-import { useAppSelector } from "@/redux/hooks";
 import { useCurrentUser } from "@/redux/features/auth/authApi";
 import { useGetUserWithEmailQuery } from "@/redux/features/user/userApi";
+import { useAppSelector } from "@/redux/hooks";
+import { Menus } from "@/utils/navMenus";
+import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
+import { Search, Menu as MenuIcon } from "lucide-react";
+import { useState } from "react";
+import { FaSignInAlt } from "react-icons/fa";
+import { FaCartShopping } from "react-icons/fa6";
+import { MdOutlineAssignmentInd } from "react-icons/md";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Popover } from "../ui/popover";
 import UserDropdown from "../UserDropdown";
+import { motion } from "framer-motion";
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
-
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
   const user = useAppSelector(useCurrentUser);
-
   const { data: userData } = useGetUserWithEmailQuery(user?.email);
+  const cart = useAppSelector((state) => state.cart.cart);
 
   const mobileNavVariants = {
     open: { opacity: 1, y: 0 },
     closed: { opacity: 0, y: "-200%" },
   };
 
-  const handleMenuItemClick = () => {
-    setOpen(false);
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/products?searchTerm=${searchQuery}`);
+      setSearchQuery("");
+    }
   };
 
-  const ActiveLink = ({
-    children,
-    to,
-  }: {
-    children: ReactNode;
-    to: string;
-  }) => {
-    return (
-      <NavLink to={to} className="relative group">
-        {({ isActive }) => (
-          <>
-            {children}
-            <motion.div
-              initial={false}
-              animate={{
-                width: isActive ? "100%" : "0%",
-                opacity: isActive ? 1 : 0,
-              }}
-              className="absolute -bottom-2 left-0 h-[3px] bg-white rounded-full"
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            />
-            <motion.div
-              initial={false}
-              animate={{
-                width: "0%",
-                opacity: 0,
-              }}
-              whileHover={{
-                width: !isActive ? "100%" : "0%",
-                opacity: !isActive ? 1 : 0,
-              }}
-              className="absolute -bottom-2 left-0 h-0.5 bg-primary rounded-full"
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            />
-          </>
-        )}
-      </NavLink>
-    );
+  const handleMenuItemClick = () => {
+    setIsMenuOpen(false);
   };
 
   return (
-    <nav className="bg-secondary w-full fixed top-0 z-50 h-16">
-      <div className="h-full lg:container relative flex items-center justify-between px-4 md:flex md:justify-between">
-        <div className="flex items-center space-x-4 md:space-x-8">
-          <Link to="/" className="text-2xl text-white font-semibold italic">
+    <nav className="bg-secondary w-full fixed top-0 z-50 shadow-md">
+      <div className="lg:container mx-auto">
+        {/* Top bar */}
+        <div className="h-16 px-4 flex items-center justify-between gap-4">
+          <Link
+            to="/"
+            className="text-2xl text-white font-semibold italic shrink-0"
+          >
             Shop Saga
           </Link>
-          <ul className=" hidden md:flex items-center space-x-4 lg:space-x-6">
-            {Menus.map((item, idx) => (
-              <li
-                key={idx}
-                className="text-white font-semibold text-sm lg:text-base"
+
+          <form
+            onSubmit={handleSearch}
+            className="hidden md:flex flex-1 max-w-2xl"
+          >
+            <div className="relative w-full">
+              <Input
+                type="text"
+                placeholder="Search products..."
+                className="w-full pr-10"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Button
+                type="submit"
+                variant="ghost"
+                size="icon"
+                className="bg-primary absolute right-0 top-0 text-white hover:text-white/70 rounded-r-md rounded-l-none"
               >
-                <ActiveLink to={item.path}>
-                  <span className="px-2 py-1 lg:px-3 lg:py-2 transition-all duration-500 ease-in-out rounded hover:bg-accent hover:text-primary">
-                    {item.title}
-                  </span>
-                </ActiveLink>
+                <Search className="h-5 w-5" />
+              </Button>
+            </div>
+          </form>
+
+          <div className="flex items-center gap-4">
+            <Link to="/cart" className="relative mt-1">
+              <FaCartShopping size={24} className=" text-white" />
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                {cart.length}
+              </span>
+            </Link>
+
+            {userData?.data ? (
+              <UserDropdown user={userData.data} />
+            ) : (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" className="h-8 w-8 rounded-full">
+                    <Avatar className="h-7 w-7">
+                      <AvatarFallback>U</AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <div className="w-60 px-3 py-4 mt-1 flex flex-col gap-y-4 bg-accent text-primary rounded z-50">
+                    <Link
+                      className="flex items-center gap-x-2 text-primary font-semibold hover:underline"
+                      to={"/login"}
+                    >
+                      <FaSignInAlt size={20} />
+                      Sign In
+                    </Link>
+
+                    <Link
+                      className="flex items-center gap-x-2 text-primary font-semibold hover:underline"
+                      to={"/register"}
+                    >
+                      <MdOutlineAssignmentInd size={20} />
+                      Sign Up
+                    </Link>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            )}
+            <div className="md:hidden">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-white"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                <MenuIcon className="h-6 w-6" />
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Navigation menu and Mobile Hamburger */}
+        <div className="border-t border-white/20 relative w-[60%]">
+          <ul className="hidden md:flex items-center justify-start space-x-8 h-12 px-4">
+            {Menus.filter((item) => item.title !== "Cart").map((item, idx) => (
+              <li key={idx}>
+                <NavLink
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `text-md font-medium transition-all duration-300 hover:text-white relative
+                    ${isActive ? "text-white" : "text-white/80"}
+                    after:content-[""] after:absolute after:w-0 after:h-0.5 
+                    after:bg-white after:left-0 after:-bottom-1
+                    after:transition-all after:duration-300
+                    hover:after:w-full`
+                  }
+                >
+                  {item.title}
+                </NavLink>
               </li>
             ))}
           </ul>
         </div>
-        <div className="hidden md:flex items-center space-x-4 relative">
-          {userData?.data ? (
-            <UserDropdown user={userData.data} />
-          ) : (
-            <div className="flex items-center">
-              <ActiveLink to="/login">
-                <span className="px-2 py-1 rounded flex items-center gap-1 text-white font-semibold text-sm lg:text-base transition-all duration-500 ease-in-out hover:bg-slate-50 hover:text-primary">
-                  Login
-                </span>
-              </ActiveLink>
-              <ActiveLink to="/register">
-                <span className="px-2 py-1 rounded flex items-center gap-1 text-white font-semibold text-sm lg:text-base transition-all duration-500 ease-in-out hover:bg-slate-50 hover:text-primary">
-                  Register
-                </span>
-              </ActiveLink>
-            </div>
-          )}
-        </div>
-        <div className="md:hidden">
-          <Hamburger color="white" toggled={open} toggle={setOpen} />
-        </div>
+
+        {/* Mobile Navigation Menu */}
         <motion.div
-          animate={open ? "open" : "closed"}
+          initial="closed"
+          animate={isMenuOpen ? "open" : "closed"}
           variants={mobileNavVariants}
-          className="block md:hidden bg-white fixed left-0 right-0 top-16"
+          className="md:hidden bg-white absolute left-0 right-0 shadow-lg"
         >
-          <ul className="ps-4 space-y-2">
-            {Menus.map((item, idx) => (
-              <li key={idx} className="text-primary hover:text-slate-50">
+          {/* Mobile Search */}
+          <form onSubmit={handleSearch} className="p-4">
+            <div className="relative w-full">
+              <Input
+                type="text"
+                placeholder="Search products..."
+                className="w-full pr-10"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Button
+                type="submit"
+                variant="ghost"
+                size="icon"
+                className="bg-primary absolute right-0 top-0 text-white hover:text-white/70 rounded-r-md rounded-l-none"
+              >
+                <Search className="h-5 w-5" />
+              </Button>
+            </div>
+          </form>
+
+          {/* Mobile Menu Items */}
+          <ul className="px-4 space-y-2 pb-4">
+            {Menus.filter((item) => item.title !== "Cart").map((item, idx) => (
+              <li key={idx} className="text-primary">
                 <NavLink
-                  className="px-3 py-1 flex items-center gap-x-3 transition-all duration-700 ease-in-out rounded"
                   to={item.path}
+                  className={({ isActive }) =>
+                    `px-3 py-2 flex items-center gap-x-3 rounded transition-all duration-300 ${
+                      isActive
+                        ? "bg-secondary text-white"
+                        : "hover:bg-secondary/10"
+                    }`
+                  }
                   onClick={handleMenuItemClick}
                 >
                   {item.icon}
@@ -128,30 +201,6 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          <div className="mt-1 px-4 pb-2 relative">
-            {userData?.data ? (
-              <UserDropdown user={userData.data} />
-            ) : (
-              <div>
-                <NavLink
-                  className="px-3 mb-4 pt-1 flex items-center gap-x-3 text-primary hover:text-secondary transition-all duration-700 ease-in-out rounded"
-                  to="/login"
-                  onClick={handleMenuItemClick}
-                >
-                  <BiLogIn size={18} color="#674188" />
-                  Login
-                </NavLink>
-                <NavLink
-                  className="px-3 flex items-center gap-x-3 text-primary hover:text-secondary transition-all duration-700 ease-in-out rounded"
-                  to="/register"
-                  onClick={handleMenuItemClick}
-                >
-                  <HiOutlineLogin size={18} color="#674188" />
-                  Register
-                </NavLink>
-              </div>
-            )}
-          </div>
         </motion.div>
       </div>
     </nav>

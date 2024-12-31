@@ -17,6 +17,8 @@ type TCustomError = {
   };
 };
 
+//  http://localhost:5000/api
+
 const baseQuery = fetchBaseQuery({
   baseUrl: "https://assignment-9-server-kappa.vercel.app/api",
   credentials: "include",

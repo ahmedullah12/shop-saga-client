@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import contact from "../../assets/contact.jpg";
+import { MdKeyboardArrowRight } from "react-icons/md";
 
 const Contact = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -13,7 +14,14 @@ const Contact = () => {
   };
 
   return (
-    <div className="container min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="container min-h-screen bg-gradient-to-b from-white to-gray-50 py-6">
+      <div className="w-full bg-gray-50 mb-6 px-4 py-6">
+              <h1 className="text-3xl font-bold text-primary mb-6">Contact Us</h1>
+              <p className="flex items-center space-x-3text-md font-bold">
+                <span>Home</span> <MdKeyboardArrowRight size={20} />{" "}
+                <span className="text-primary">Contact</span>
+              </p>
+            </div>
       {/* Hero Section */}
       <div className="relative overflow-hidden bg-secondary py-16 mt-4 mb-16">
         <div className="absolute inset-0">

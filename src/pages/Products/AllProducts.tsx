@@ -2,12 +2,28 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { FilterIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import ProductCard from "@/components/product/ProductCard";
 import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
 import { useGetAllProductsQuery } from "@/redux/features/product/productApi";
 import { IProduct } from "@/types/global";
 import Pagination from "@/components/Pagination";
 import ProductCardSkeleton from "@/components/product/ProductCardSkeleton";
+import { MdKeyboardArrowRight } from "react-icons/md";
+
+const PRICE_RANGES = [
+  { value: "0-50", label: "$0-$50" },
+  { value: "50-100", label: "$50-$100" },
+  { value: "100-200", label: "$100-$200" },
+  { value: "200-400", label: "$200-$400" },
+  { value: "400-", label: "$400+" },
+];
 
 const AllProducts = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,17 +36,15 @@ const AllProducts = () => {
 
   const [searchParams] = useSearchParams();
 
-  // Use debounced search term to prevent too many API calls
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
-      setCurrentPage(1); // Reset page when search changes
+      setCurrentPage(1); 
     }, 300);
 
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  // Query with all filter parameters
   const { data: productData, isLoading: productsLoading } =
     useGetAllProductsQuery({
       searchTerm: debouncedSearchTerm,
@@ -47,11 +61,16 @@ const AllProducts = () => {
     const categoryParam = searchParams.get("category");
     if (categoryParam) {
       setCategory(categoryParam);
-      setCurrentPage(1); // Reset page when category is set from URL
+      setCurrentPage(1);
+    }
+
+    const searchTerm = searchParams.get("searchTerm");
+    if (searchTerm) {
+      setSearchTerm(searchTerm);
+      setCurrentPage(1);
     }
   }, [searchParams]);
 
-  // Reset page when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [priceRange, category]);
@@ -60,12 +79,12 @@ const AllProducts = () => {
     setSearchTerm(e.target.value);
   };
 
-  const handlePriceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPriceRange(e.target.value);
+  const handlePriceChange = (value: string) => {
+    setPriceRange(value);
   };
 
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategory(e.target.value);
+  const handleCategoryChange = (value: string) => {
+    setCategory(value);
   };
 
   const handleClearFilters = () => {
@@ -80,10 +99,13 @@ const AllProducts = () => {
 
   return (
     <div className="container mx-auto p-6 mb-12">
-      <h1 className="text-2xl md:text-3xl font-bold mb-6 text-secondary">
-        All Products
-      </h1>
-
+      <div className="w-full bg-gray-50 mb-6 px-4 py-6">
+        <h1 className="text-3xl font-bold text-primary mb-6">Products</h1>
+        <p className="flex items-center space-x-3text-md font-bold">
+          <span>Home</span> <MdKeyboardArrowRight size={20} />{" "}
+          <span className="text-primary">Products</span>
+        </p>
+      </div>
       <div className="mb-6">
         <input
           type="text"
@@ -106,44 +128,44 @@ const AllProducts = () => {
       </div>
 
       <div className="flex flex-col md:flex-row gap-6">
-        {/* Sidebar Filters - Hidden on mobile unless toggled */}
+        {/* Sidebar Filters */}
         <aside
           className={`w-full md:w-64 ${
             showMobileFilters ? "block" : "hidden"
           } md:block`}
         >
-          <div className="bg-accent p-4 rounded-lg sticky top-24">
+          <div className="bg-accent p-4 rounded-lg sticky top-32">
             <div className="space-y-6">
               <div>
                 <h3 className="font-semibold mb-2">Price Range</h3>
-                <select
-                  value={priceRange}
-                  onChange={handlePriceChange}
-                  className="w-full p-2 border rounded-md"
-                >
-                  <option value="">All Prices</option>
-                  <option value="0-50">$0-$50</option>
-                  <option value="50-100">$50-$100</option>
-                  <option value="100-200">$100-$200</option>
-                  <option value="200-400">$200-$400</option>
-                  <option value="400-">$400+</option>
-                </select>
+                <Select value={priceRange} onValueChange={handlePriceChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select price range" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PRICE_RANGES.map((range) => (
+                      <SelectItem key={range.value} value={range.value}>
+                        {range.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div>
                 <h3 className="font-semibold mb-2">Categories</h3>
-                <select
-                  value={category}
-                  onChange={handleCategoryChange}
-                  className="w-full p-2 border rounded-md "
-                >
-                  <option value="">All Categories</option>
-                  {categories?.data?.data?.map((cat: any) => (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.name}
-                    </option>
-                  ))}
-                </select>
+                <Select value={category} onValueChange={handleCategoryChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories?.data?.data?.map((cat: any) => (
+                      <SelectItem key={cat.id} value={cat.id}>
+                        {cat.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               {(priceRange || category || searchTerm) && (
@@ -158,7 +180,6 @@ const AllProducts = () => {
           </div>
         </aside>
 
-        {/* Main Content */}
         <main className="flex-1">
           {categoriesLoading || productsLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -169,12 +190,15 @@ const AllProducts = () => {
           ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {productData?.data?.data?.map((product: IProduct) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+                {productData?.data?.data?.length > 0 ? (
+                  productData?.data?.data?.map((product: IProduct) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))
+                ) : (
+                  <p>No products found...</p>
+                )}
               </div>
 
-              {/* Pagination */}
               {meta?.total > dataPerPage && (
                 <div className="mt-8">
                   <Pagination

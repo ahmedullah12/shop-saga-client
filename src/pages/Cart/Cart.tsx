@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { UserRole } from "@/utils/constants";
 import { Minus, Plus } from "lucide-react";
 import toast from "react-hot-toast";
+import { MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
@@ -46,6 +47,13 @@ const Cart = () => {
 
   return (
     <div className="md:container px-4 min-h-screen">
+      <div className="w-full bg-gray-50 mb-6 px-4 py-6">
+              <h1 className="text-3xl font-bold text-primary mb-6">Cart</h1>
+              <p className="flex items-center space-x-3text-md font-bold">
+                <span>Home</span> <MdKeyboardArrowRight size={20} />{" "}
+                <span className="text-primary">Cart</span>
+              </p>
+            </div>
       {cart.length === 0 ? (
         <div className="min-h-screen flex">
           <p className="text-xl md:text-2xl font-bold text-primary mt-4">
@@ -110,7 +118,7 @@ const Cart = () => {
             <h3 className="text-2xl font-medium">Order Summary</h3>
             {
               cart.length > 0 && cart.map(prod => (
-                <div className="flex justify-between text-sm mt-4">
+                <div key={prod.id} className="flex justify-between text-sm mt-4">
                   <p>{prod.name}</p>
                   <p>${prod.flashSalePrice ? prod.flashSalePrice.toFixed(2) : prod.price}({prod.addedProductQuantity})</p>
                 </div>
