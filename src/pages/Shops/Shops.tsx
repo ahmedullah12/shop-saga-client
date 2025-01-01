@@ -3,6 +3,7 @@ import ShopCardSkeleton from "@/components/ShopCardSkeleton";
 import { useGetActiveShopsQuery } from "@/redux/features/shop/shopApi";
 import { IShop } from "@/types/global";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Shops = () => {
   const { data: shopsData, isLoading } = useGetActiveShopsQuery({});
@@ -14,7 +15,7 @@ const Shops = () => {
       <div className="w-full bg-gray-50 mb-6 px-4 py-6">
         <h1 className="text-3xl font-bold text-primary mb-6">Shops</h1>
         <p className="flex items-center space-x-3text-md font-bold">
-          <span>Home</span> <MdKeyboardArrowRight size={20} />{" "}
+        <Link to="/" className="hover:underline">Home</Link> <MdKeyboardArrowRight size={20} />{" "}
           <span className="text-primary">Shops</span>
         </p>
       </div>

@@ -43,7 +43,7 @@ const UserDropdown = ({ user }: TUserDropdown) => {
                 to={"/recent-products"}
               >
                 <ShoppingBasket />
-                Recent Products
+                Recent Viewed Products
               </Link>
               <Link
                 className="flex items-center gap-x-2 text-primary font-semibold hover:underline"

@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { leadersData, teamData } from "@/utils/aboutPageData";
 import locationImg from "../../assets/location.png";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -10,7 +11,10 @@ const About = () => {
       <div className="w-full bg-gray-50 mb-6 px-4 py-6">
         <h1 className="text-3xl font-bold text-primary mb-6">About</h1>
         <p className="flex items-center space-x-3text-md font-bold">
-          <span>Home</span> <MdKeyboardArrowRight size={20} />{" "}
+          <Link to="/" className="hover:underline">
+            Home
+          </Link>{" "}
+          <MdKeyboardArrowRight size={20} />{" "}
           <span className="text-primary">About</span>
         </p>
       </div>

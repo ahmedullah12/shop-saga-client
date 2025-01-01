@@ -17,7 +17,9 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const { cart, totalPrice, discountedTotal, appliedCoupon } = useAppSelector((state) => state.cart);
+  const { cart, totalPrice, discountedTotal, appliedCoupon } = useAppSelector(
+    (state) => state.cart
+  );
   const user = useAppSelector(useCurrentUser);
   const [couponCode, setCouponCode] = useState("");
 
@@ -71,7 +73,7 @@ const Cart = () => {
   };
 
   // Calculate discount amount
-  const discountAmount = appliedCoupon 
+  const discountAmount = appliedCoupon
     ? (totalPrice * appliedCoupon.discount) / 100
     : 0;
 
@@ -80,7 +82,10 @@ const Cart = () => {
       <div className="w-full bg-gray-50 mb-6 px-4 py-6">
         <h1 className="text-3xl font-bold text-primary mb-6">Cart</h1>
         <p className="flex items-center space-x-3text-md font-bold">
-          <span>Home</span> <MdKeyboardArrowRight size={20} />{" "}
+          <Link to="/" className="hover:underline">
+            Home
+          </Link>{" "}
+          <MdKeyboardArrowRight size={20} />{" "}
           <span className="text-primary">Cart</span>
         </p>
       </div>
@@ -182,7 +187,6 @@ const Cart = () => {
                   Apply
                 </Button>
               </div>
-              
             </div>
 
             <div className="w-full h-[1px] bg-primary my-4"></div>
@@ -193,8 +197,10 @@ const Cart = () => {
               <p className="flex justify-between">
                 Discount:{" "}
                 <span className="text-green-600">
-                  {appliedCoupon 
-                    ? `${appliedCoupon.discount}% (-$${discountAmount.toFixed(2)})`
+                  {appliedCoupon
+                    ? `${appliedCoupon.discount}% (-$${discountAmount.toFixed(
+                        2
+                      )})`
                     : "$0.00"}
                 </span>
               </p>

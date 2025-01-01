@@ -2,6 +2,7 @@ import ProductCard from "@/components/product/ProductCard";
 import { useAppSelector } from "@/redux/hooks";
 import { IProduct } from "@/types/global";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const RecentViewedProducts = () => {
   const recentProducts = useAppSelector(
@@ -15,7 +16,10 @@ const RecentViewedProducts = () => {
           Recent Viewed Products
         </h1>
         <p className="flex items-center space-x-3text-md font-bold">
-          <span>Home</span> <MdKeyboardArrowRight size={20} />{" "}
+          <Link to="/" className="hover:underline">
+            Home
+          </Link>{" "}
+          <MdKeyboardArrowRight size={20} />{" "}
           <span className="text-primary">Recent Viewed Products</span>
         </p>
       </div>

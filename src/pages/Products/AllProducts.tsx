@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { FilterIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -102,7 +102,7 @@ const AllProducts = () => {
       <div className="w-full bg-gray-50 mb-6 px-4 py-6">
         <h1 className="text-3xl font-bold text-primary mb-6">Products</h1>
         <p className="flex items-center space-x-3text-md font-bold">
-          <span>Home</span> <MdKeyboardArrowRight size={20} />{" "}
+          <Link to="/" className="hover:underline">Home</Link> <MdKeyboardArrowRight size={20} />{" "}
           <span className="text-primary">Products</span>
         </p>
       </div>

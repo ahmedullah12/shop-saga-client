@@ -3,6 +3,7 @@ import ProductCardSkeleton from "@/components/product/ProductCardSkeleton";
 import { useGetFlashSaleProductsQuery } from "@/redux/features/product/productApi";
 import { IProduct } from "@/types/global";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const FlashSaleProducts = () => {
   const { data: products, isLoading } = useGetFlashSaleProductsQuery({});
@@ -14,7 +15,10 @@ const FlashSaleProducts = () => {
           Flash Sale Products
         </h1>
         <p className="flex items-center space-x-3text-md font-bold">
-          <span>Home</span> <MdKeyboardArrowRight size={20} />{" "}
+          <Link to="/" className="hover:underline">
+            Home
+          </Link>{" "}
+          <MdKeyboardArrowRight size={20} />{" "}
           <span className="text-primary">Flash Sale Products</span>
         </p>
       </div>
