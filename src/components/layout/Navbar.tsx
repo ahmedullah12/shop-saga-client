@@ -16,10 +16,7 @@ import { Popover } from "../ui/popover";
 import UserDropdown from "../UserDropdown";
 import { motion } from "framer-motion";
 import { useGetAllCategoriesQuery } from "@/redux/features/category/categoryApi";
-import { ICategory } from "@/types/global";
 import MegaMenu from "../MegaMenu";
-
-
 
 export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -137,7 +134,7 @@ export default function Navbar() {
         </div>
 
         {/* Desktop Navigation menu with Mega Menu */}
-        <div className="border-t border-white/20 relative">
+        <div className="border-t border-white/20 relative w-[50vw]">
           <ul className="hidden md:flex items-center justify-start space-x-8 h-12 px-4">
             <li className="group relative">
               <button className="flex items-center gap-1 text-md font-medium text-white/80 hover:text-white transition-all duration-300">
@@ -193,23 +190,6 @@ export default function Navbar() {
               </Button>
             </div>
           </form>
-
-          {/* Mobile Categories */}
-          <div className="px-4 pb-4">
-            <h3 className="font-semibold text-primary mb-2">Categories</h3>
-            <div className="grid grid-cols-2 gap-2">
-              {categories?.data?.data?.map((category: ICategory) => (
-                <Link
-                  key={category.id}
-                  to={`/category/${category.id}`}
-                  className="p-2 rounded hover:bg-gray-50 transition-colors duration-200"
-                  onClick={handleMenuItemClick}
-                >
-                  <span className="text-gray-600">{category.name}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
 
           {/* Mobile Menu Items */}
           <ul className="px-4 space-y-2 pb-4">

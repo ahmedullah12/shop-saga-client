@@ -82,7 +82,7 @@ const DashboardLayout: React.FC = () => {
         <div>
           <div className="p-4">
             <p className="mb-3 text-2xl text-primary italic font-bold">
-              Dashboard
+              ShopSaga
             </p>
           </div>
           <div className="px-4 flex-grow">

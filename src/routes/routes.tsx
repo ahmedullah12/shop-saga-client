@@ -34,6 +34,9 @@ import About from "@/pages/About/About";
 import Contact from "@/pages/Contact/Contact";
 import Profile from "@/pages/Profile/Profile";
 import Coupons from "@/pages/Admin/Coupons/Coupons";
+import SubscribedUsers from "@/pages/Admin/SubscribedUsers/SubscribedUsers";
+import VendorDashbaord from "@/pages/Vendor/VendorDashbaord/VendorDashbaord";
+import AdminDashboard from "@/pages/Admin/AdminDashboard/AdminDashboard";
 
 const router = createBrowserRouter([
   {
@@ -144,6 +147,14 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       {
+        path: "/dashboard/vendor/dashboard",
+        element: (
+          <ProtectedRoute role={UserRole.VENDOR}>
+            <VendorDashbaord />
+          </ProtectedRoute>
+        )
+      },
+      {
         path: "/dashboard/vendor/shop",
         element: (
           <ProtectedRoute role={UserRole.VENDOR}>
@@ -192,6 +203,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/dashboard/admin/dashboard",
+        element: (
+          <ProtectedRoute role={UserRole.ADMIN}>
+            <AdminDashboard />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "/dashboard/admin/all-users",
         element: (
           <ProtectedRoute role={UserRole.ADMIN}>
@@ -220,6 +239,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute role={UserRole.ADMIN}>
             <AllShops />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/dashboard/admin/subscribed-users",
+        element: (
+          <ProtectedRoute role={UserRole.ADMIN}>
+            <SubscribedUsers />
           </ProtectedRoute>
         ),
       },

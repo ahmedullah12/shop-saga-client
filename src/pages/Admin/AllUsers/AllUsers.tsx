@@ -64,7 +64,7 @@ const AllUsers = () => {
       <Card className="w-full max-w-6xl mx-auto my-6">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-primary">
-            Order History
+            All Users
           </CardTitle>
         </CardHeader>
         <CardContent>

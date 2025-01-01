@@ -65,7 +65,7 @@ const UserDropdown = ({ user }: TUserDropdown) => {
               {user.role === "VENDOR" ? (
                 <Link
                   className="flex items-center gap-x-2 text-primary font-semibold hover:underline"
-                  to={"/dashboard/vendor/shop"}
+                  to={"/dashboard/vendor/dashboard"}
                 >
                   <MdDashboard size={23}/>
                   Dashboard
@@ -73,7 +73,7 @@ const UserDropdown = ({ user }: TUserDropdown) => {
               ) : (
                 <Link
                   className="flex items-center gap-x-2  text-primary font-semibold hover:underline"
-                  to={"/dashboard/admin/all-users"}
+                  to={"/dashboard/admin/dashboard"}
                 >
                   <MdDashboard size={23} />
                   Dashboard

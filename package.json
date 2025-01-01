@@ -39,6 +39,7 @@
     "react-router-dom": "^7.0.2",
     "react-select": "^5.9.0",
     "react-star-ratings": "^2.3.0",
+    "recharts": "^2.15.0",
     "redux-persist": "^6.0.0",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7"

@@ -103,6 +103,13 @@ export interface IReview {
   product: IProduct;
 }
 
+export interface ISubscribeUser {
+  id: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface ICoupon {
   id: string;
   couponNumber: string;

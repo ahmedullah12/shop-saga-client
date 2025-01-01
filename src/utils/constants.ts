@@ -10,6 +10,10 @@ export const UserRole = {
 
 export const vendorSideBarOptions = [
   {
+    title: "Dashboard",
+    route: "dashboard",
+  },
+  {
     title: "Shop",
     route: "shop",
   },
@@ -28,6 +32,10 @@ export const vendorSideBarOptions = [
 ];
 
 export const adminSideBarOptions = [
+  {
+    title: "Dashboard",
+    route: "dashboard",
+  },
   {
     title: "Users",
     route: "all-users",

@@ -24,7 +24,7 @@ const userApi = baseApi.injectEndpoints({
       providesTags: ["Users"],
     }),
     updateUser: builder.mutation({
-      query: ({userId, payload}) => ({
+      query: ({ userId, payload }) => ({
         url: `/user/${userId}`,
         method: "PUT",
         body: payload,
@@ -38,12 +38,24 @@ const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Users", "Shops"],
     }),
+    getAllSubscribeUsers: builder.query({
+      query: ({ page, limit }) => {
+        const params = new URLSearchParams();
+
+        if (page) params.append("page", page);
+        if (limit) params.append("limit", limit);
+        return {
+          url: `/user/subscribe-users?${params.toString()}`,
+          method: "GET",
+        };
+      },
+    }),
     userSubscribe: builder.mutation({
       query: (payload) => ({
         url: "/user/subscribe-user",
         method: "POST",
         body: payload,
-      })
+      }),
     }),
     deleteUser: builder.mutation({
       query: (id) => ({
@@ -67,6 +79,7 @@ export const {
   useGetUserWithEmailQuery,
   useUpdateUserMutation,
   useFollowShopMutation,
+  useGetAllSubscribeUsersQuery,
   useUserSubscribeMutation,
   useDeleteUserMutation,
   useSuspendUserMutation,

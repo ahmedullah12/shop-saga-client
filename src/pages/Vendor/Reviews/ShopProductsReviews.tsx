@@ -31,7 +31,7 @@ const ShopProductsReviews = () => {
       page: currentPage,
     });
 
-  if (isLoading && reviewsLoading) return <Loader />;
+  if (isLoading || reviewsLoading) return <Loader />;
 
   const reviews = reviewsData?.data?.data;
   const meta = reviewsData?.data?.meta;
