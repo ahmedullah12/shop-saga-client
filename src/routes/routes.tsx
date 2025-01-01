@@ -33,6 +33,7 @@ import ErrorPage from "@/pages/Error/Error";
 import About from "@/pages/About/About";
 import Contact from "@/pages/Contact/Contact";
 import Profile from "@/pages/Profile/Profile";
+import Coupons from "@/pages/Admin/Coupons/Coupons";
 
 const router = createBrowserRouter([
   {
@@ -219,6 +220,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute role={UserRole.ADMIN}>
             <AllShops />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/dashboard/admin/coupons",
+        element: (
+          <ProtectedRoute role={UserRole.ADMIN}>
+            <Coupons />
           </ProtectedRoute>
         ),
       },

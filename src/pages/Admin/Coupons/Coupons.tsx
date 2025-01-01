@@ -1,5 +1,5 @@
 import Loader from "@/components/Loader";
-import CreateCategoryModal from "@/components/modals/CreateCategoryModal";
+import CreateCouponModal from "@/components/modals/CreateCouponModal";
 import DeleteConfirmationModal from "@/components/modals/DeleteConfirmationModal";
 import Pagination from "@/components/Pagination";
 import { Button } from "@/components/ui/button";
@@ -11,8 +11,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useDeleteCategoryMutation } from "@/redux/features/category/categoryApi";
-import { useGetAllCouponsQuery } from "@/redux/features/coupon/couponApi";
+import {
+  useDeleteCouponMutation,
+  useGetAllCouponsQuery,
+} from "@/redux/features/coupon/couponApi";
 import { ICoupon } from "@/types/global";
 import formatDate from "@/utils/formatDate";
 import { useState } from "react";
@@ -28,16 +30,16 @@ const Coupons = () => {
     page: currentPage,
   });
 
-  const [deleteCategory] = useDeleteCategoryMutation();
+  const [deleteCoupon] = useDeleteCouponMutation();
 
   const handleOpenDeleteModal = (coupon: ICoupon) => {
     setSelectedCoupon(coupon);
     setIsDeleteModalOpen(true);
   };
 
-  const handleDeleteCategory = async () => {
+  const handleDeleteCoupon = async () => {
     if (selectedCoupon) {
-      return deleteCategory(selectedCoupon.id).unwrap();
+      return deleteCoupon(selectedCoupon.id).unwrap();
     }
   };
 
@@ -50,20 +52,21 @@ const Coupons = () => {
   return (
     <div className="w-full p-6 bg-white shadow-sm rounded-lg">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">All Categories</h2>
-        <CreateCategoryModal />
+        <h2 className="text-2xl font-bold text-gray-800">All Coupons</h2>
+        <CreateCouponModal />
       </div>
 
       {coupons.length === 0 ? (
         <div className="text-center py-12 text-gray-500">
-          <p className="text-lg">No categories found</p>
-          <p className="text-sm">Start by adding category</p>
+          <p className="text-lg">No coupons found</p>
+          <p className="text-sm">Start by adding coupon</p>
         </div>
       ) : (
         <Table className="mb-4">
           <TableHeader>
             <TableRow>
               <TableHead>Number</TableHead>
+              <TableHead>Discount</TableHead>
               <TableHead>Expiry Date</TableHead>
               <TableHead>Created At</TableHead>
               <TableHead>Actions</TableHead>
@@ -74,6 +77,9 @@ const Coupons = () => {
               <TableRow key={coupon.id}>
                 <TableCell className="font-medium">
                   {coupon.couponNumber}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {coupon.discount}%
                 </TableCell>
 
                 <TableCell>{formatDate(coupon.expiryDate)}</TableCell>
@@ -97,8 +103,8 @@ const Coupons = () => {
       <DeleteConfirmationModal
         isOpen={isDeleteModalOpen}
         onOpenChange={setIsDeleteModalOpen}
-        onDelete={handleDeleteCategory}
-        title="Delete User"
+        onDelete={handleDeleteCoupon}
+        title="Delete Coupon"
         description="Are you sure you want to delete this coupon?"
       />
 

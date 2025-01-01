@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 
 const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState<string>("");
-  const { cart, totalPrice } = useAppSelector((state) => state.cart);
+  const { cart, totalPrice, discountedTotal } = useAppSelector((state) => state.cart);
   const navigate = useNavigate();
   const [createPayment] = useCreatePaymentMutation();
 
@@ -27,7 +27,7 @@ const Checkout = () => {
 
     const submitData = {
       ...data,
-      totalPrice,
+      totalPrice: discountedTotal ? discountedTotal : totalPrice,
       products: cart,
     };
 
@@ -53,6 +53,7 @@ const Checkout = () => {
     customerName: userData?.data?.name,
     customerEmail: userData?.data?.email,
     customerPhone: userData?.data?.contactNumber,
+    customerAddress: userData?.data?.address ? userData?.data?.address : "",
   };
 
   return (
@@ -184,7 +185,7 @@ const Checkout = () => {
                         Total
                       </p>
                       <p className="text-lg font-semibold text-primary">
-                        ${totalPrice.toFixed(2)}
+                        ${discountedTotal ? discountedTotal.toFixed(2) : totalPrice.toFixed(2)}
                       </p>
                     </div>
 

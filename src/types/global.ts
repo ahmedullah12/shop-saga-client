@@ -107,6 +107,7 @@ export interface ICoupon {
   id: string;
   couponNumber: string;
   expiryDate: string;
+  discount: number;
   createdAt: string;
   updatedAt: string;
   userCoupon: IUserCoupon[];

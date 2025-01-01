@@ -44,6 +44,14 @@ export const adminSideBarOptions = [
     title: "Orders History",
     route: "orders-history",
   },
+  {
+    title: "Subscribed Users",
+    route: "subscribed-users",
+  },
+  {
+    title: "Coupons",
+    route: "coupons",
+  },
 ];
 
 export const bannerCarouselData = [

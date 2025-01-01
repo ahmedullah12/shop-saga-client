@@ -39,11 +39,11 @@ const couponApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Coupons"],
     }),
-    useCoupon: builder.mutation({
-      query: (payload) => ({
-        url: `/coupon/use-coupon`,
+    validateCoupon: builder.mutation({
+      query: (code) => ({
+        url: `/coupon/validate-coupon`,
         method: "POST",
-        body: payload,
+        body: code,
       }),
     }),
   }),
@@ -54,5 +54,5 @@ export const {
   useCreateCouponMutation,
   useDeleteCouponMutation,
   useGetAllCouponsQuery,
-  useUseCouponMutation,
+  useValidateCouponMutation,
 } = couponApi;

@@ -1,23 +1,30 @@
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useCurrentUser } from "@/redux/features/auth/authApi";
 import {
   decreaseQuantity,
   increaseQuantity,
   removeFromCart,
+  applyCoupon,
 } from "@/redux/features/cart/cartSlice";
+import { useValidateCouponMutation } from "@/redux/features/coupon/couponApi";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { UserRole } from "@/utils/constants";
 import { Minus, Plus } from "lucide-react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const { cart, totalPrice } = useAppSelector((state) => state.cart);
+  const { cart, totalPrice, discountedTotal, appliedCoupon } = useAppSelector((state) => state.cart);
   const user = useAppSelector(useCurrentUser);
+  const [couponCode, setCouponCode] = useState("");
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const [validateCoupon] = useValidateCouponMutation();
 
   const handleIncrease = (productId: string) => {
     dispatch(increaseQuantity(productId));
@@ -33,6 +40,24 @@ const Cart = () => {
     dispatch(removeFromCart(productId));
   };
 
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) {
+      toast.error("Please enter a coupon code");
+      return;
+    }
+
+    try {
+      const res = await validateCoupon({ code: couponCode }).unwrap();
+      if (res.success) {
+        dispatch(applyCoupon(res.data));
+        setCouponCode("");
+        toast.success(res.message);
+      }
+    } catch (err: any) {
+      toast.error(err.data.message);
+    }
+  };
+
   const handleNavigateCheckout = () => {
     if (user && user.role !== UserRole.CUSTOMER) {
       return toast.error("You need a customer account to proceed!!");
@@ -45,8 +70,13 @@ const Cart = () => {
     return toast.error("Please login to checkout!!");
   };
 
+  // Calculate discount amount
+  const discountAmount = appliedCoupon 
+    ? (totalPrice * appliedCoupon.discount) / 100
+    : 0;
+
   return (
-    <div className="md:container px-4 min-h-screen">
+    <div className="md:container px-4 py-6 min-h-screen mb-10">
       <div className="w-full bg-gray-50 mb-6 px-4 py-6">
         <h1 className="text-3xl font-bold text-primary mb-6">Cart</h1>
         <p className="flex items-center space-x-3text-md font-bold">
@@ -138,11 +168,43 @@ const Cart = () => {
                   </p>
                 </div>
               ))}
+
+            {/* Coupon Section */}
+            <div className="mt-6">
+              <div className="flex gap-2">
+                <Input
+                  type="text"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                  placeholder="Enter coupon code"
+                />
+                <Button onClick={handleApplyCoupon} className="bg-primary">
+                  Apply
+                </Button>
+              </div>
+              
+            </div>
+
             <div className="w-full h-[1px] bg-primary my-4"></div>
-            <p className="text-lg mt-10 mb-4 flex justify-between">
-              Total Price:{" "}
-              <span className="text-primary">${totalPrice.toFixed(2)}</span>
-            </p>
+            <div className="text-lg mt-10 mb-4 space-y-2">
+              <p className="flex justify-between">
+                Subtotal: <span>${totalPrice.toFixed(2)}</span>
+              </p>
+              <p className="flex justify-between">
+                Discount:{" "}
+                <span className="text-green-600">
+                  {appliedCoupon 
+                    ? `${appliedCoupon.discount}% (-$${discountAmount.toFixed(2)})`
+                    : "$0.00"}
+                </span>
+              </p>
+              <p className="flex justify-between font-bold">
+                Total:{" "}
+                <span className="text-primary">
+                  ${discountedTotal.toFixed(2)}
+                </span>
+              </p>
+            </div>
 
             <Button onClick={handleNavigateCheckout} className="w-full mt-4">
               Proceed to Checkout

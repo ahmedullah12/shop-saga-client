@@ -1,4 +1,4 @@
-import { IProduct } from "@/types/global";
+import { ICoupon, IProduct } from "@/types/global";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type CartItem = IProduct & {
@@ -10,6 +10,8 @@ type TInitialState = {
   totalPrice: number;
   warning: string | null;
   pendingProduct: IProduct | null;
+  appliedCoupon: ICoupon | null;
+  discountedTotal: number;
 };
 
 const initialState: TInitialState = {
@@ -17,6 +19,8 @@ const initialState: TInitialState = {
   totalPrice: 0,
   warning: null,
   pendingProduct: null,
+  appliedCoupon: null,
+  discountedTotal: 0,
 };
 
 const recalculateTotalPrice = (cart: CartItem[]) =>
@@ -27,6 +31,12 @@ const recalculateTotalPrice = (cart: CartItem[]) =>
         : item.price;
     return total + priceToUse * item.addedProductQuantity;
   }, 0);
+
+const calculateDiscountedTotal = (totalPrice: number, coupon: ICoupon | null) => {
+  if (!coupon) return totalPrice;
+  const discount = (totalPrice * coupon.discount) / 100;
+  return totalPrice - discount;
+};
 
 const cartSlice = createSlice({
   name: "cart",
@@ -56,6 +66,7 @@ const cartSlice = createSlice({
       }
 
       state.totalPrice = recalculateTotalPrice(state.cart);
+      state.discountedTotal = calculateDiscountedTotal(state.totalPrice, state.appliedCoupon);
       state.warning = null;
       state.pendingProduct = null;
     },
@@ -73,6 +84,7 @@ const cartSlice = createSlice({
       }
 
       state.totalPrice = recalculateTotalPrice(state.cart);
+      state.discountedTotal = calculateDiscountedTotal(state.totalPrice, state.appliedCoupon);
       state.warning = null;
       state.pendingProduct = null;
     },
@@ -93,6 +105,7 @@ const cartSlice = createSlice({
         product.addedProductQuantity += 1;
         product.inventoryCount -= 1;
         state.totalPrice += priceToUse;
+        state.discountedTotal = calculateDiscountedTotal(state.totalPrice, state.appliedCoupon);
       }
     },
 
@@ -107,6 +120,7 @@ const cartSlice = createSlice({
         product.addedProductQuantity -= 1;
         product.inventoryCount += 1;
         state.totalPrice -= priceToUse;
+        state.discountedTotal = calculateDiscountedTotal(state.totalPrice, state.appliedCoupon);
       }
     },
 
@@ -125,6 +139,7 @@ const cartSlice = createSlice({
       if (state.totalPrice < 0) {
         state.totalPrice = 0;
       }
+      state.discountedTotal = calculateDiscountedTotal(state.totalPrice, state.appliedCoupon);
     },
 
     clearCart: (state) => {
@@ -134,9 +149,21 @@ const cartSlice = createSlice({
 
       state.cart = [];
       state.totalPrice = 0;
+      state.discountedTotal = 0;
       state.warning = null;
       state.pendingProduct = null;
+      state.appliedCoupon = null;
     },
+
+    applyCoupon: (state, action: PayloadAction<ICoupon>) => {
+      state.appliedCoupon = action.payload;
+      state.discountedTotal = calculateDiscountedTotal(state.totalPrice, action.payload);
+    },
+
+    removeCoupon: (state) => {
+      state.appliedCoupon = null;
+      state.discountedTotal = state.totalPrice;
+    }
   },
 });
 
@@ -148,5 +175,8 @@ export const {
   increaseQuantity,
   decreaseQuantity,
   clearCart,
+  applyCoupon,
+  removeCoupon
 } = cartSlice.actions;
+
 export default cartSlice.reducer;

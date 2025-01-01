@@ -29,15 +29,15 @@ const UserDropdown = ({ user }: TUserDropdown) => {
           <span>{user?.name}</span>
         </PopoverTrigger>
         <PopoverContent className="w-60 bg-accent border-none">
+          <Link
+            className="flex items-center gap-x-2 text-primary font-semibold hover:underline mb-2"
+            to={"/profile"}
+          >
+            <AiFillProfile size={23} />
+            Profile
+          </Link>
           {user.role === "CUSTOMER" ? (
             <div className="flex flex-col gap-y-3">
-              <Link
-                className="flex items-center gap-x-2 text-primary font-semibold hover:underline"
-                to={"/profile"}
-              >
-                <AiFillProfile size={22} />
-                Profile
-              </Link>
               <Link
                 className="flex items-center gap-x-2 text-primary font-semibold hover:underline"
                 to={"/recent-products"}
@@ -67,7 +67,7 @@ const UserDropdown = ({ user }: TUserDropdown) => {
                   className="flex items-center gap-x-2 text-primary font-semibold hover:underline"
                   to={"/dashboard/vendor/shop"}
                 >
-                  <MdDashboard />
+                  <MdDashboard size={23}/>
                   Dashboard
                 </Link>
               ) : (
@@ -75,7 +75,7 @@ const UserDropdown = ({ user }: TUserDropdown) => {
                   className="flex items-center gap-x-2  text-primary font-semibold hover:underline"
                   to={"/dashboard/admin/all-users"}
                 >
-                  <MdDashboard size={22}/>
+                  <MdDashboard size={23} />
                   Dashboard
                 </Link>
               )}
@@ -85,7 +85,7 @@ const UserDropdown = ({ user }: TUserDropdown) => {
             onClick={handleLogout}
             className="flex items-center gap-x-2 text-primary font-semibold mt-3"
           >
-            <LogOut size={22} />
+            <LogOut size={23} />
             Logout
           </button>
         </PopoverContent>
