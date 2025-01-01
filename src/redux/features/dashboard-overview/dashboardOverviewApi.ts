@@ -8,7 +8,13 @@ const dashboardOverviewApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    getVendorOverviewData: builder.query({
+      query: (id) => ({
+        url: `/dashboard-overview/vendor-overview/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useGetAllOverviewDataQuery } = dashboardOverviewApi;
+export const { useGetAllOverviewDataQuery, useGetVendorOverviewDataQuery } = dashboardOverviewApi;
