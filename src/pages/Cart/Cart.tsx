@@ -14,7 +14,7 @@ import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const { cart, totalPrice, discountedTotal, appliedCoupon } = useAppSelector(
