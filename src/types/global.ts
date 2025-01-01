@@ -49,8 +49,8 @@ export interface IShop {
   status: string;
   createdAt: string;
   updatedAt: string;
-  vendor: IUserData
-  products?: IProduct[]
+  vendor: IUserData;
+  products?: IProduct[];
 }
 
 export interface IProductCategory {
@@ -101,4 +101,21 @@ export interface IReview {
   updatedAt: string;
   user: IUserData;
   product: IProduct;
+}
+
+export interface ICoupon {
+  id: string;
+  couponNumber: string;
+  expiryDate: string;
+  createdAt: string;
+  updatedAt: string;
+  userCoupon: IUserCoupon[];
+}
+
+export interface IUserCoupon {
+  couponId: string;
+  userId: string;
+  status: string;
+  coupon: ICoupon;
+  user: IUserData;
 }

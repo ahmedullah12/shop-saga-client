@@ -6,6 +6,7 @@ import { MdDashboard, MdOutlineRateReview } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { AiFillProfile } from "react-icons/ai";
 
 type TUserDropdown = {
   user: IUserData;
@@ -30,6 +31,13 @@ const UserDropdown = ({ user }: TUserDropdown) => {
         <PopoverContent className="w-60 bg-accent border-none">
           {user.role === "CUSTOMER" ? (
             <div className="flex flex-col gap-y-3">
+              <Link
+                className="flex items-center gap-x-2 text-primary font-semibold hover:underline"
+                to={"/profile"}
+              >
+                <AiFillProfile size={22} />
+                Profile
+              </Link>
               <Link
                 className="flex items-center gap-x-2 text-primary font-semibold hover:underline"
                 to={"/recent-products"}

@@ -23,6 +23,14 @@ const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Users"],
     }),
+    updateUser: builder.mutation({
+      query: ({userId, payload}) => ({
+        url: `/user/${userId}`,
+        method: "PUT",
+        body: payload,
+      }),
+      invalidatesTags: ["Users"],
+    }),
     followShop: builder.mutation({
       query: (shopId) => ({
         url: `/user/follow-shop/${shopId}`,
@@ -57,6 +65,7 @@ const userApi = baseApi.injectEndpoints({
 export const {
   useGetAllUsersQuery,
   useGetUserWithEmailQuery,
+  useUpdateUserMutation,
   useFollowShopMutation,
   useUserSubscribeMutation,
   useDeleteUserMutation,

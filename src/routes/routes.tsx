@@ -32,6 +32,7 @@ import Shops from "@/pages/Shops/Shops";
 import ErrorPage from "@/pages/Error/Error";
 import About from "@/pages/About/About";
 import Contact from "@/pages/Contact/Contact";
+import Profile from "@/pages/Profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,14 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/profile",
+        element: (
+          <ProtectedRoute role={undefined}>
+            <Profile />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/shop/:id",
