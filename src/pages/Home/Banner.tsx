@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 export default function Banner() {
   return (
-    <div className="container px-4 py-4">
+    <div className="container px-0 py-4">
       <Carousel
         plugins={[
           Autoplay({

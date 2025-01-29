@@ -1,6 +1,8 @@
 import banner4 from "../assets/banner4.png";
 import banner5 from "../assets/banner5.png";
 import banner6 from "../assets/banner6.png";
+import { MdDashboard } from "react-icons/md";
+import { CiShop } from "react-icons/ci";
 
 export const UserRole = {
   ADMIN: "ADMIN",

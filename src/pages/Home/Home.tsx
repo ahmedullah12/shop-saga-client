@@ -6,15 +6,24 @@ import Newsletter from "./Newsletter";
 import RecentProducts from "./RecentProducts";
 import PromoSection from "./PromoSection";
 import Offer from "./Offer";
+import { useGoogleOneTapLogin } from "@react-oauth/google";
 
 const Home = () => {
+  useGoogleOneTapLogin({
+    onSuccess: (credentialResponse) => {
+      console.log(credentialResponse);
+    },
+    onError: () => {
+      console.log("One Tap Login Failed");
+    },
+  });
   return (
     <div>
       <ScrollToTop />
       <Banner />
-      <PromoSection/>
       <Categories />
-      <Offer/>
+      <PromoSection />
+      <Offer />
       <FlashSaleProducts />
       <Newsletter />
       <RecentProducts />

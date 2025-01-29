@@ -11,7 +11,7 @@ const RecentProducts = () => {
   });
 
   return (
-    <div className="container mx-auto p-6 mb-12">
+    <div className="container mx-auto my-10 px-0">
       <h1 className="text-2xl md:text-3xl font-bold mb-6 text-secondary">
         Recent Products
       </h1>

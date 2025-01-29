@@ -47,9 +47,9 @@ export default function Navbar() {
 
   return (
     <nav className="bg-secondary w-full fixed top-0 z-50 shadow-md">
-      <div className="lg:container mx-auto">
+      <div className="lg:container lg:px-0 mx-auto">
         {/* Top bar */}
-        <div className="h-16 px-4 flex items-center justify-between gap-4">
+        <div className="h-16 flex items-center justify-between gap-4">
           <Link
             to="/"
             className="text-2xl text-white font-semibold italic shrink-0"
@@ -135,7 +135,7 @@ export default function Navbar() {
 
         {/* Desktop Navigation menu with Mega Menu */}
         <div className="border-t border-white/20 relative w-[50vw]">
-          <ul className="hidden md:flex items-center justify-start space-x-8 h-12 px-4">
+          <ul className="hidden md:flex items-center justify-start space-x-8 h-12">
             <li className="group relative">
               <button className="flex items-center gap-1 text-md font-medium text-white/80 hover:text-white transition-all duration-300">
                 Categories

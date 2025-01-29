@@ -20,8 +20,8 @@ export default function PromoSection() {
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-b from-white to-gray-50">
-      <div className="container px-4">
+    <section className="py-10 bg-gradient-to-b from-white to-gray-50">
+      <div className="container px-0">
         <div className=" mb-4">
           <h2 className="text-secondary text-2xl md:text-3xl font-bold mb-4">
             Exclusive Deals & Offers
