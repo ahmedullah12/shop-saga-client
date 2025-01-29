@@ -89,7 +89,7 @@ const DashboardLayout: React.FC = () => {
             {user?.role === "VENDOR"
               ? vendorSideBarOptions.map((option) => (
                   <Link
-                    className={`block px-4 py-2 rounded-md ${
+                    className={`px-4 py-2 rounded-md flex gap-x-2 ${
                       location.pathname === `/dashboard/vendor/${option.route}`
                         ? "bg-primary text-white"
                         : ""
@@ -97,12 +97,13 @@ const DashboardLayout: React.FC = () => {
                     key={option.title}
                     to={`/dashboard/vendor/${option.route}`}
                   >
+                    <span>{option.icon}</span>
                     {option.title}
                   </Link>
                 ))
               : adminSideBarOptions.map((option) => (
                   <Link
-                    className={`block px-4 py-2 rounded-md ${
+                    className={`px-4 py-2 rounded-md flex gap-x-2 ${
                       location.pathname === `/dashboard/admin/${option.route}`
                         ? "bg-primary text-white"
                         : ""
@@ -110,6 +111,7 @@ const DashboardLayout: React.FC = () => {
                     key={option.title}
                     to={`/dashboard/admin/${option.route}`}
                   >
+                    <span>{option.icon}</span>
                     {option.title}
                   </Link>
                 ))}

@@ -1,8 +1,17 @@
+import {
+  FileClock,
+  LayoutDashboard,
+  LayoutList,
+  MessageSquareMore,
+  ShoppingBasket,
+  Store,
+  Ticket,
+  UserCheck,
+  Users,
+} from "lucide-react";
 import banner4 from "../assets/banner4.png";
 import banner5 from "../assets/banner5.png";
 import banner6 from "../assets/banner6.png";
-import { MdDashboard } from "react-icons/md";
-import { CiShop } from "react-icons/ci";
 
 export const UserRole = {
   ADMIN: "ADMIN",
@@ -14,22 +23,27 @@ export const vendorSideBarOptions = [
   {
     title: "Dashboard",
     route: "dashboard",
+    icon: <LayoutDashboard />,
   },
   {
     title: "Shop",
     route: "shop",
+    icon: <Store />,
   },
   {
     title: "Products",
     route: "products",
+    icon: <ShoppingBasket />,
   },
   {
     title: "Reviews & Ratings",
     route: "products-reviews",
+    icon: <MessageSquareMore />,
   },
   {
     title: "Order History",
     route: "shop-orders",
+    icon: <FileClock />,
   },
 ];
 
@@ -37,30 +51,37 @@ export const adminSideBarOptions = [
   {
     title: "Dashboard",
     route: "dashboard",
+    icon: <LayoutDashboard />,
   },
   {
     title: "Users",
     route: "all-users",
+    icon: <Users />,
   },
   {
     title: "Shops",
     route: "shops",
+    icon: <Store />,
   },
   {
     title: "Products Categories",
     route: "products-categories",
+    icon: <LayoutList />,
   },
   {
     title: "Orders History",
     route: "orders-history",
+    icon: <FileClock />,
   },
   {
     title: "Subscribed Users",
     route: "subscribed-users",
+    icon: <UserCheck />,
   },
   {
     title: "Coupons",
     route: "coupons",
+    icon: <Ticket />,
   },
 ];
 
