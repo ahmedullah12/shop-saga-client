@@ -9,7 +9,8 @@ const Offer = () => {
   if (couponData?.data?.data?.length === 0) return null;
 
   return (
-    <div className="container my-12 bg-gradient-to-r from-primary/90 to-primary  py-8 md:py-10 px-4 text-white rounded-md">
+    <section className="px-1 md:px-0">
+      <div className="container my-12 bg-gradient-to-r from-primary/90 to-primary  py-8 md:py-10 px-4 text-white rounded-md">
       <div className="grid md:grid-cols-2 gap-8 items-center">
         <div>
           <h3 className="text-2xl md:text-3xl font-bold mb-4">
@@ -29,6 +30,7 @@ const Offer = () => {
         </div>
       </div>
     </div>
+    </section>
   );
 };
 

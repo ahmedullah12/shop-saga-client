@@ -52,7 +52,7 @@ export default function Navbar() {
         <div className="h-16 flex items-center justify-between gap-4">
           <Link
             to="/"
-            className="text-2xl text-white font-semibold italic shrink-0"
+            className="ms-1 text-2xl text-white font-semibold italic shrink-0"
           >
             Shop Saga
           </Link>
@@ -81,7 +81,7 @@ export default function Navbar() {
           </form>
 
           <div className="flex items-center gap-4">
-            <Link to="/cart" className="relative mt-1">
+            <Link to="/cart" className="relative mt-1 hidden md:block">
               <FaCartShopping size={24} className="text-white" />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                 {cart.length}
@@ -134,7 +134,7 @@ export default function Navbar() {
         </div>
 
         {/* Desktop Navigation menu with Mega Menu */}
-        <div className="border-t border-white/20 relative w-[50vw]">
+        <div className="border-t border-white/20 relative w-[50vw] ms-1">
           <ul className="hidden md:flex items-center justify-start space-x-8 h-12">
             <li className="group relative">
               <button className="flex items-center gap-1 text-md font-medium text-white/80 hover:text-white transition-all duration-300">
@@ -193,7 +193,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Items */}
           <ul className="px-4 space-y-2 pb-4">
-            {Menus.filter((item) => item.title !== "Cart").map((item, idx) => (
+            {Menus.map((item, idx) => (
               <li key={idx} className="text-primary">
                 <NavLink
                   to={item.path}
@@ -208,6 +208,11 @@ export default function Navbar() {
                 >
                   {item.icon}
                   {item.title}
+                  {item.title === "Cart" && (
+                    <span className=" bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                      {cart.length}
+                    </span>
+                  )}
                 </NavLink>
               </li>
             ))}

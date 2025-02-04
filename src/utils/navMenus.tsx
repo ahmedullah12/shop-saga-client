@@ -1,30 +1,29 @@
-import { FaCartShopping } from "react-icons/fa6";
-import { MdInventory } from "react-icons/md";
+import { Store, Package, Info, Contact, ShoppingCart } from "lucide-react";
 
 export const Menus = [
   {
     title: "Products",
     path: "/products",
-    icon: <MdInventory size={18} color="#674188" />,
+    icon: <Package size={18} />,
   },
   {
     title: "Shops",
     path: "/shops",
-    icon: <MdInventory size={18} color="#674188" />,
+    icon: <Store size={18} />,
   },
   {
     title: "About",
     path: "/about",
-    icon: <MdInventory size={18} color="#674188" />,
+    icon: <Info size={18} />,
   },
   {
     title: "Contact Us",
     path: "/contact",
-    icon: <MdInventory size={18} color="#674188" />,
+    icon: <Contact size={18} />,
   },
   {
     title: "Cart",
     path: "/cart",
-    icon: <FaCartShopping size={18} color="#674188" />,
+    icon: <ShoppingCart size={18} />,
   },
 ];

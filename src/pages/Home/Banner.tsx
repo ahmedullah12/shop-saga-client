@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
-  CarouselItem
+  CarouselItem,
 } from "@/components/ui/carousel";
 import { bannerCarouselData } from "@/utils/constants";
 import Autoplay from "embla-carousel-autoplay";

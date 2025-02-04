@@ -11,7 +11,7 @@ const FlashSaleProducts = () => {
   });
 
   return (
-    <div className="container px-0 pb-6 mb-12">
+    <div className="container px-1 md:px-0 pb-6 mb-12">
       <h1 className="text-2xl md:text-3xl font-bold mb-6 text-secondary">
         Flash Sale Products
       </h1>

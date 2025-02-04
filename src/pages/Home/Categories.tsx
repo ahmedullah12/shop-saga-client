@@ -14,7 +14,7 @@ const Categories = () => {
   if (isLoading) return <Loader/>
 
   return (
-    <div className="container mx-auto py-6 px-0">
+    <div className="container mx-auto py-6 px-1 mdpx-0">
       <h1 className="text-2xl md:text-3xl font-bold mb-6 text-secondary">
         Product Categories
       </h1>

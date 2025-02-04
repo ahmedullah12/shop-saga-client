@@ -22,11 +22,11 @@ const UserDropdown = ({ user }: TUserDropdown) => {
     <div>
       <Popover>
         <PopoverTrigger className="ms-[6px] px-2 py-1 flex items-center gap-3 text-primary md:text-white rounded">
-          <Avatar className="text-black">
+          <Avatar className="text-white">
             {user.profileImage && <AvatarImage src={user?.profileImage} />}
             <AvatarFallback>{user && user?.name.slice(0, 2)}</AvatarFallback>
           </Avatar>
-          <span>{user?.name}</span>
+          <span className="text-white">{user?.name}</span>
         </PopoverTrigger>
         <PopoverContent className="w-60 bg-accent border-none">
           <Link
