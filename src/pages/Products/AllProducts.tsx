@@ -98,7 +98,8 @@ const AllProducts = () => {
   const totalPages = Math.ceil(meta?.total / dataPerPage);
 
   return (
-    <div className="container mx-auto p-6 mb-12">
+    <div className="container mx-auto px-2 py-4
+     md:p-6 mb-12">
       <div className="w-full bg-gray-50 mb-6 px-4 py-6">
         <h1 className="text-3xl font-bold text-primary mb-6">Products</h1>
         <p className="flex items-center space-x-3text-md font-bold">
@@ -106,6 +107,7 @@ const AllProducts = () => {
           <span className="text-primary">Products</span>
         </p>
       </div>
+      <div className="flex justify-between ">
       <div className="mb-6">
         <input
           type="text"
@@ -122,9 +124,9 @@ const AllProducts = () => {
           className="bg-primary space-x-1 hover:bg-secondary w-full"
           onClick={() => setShowMobileFilters(!showMobileFilters)}
         >
-          <span>{showMobileFilters ? "Hide Filters" : "Show Filters"}</span>
           <FilterIcon size={18} />
         </Button>
+      </div>
       </div>
 
       <div className="flex flex-col md:flex-row gap-6">
