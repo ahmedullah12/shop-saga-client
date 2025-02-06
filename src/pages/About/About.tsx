@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const About = () => {
   return (
-    <div className="md:container min-h-screen bg-gradient-to-b from-white to-gray-50 py-6">
+    <div className="container min-h-screen bg-gradient-to-b from-white to-gray-50 py-4 md:py-6 px-2 md:px-0">
       <div className="w-full bg-gray-50 mb-6 px-4 py-6">
         <h1 className="text-3xl font-bold text-primary mb-6">About</h1>
         <p className="flex items-center space-x-3text-md font-bold">
@@ -216,11 +216,11 @@ const About = () => {
               </div>
             </div>
             <div className="mt-10 lg:mt-0">
-              <div className="">
+              <div className="flex justify-center md:justify-normal">
                 <img
                   src={locationImg}
                   alt="Our Location"
-                  className="max-h-[300px] rounded-xl ring-1 ring-gray-400/10"
+                  className="max-h-[200px] md:max-h-[300px] rounded-xl ring-1 ring-gray-400/10"
                 />
               </div>
             </div>

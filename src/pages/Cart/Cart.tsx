@@ -78,7 +78,7 @@ const Cart = () => {
     : 0;
 
   return (
-    <div className="md:container px-4 py-6 min-h-screen mb-10">
+    <div className="container px-2 md:px-0 py-4 md:py-6 min-h-screen mb-10">
       <div className="w-full bg-gray-50 mb-6 px-4 py-6">
         <h1 className="text-3xl font-bold text-primary mb-6">Cart</h1>
         <p className="flex items-center space-x-3text-md font-bold">

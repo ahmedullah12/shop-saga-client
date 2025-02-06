@@ -26,7 +26,7 @@ const UserDropdown = ({ user }: TUserDropdown) => {
             {user.profileImage && <AvatarImage src={user?.profileImage} />}
             <AvatarFallback>{user && user?.name.slice(0, 2)}</AvatarFallback>
           </Avatar>
-          <span className="text-white">{user?.name}</span>
+          <span className="hidden md:block text-white">{user?.name}</span>
         </PopoverTrigger>
         <PopoverContent className="w-60 bg-accent border-none">
           <Link

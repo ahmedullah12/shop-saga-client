@@ -66,7 +66,7 @@ const ProductDetails = () => {
 
   return (
     <div className="bg-background pt-4 pb-10">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto">
         <div className="w-full mx-auto shadow-2xl border-none">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 p-6 md:p-10">
             {/* Image Section (Unchanged) */}

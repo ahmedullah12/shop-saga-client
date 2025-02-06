@@ -3,7 +3,8 @@ import { useGetUserWithEmailQuery } from "@/redux/features/user/userApi";
 import { useAppSelector } from "@/redux/hooks";
 import { Menus } from "@/utils/navMenus";
 import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
-import { Search, Menu as MenuIcon, ChevronDown } from "lucide-react";
+import { Search, ChevronDown } from "lucide-react";
+import { IoMdMenu } from "react-icons/io";
 import { useState } from "react";
 import { FaSignInAlt } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
@@ -80,7 +81,7 @@ export default function Navbar() {
             </div>
           </form>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center md:gap-4">
             <Link to="/cart" className="relative mt-1 hidden md:block">
               <FaCartShopping size={24} className="text-white" />
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
@@ -121,14 +122,12 @@ export default function Navbar() {
               </Popover>
             )}
             <div className="md:hidden">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-white"
+              <button
+                className="me-2 ms-1 text-white mt-1"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                <MenuIcon className="h-6 w-6" />
-              </Button>
+                <IoMdMenu size={26}/>
+              </button>
             </div>
           </div>
         </div>
