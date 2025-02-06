@@ -55,7 +55,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             {product.name}
           </CardTitle>
           <p className="text-sm text-muted-foreground mt-1">
-            {product.description.slice(0, 50) + "..."}
+            {product.description.slice(0, 80) + "..."}
           </p>
           <div className="flex items-center justify-between mt-4">
             <p className="text-xl font-bold text-primary">

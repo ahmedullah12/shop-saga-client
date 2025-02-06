@@ -32,7 +32,10 @@ const recalculateTotalPrice = (cart: CartItem[]) =>
     return total + priceToUse * item.addedProductQuantity;
   }, 0);
 
-const calculateDiscountedTotal = (totalPrice: number, coupon: ICoupon | null) => {
+const calculateDiscountedTotal = (
+  totalPrice: number,
+  coupon: ICoupon | null
+) => {
   if (!coupon) return totalPrice;
   const discount = (totalPrice * coupon.discount) / 100;
   return totalPrice - discount;
@@ -42,10 +45,15 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart: (state, action: PayloadAction<IProduct>) => {
+    addToCart: (
+      state,
+      action: PayloadAction<IProduct & { addedProductQuantity?: number }>
+    ) => {
       const selectedProduct = state.cart.find(
         (product) => product.id === action.payload.id
       );
+
+      const quantityToAdd = action.payload.addedProductQuantity || 1; // Use provided quantity or default to 1
 
       if (
         state.cart.length > 0 &&
@@ -57,16 +65,22 @@ const cartSlice = createSlice({
       }
 
       if (!selectedProduct) {
-        const product = { ...action.payload, addedProductQuantity: 1 };
-        product.inventoryCount -= 1;
+        const product = {
+          ...action.payload,
+          addedProductQuantity: quantityToAdd,
+        };
+        product.inventoryCount -= quantityToAdd;
         state.cart.push(product);
       } else {
-        selectedProduct.addedProductQuantity += 1;
-        selectedProduct.inventoryCount -= 1;
+        selectedProduct.addedProductQuantity += quantityToAdd;
+        selectedProduct.inventoryCount -= quantityToAdd;
       }
 
       state.totalPrice = recalculateTotalPrice(state.cart);
-      state.discountedTotal = calculateDiscountedTotal(state.totalPrice, state.appliedCoupon);
+      state.discountedTotal = calculateDiscountedTotal(
+        state.totalPrice,
+        state.appliedCoupon
+      );
       state.warning = null;
       state.pendingProduct = null;
     },
@@ -84,7 +98,10 @@ const cartSlice = createSlice({
       }
 
       state.totalPrice = recalculateTotalPrice(state.cart);
-      state.discountedTotal = calculateDiscountedTotal(state.totalPrice, state.appliedCoupon);
+      state.discountedTotal = calculateDiscountedTotal(
+        state.totalPrice,
+        state.appliedCoupon
+      );
       state.warning = null;
       state.pendingProduct = null;
     },
@@ -105,7 +122,10 @@ const cartSlice = createSlice({
         product.addedProductQuantity += 1;
         product.inventoryCount -= 1;
         state.totalPrice += priceToUse;
-        state.discountedTotal = calculateDiscountedTotal(state.totalPrice, state.appliedCoupon);
+        state.discountedTotal = calculateDiscountedTotal(
+          state.totalPrice,
+          state.appliedCoupon
+        );
       }
     },
 
@@ -120,7 +140,10 @@ const cartSlice = createSlice({
         product.addedProductQuantity -= 1;
         product.inventoryCount += 1;
         state.totalPrice -= priceToUse;
-        state.discountedTotal = calculateDiscountedTotal(state.totalPrice, state.appliedCoupon);
+        state.discountedTotal = calculateDiscountedTotal(
+          state.totalPrice,
+          state.appliedCoupon
+        );
       }
     },
 
@@ -139,7 +162,10 @@ const cartSlice = createSlice({
       if (state.totalPrice < 0) {
         state.totalPrice = 0;
       }
-      state.discountedTotal = calculateDiscountedTotal(state.totalPrice, state.appliedCoupon);
+      state.discountedTotal = calculateDiscountedTotal(
+        state.totalPrice,
+        state.appliedCoupon
+      );
     },
 
     clearCart: (state) => {
@@ -157,13 +183,16 @@ const cartSlice = createSlice({
 
     applyCoupon: (state, action: PayloadAction<ICoupon>) => {
       state.appliedCoupon = action.payload;
-      state.discountedTotal = calculateDiscountedTotal(state.totalPrice, action.payload);
+      state.discountedTotal = calculateDiscountedTotal(
+        state.totalPrice,
+        action.payload
+      );
     },
 
     removeCoupon: (state) => {
       state.appliedCoupon = null;
       state.discountedTotal = state.totalPrice;
-    }
+    },
   },
 });
 
@@ -176,7 +205,7 @@ export const {
   decreaseQuantity,
   clearCart,
   applyCoupon,
-  removeCoupon
+  removeCoupon,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
